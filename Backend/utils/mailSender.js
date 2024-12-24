@@ -25,4 +25,4 @@ const mailSender = async(email, title, body)=>{
     }
 }
 
-mocdule.exports  = mailSender;
+module.exports  = mailSender;
