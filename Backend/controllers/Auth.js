@@ -3,7 +3,8 @@ const OTP = require('../models/OTP');
 const Profile = require('../models/Profile')
 const otpGenerator = require('otp-generator')
 const bcrypt = require('bcrypt');
-
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 // send otp
 
 exports.sendOTP = async (req,res)=>{
@@ -103,7 +104,6 @@ exports.signUp = async(req,res)=>{
             dateOfBirth: null,
             about: null,
             contactNumber: null,
-
         });
 
         const user = await User.create({
@@ -132,5 +132,86 @@ exports.signUp = async(req,res)=>{
 }
 
 //login
+exports.login =async(req,res) =>{
+    try {
+        const {email,password} = req.body;
+        if(!email || !password){
+            return res.status(403).json({
+                success: false,
+                message: "all fields are required",
+            })
+        }
+        const existingUser = await User.findOne({email}).populate('additionalDetails');
+        if(!existingUser){
+            return res.status(401).json({
+                success: false,
+                message: "User does not exist",
+            })
+        }
+
+        if(!(await bcrypt.compare(password, existingUser.password))){
+            return res.status(403).json({
+                success: false,
+                message: "Incorrect Password",
+            })
+        }
+
+        //generating token
+        const payload={
+            email: existingUser.email,
+            id: existingUser._id,
+            accountType: existingUser.accountType,
+        }
+        const token = jwt.sign(payload,process.env.JWT_SECRET,{
+            expiresIn:'2h'
+        });
+        existingUser.token = token;
+        existingUser.password = undefined;
+
+        const options = {
+            expires: new Date(Date.now() + 3*24*60*60*1000),
+            httpOnly: true,
+        }
+    
+        return res.cookie('token',token,options).json({
+            success: true,
+            message: "User login successfully",
+            existingUser,
+            token,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            success:false,
+            message: "User cannot be logedin, please try again",
+        })
+    }
+}
 
 //changepassword
+exports.changePassword = async (req,res) =>{
+    try {
+        const {currentPassword, newPassword, confirmNewPassword} = req.body;
+        if(!(await bcrypt.compare(currentPassword, req.user.password))){
+            return res.status(400).json({
+                success: false,
+                message: "incorrect currentPassword",
+            })
+        }
+        if(newPassword !== confirmNewPassword){
+            return res.status(400).json({
+                success: false,
+                message: "new Password and Confirm Password",
+            })
+        }
+        const hashedPassword = bcrypt.hash(newPassword,10);
+        const currentUser = req.user;
+        currentUser.password = hashedPassword,
+        currentUser.save();
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "cannot change password right now"
+        })
+    }
+}
