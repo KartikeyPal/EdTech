@@ -24,6 +24,7 @@ exports.createCourse = async(req,res)=>{
                 message: "User is not instructor",
             })
         } 
+        //checking for instructor
         const userId = req.user.id;
         const instructorDetails = await User.findById(userId);
         if(!instructorDetails){
