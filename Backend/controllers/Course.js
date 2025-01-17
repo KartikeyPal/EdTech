@@ -109,3 +109,44 @@ exports.showAllCourses = async(req,res) =>{
         })
     }
 }
+
+//get coursse details
+exports.getCourseDetails = async(req,res)=>{
+    try {
+        const {courseId} = req.body;
+        const courseDetails =  await Course.findById({_id:courseId}).populate(
+            {
+                path:"instructor",
+                populate:{
+                    path:"additionalDetails",
+                }
+            }
+        )
+        .populate("category")
+        .populate("ratingAndReview")
+        .populate({
+            path:"courseContent",
+            populate:{
+                path:"subsection",
+            },
+        }).exec();
+
+        //validation
+        if(!courseDetails){
+            return res.status(400).json({
+                success:false,
+                message:"Could not find the course",
+            });
+        };
+        return res.status(200).json({
+            success:true,
+            message:"course fetched successfully",
+            data: courseDetails,
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message, 
+        })
+    }
+}

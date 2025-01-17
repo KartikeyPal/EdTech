@@ -1,13 +1,14 @@
-const User = require('../models/User');
-const OTP = require('../models/OTP');
-const Profile = require('../models/Profile')
-const otpGenerator = require('otp-generator')
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-// send otp
+import User from '../models/User.js';
+import OTP from '../models/OTP.js';
+import Profile from '../models/Profile.js';
+import otpGenerator from 'otp-generator';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
-exports.sendOTP = async (req,res)=>{
+// send otp
+export const sendOTP = async (req, res) => {
     try {
         const {email} = req.body;
         const checkUser = await User.findOne({email});
@@ -50,12 +51,8 @@ exports.sendOTP = async (req,res)=>{
     
 }
 
-
-
-
 //signup
-
-exports.signUp = async(req,res)=>{
+export const signUp = async(req,res)=>{
     try {
         const {
             firstName,lastName,email,password,confirmPassword,accountType,otp
@@ -132,7 +129,7 @@ exports.signUp = async(req,res)=>{
 }
 
 //login
-exports.login =async(req,res) =>{
+export const login =async(req,res) =>{
     try {
         const {email,password} = req.body;
         if(!email || !password){
@@ -189,7 +186,7 @@ exports.login =async(req,res) =>{
 }
 
 //changepassword
-exports.changePassword = async (req,res) =>{
+export const changePassword = async (req,res) =>{
     try {
         const {currentPassword, newPassword, confirmNewPassword} = req.body;
         if(!(await bcrypt.compare(currentPassword, req.user.password))){
