@@ -1,4 +1,4 @@
-const Category = require('../models/Category')
+const Category = require('../models/Category.js')
 
 exports.createCategory= async(req,res)=>{
     try {
@@ -49,9 +49,31 @@ exports.showAllCategory = async (req,res) =>{
 exports.categoryPageDetails = async(req,res) =>{
     try {
         const {categoryId} = req.body;
-        const selectedCategory =await Category.find
+        const selectedCategory =await Category.findById(categoryId).populate("courses").exec();  
+        if(!selectedCategory){
+            return res.status(404).json({
+                success:false,
+                message:"data not found",
+            })
+        }
+        const differentCategories = await Category.find({_id: {$ne: categoryId},}).populate("courses").exec();
+
+        //how can i get top selling courses
+
+        return res.status(200).json({
+            success:true,
+            data:{
+                selectedCategory,
+                differentCategories,
+                //top courses pending
+            }
+        })
+
     } catch (error) {
-        
+        return res.status(500).json({
+            success:false,
+            message: error.message,
+        })   
     }
 }
 
