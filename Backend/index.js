@@ -1,22 +1,23 @@
 const express =  require("express");
 const app = express();
 
-const userRoutes = require('./routes');
-const profileRoutes = require('./routes');
-const courseRoutes = require('./routes');
-const paymentRoutes = require('./routes');
+const userRoutes = require('./routes/userRoutes');
+const profileRoutes = require('./routes/profileRoutes');
+const courseRoutes = require('./routes/courseRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 const database = require('./config/database');
-const cookieParser = require('./cookie-parser')
+const cookieParser = require('cookie-parser')
 const cors = require('cors');
-const {cloudinaryConnect} = require('./config/database')
+const {cloudinaryConnect} = require('./config/cloudinary')
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 4000;
 
-//database conncect
+//database connection
 database.connect();
+//M|iddlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -52,6 +53,4 @@ app.get("/",(req,res)=>{
 app.listen(PORT,()=>{
     console.log(`Server is running at ${PORT}`);
 })
-
-
 

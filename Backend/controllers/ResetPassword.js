@@ -2,6 +2,7 @@ const User = require('../models/User');
 const mailSender = require('../utils/mailSender');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const crypto = require('crypto');
 
 //resetPasswordToken
 exports.resetPasswordToken = async(req,res) =>{
@@ -36,6 +37,7 @@ exports.resetPasswordToken = async(req,res) =>{
         return res.json({
             success: true,
             message: "please check your mail and reset your password",
+            updateDetails,
         })
     } catch (error) {
         console.log(error);

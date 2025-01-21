@@ -1,3 +1,4 @@
+const Category = require('../models/Category');
 const Course = require('../models/Course');
 const Tag = require('../models/Tags');
 const User = require('../models/User');
@@ -6,12 +7,12 @@ const {uploadImageToCloudinary} = require('../utils/imageUploader');
 exports.createCourse = async(req,res)=>{
     try {
         //fetching data
-        const {courseName,courseDescription,whatYouWillLearn,price,tag} = req.body;
+        const {courseName,courseDescription,whatYouWillLearn,price,tag,categoryId} = req.body;
         
         const thumbnail = req.files.thumbnailImage;
 
         //validation
-        if(!courseName || !courseDescription||!whatYouWillLearn||!price||!tag || !thumbnail){
+        if(!courseName || !courseDescription||!whatYouWillLearn||!price||!tag || !thumbnail || !category){
             return res.status(400).json({
                 success:false,
                 message: "all fields are required",
@@ -35,11 +36,11 @@ exports.createCourse = async(req,res)=>{
         }
 
         //tags validation
-        const tagDetails = await Tag.findById(tag);
+        const categoryDetails = await Category.findById(categoryId);
         if(!tagDetails){
             return res.status(404).json({
                 success: false,
-                message: "Tag Details not found",
+                message: "category Details not found",
             })
         }
 
@@ -52,7 +53,7 @@ exports.createCourse = async(req,res)=>{
             instructor:instructorDetails._id,
             whatYouWillLearn,
             price,
-            tag:tagDetails._id,
+            category:tagDetails._id,
             thumbnail:thumbnailImage.secure_url,
         }
 
@@ -81,7 +82,7 @@ exports.createCourse = async(req,res)=>{
   
     } catch (error) {
         console.error(error);
-        return res.staus(500).json({
+        return res.status(500).json({
             success:false,
             message:"course creation failed",
             error: error.message,

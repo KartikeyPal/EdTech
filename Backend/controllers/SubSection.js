@@ -39,5 +39,27 @@ exports.createSubSection = async(req,res)=>{
     }
 }
 //pending updateSubsection
+exports.updateSubSection = async(req,res)=>{
+    try {
+        
+    } catch (error) {
+        return res.status(500).json({
+            success:false,
+            message: "unable to update SubSection, please try again later",
+            error: error.message,
+        })
+    }
+}
 //pending delete subsection 
+exports.deleteSubSection = async(req,res)=>{
+    try {
+        
+    } catch (error) {
+        return res.status(500).json({
+            success:false,
+            message: "unable to delete SubSection, please try again later",
+            error: error.message,
+        })
+    }
+}
 
