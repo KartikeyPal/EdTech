@@ -45,8 +45,8 @@ router.post('/deleteSection',auth,isInstructor,deleteSection);
 router.post('/updateSubSection',auth,isInstructor,updateSubSection);
 router.post('/deleteSubSection',auth,isInstructor,deleteSubSection);
 router.post('/addSubSection',auth,isInstructor,createSubSection);
-router.get('/showAllCoursess',showAllCourses);
-router.get('getCourseDetails',getCourseDetails);
+router.get('/showAllCourses',showAllCourses);
+router.post('/getCourseDetails',getCourseDetails);
 
 
 //category can only be create by admin

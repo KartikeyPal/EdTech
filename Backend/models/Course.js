@@ -18,7 +18,8 @@ const courseSchema = new mongoose.Schema({
         ref: "User",
     },
     whatYouWillLearn:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
+        required: true,
     },
     courseContent:[
         {

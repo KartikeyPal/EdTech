@@ -10,9 +10,11 @@ exports.createCourse = async(req,res)=>{
         const {courseName,courseDescription,whatYouWillLearn,price,tag,categoryId} = req.body;
         
         const thumbnail = req.files.thumbnailImage;
+        console.log("text data = ", req.body);
+        console.log("image data = ",req.files.thumbnailImage);
 
         //validation
-        if(!courseName || !courseDescription||!whatYouWillLearn||!price||!tag || !thumbnail || !category){
+        if(!courseName || !courseDescription||!whatYouWillLearn||!price||!tag || !thumbnail || !categoryId){
             return res.status(400).json({
                 success:false,
                 message: "all fields are required",
@@ -37,7 +39,7 @@ exports.createCourse = async(req,res)=>{
 
         //tags validation
         const categoryDetails = await Category.findById(categoryId);
-        if(!tagDetails){
+        if(!categoryDetails){
             return res.status(404).json({
                 success: false,
                 message: "category Details not found",
@@ -46,18 +48,20 @@ exports.createCourse = async(req,res)=>{
 
         //uploading image to cloudinary
         const thumbnailImage = await uploadImageToCloudinary(thumbnail,process.env.FOLDER_NAME); 
-
         const coursePayload = {
             courseName,
             courseDescription,
             instructor:instructorDetails._id,
             whatYouWillLearn,
             price,
-            category:tagDetails._id,
+            category:categoryDetails._id,
             thumbnail:thumbnailImage.secure_url,
         }
-
+        
+        
+        console.log(whatYouWillLearn);
         const newCourse = await Course.create(coursePayload);
+        console.log("course created")
 
         //adding the new course to userSchema of instructor
         await User.findByIdAndUpdate({_id:instructorDetails._id},{
@@ -67,7 +71,7 @@ exports.createCourse = async(req,res)=>{
         },{new:true});
 
         //updating tagSchema
-        await Tag.findByIdAndUpdate({_id:tagDetails._id},{
+        await Category.findByIdAndUpdate({_id:categoryDetails._id},{
             $push:{
                 course:newCourse._id,
             }
@@ -81,7 +85,7 @@ exports.createCourse = async(req,res)=>{
         });
   
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         return res.status(500).json({
             success:false,
             message:"course creation failed",
@@ -124,12 +128,12 @@ exports.getCourseDetails = async(req,res)=>{
             }
         )
         .populate("category")
-        .populate("ratingAndReview")
+        // .populate("ratingAndReview")
         .populate({
             path:"courseContent",
             populate:{
                 path:"subsection",
-            },
+            }, 
         }).exec();
 
         //validation

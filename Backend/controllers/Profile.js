@@ -41,7 +41,7 @@ exports.updateProfile = async (req,res)=>{
 exports.deleteAccount = async(req,res)=>{
     try {
         const userId = req.user.id;
-    
+        console.log(userId);
         const userDetails = await User.findById(userId);
         if(!userDetails){
             return res.status(404).json({
@@ -49,8 +49,9 @@ exports.deleteAccount = async(req,res)=>{
                 message: "user not found",
             })
         }
-        await Profile.findByIdAndUpdate({_id: userDetails.additionalDetails});
-        await User.findOneAndDelete({_id:id});
+        await Profile.findByIdAndDelete({_id: userDetails.additionalDetails});
+        //deleting user
+        await User.findByIdAndDelete({_id:userId});
     
         //find a way to sedule this deletion operation
     
