@@ -52,15 +52,15 @@ const TimelineSection = () => {
             {/* part 2 */}
 
             <div className='relative  shadow-blue-200'>
-              <img src={timelineImage} alt="Timeline Image" className='shadow-white object-cover h-fit '/>
-              <div className='absolute bg-caribbeangreen-700 flex flex-row text-white uppercase py-10'>
-                  <div className='flex flex-row gap-5 items-center border-r border-caribbeangreen-300 text-white'>
-                    <p className='text-3xl font-bold '>10</p>
-                    <p className='text-caribbeangreen-900 text-sm'>Years</p>
+              <img src={timelineImage} alt="Timeline Image" className='shadow-white object-cover h-fit mb-20 '/>
+              <div className='absolute bg-caribbeangreen-700 flex flex-row text-white uppercase py-10 left-[8%] bottom-[4px]'>
+                  <div className='flex flex-row gap-5 items-center border-r border-caribbeangreen-300 text-white px-7'>
+                    <p className='text-3xl font-bold'>10</p>
+                    <p className='text-sm '>Years Of Experience</p>
                   </div>
-                  <div className='flex gap-5 items-center px-7 text-white '>
+                  <div className='flex gap-5 items-center px-7'>
                   <p className='text-3xl font-bold'>250</p>
-                  <p className='text-caribbeangreen-700 text-sm'>Types of Courses </p>
+                  <p className='text-sm'>Types of Courses </p>
                   </div>
               </div>
             </div>
