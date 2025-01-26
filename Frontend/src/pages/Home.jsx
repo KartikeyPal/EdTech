@@ -1,14 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import HighlightText from '../components/core/homepage/HighlightText';
 import CTAButton from '../components/core/homepage/Button';
-import Banner from '../../assets/Images/banner.mp4'
+import Banner from '../../assets/Images/banner.mp4';
 import CodeBlocks from '../components/core/homepage/CodeBlocks';
 import TimelineSection from '../components/core/homepage/TimelineSection.jsx';
-import LearningLanguageSection from "../components/core/homepage/LearningLanguageSection.jsx"
-import InstructorSection from '../components/core/homepage/InstructorSection.jsx'
-import ExploreMore from '../components/core/homepage/ExploreMore.jsx'
+import LearningLanguageSection from "../components/core/homepage/LearningLanguageSection.jsx";
+import InstructorSection from '../components/core/homepage/InstructorSection.jsx';
+import ExploreMore from '../components/core/homepage/ExploreMore.jsx';
+import Footer from '../components/common/Footer.jsx';
 
 const Home = () => {
 
@@ -74,14 +75,14 @@ const Home = () => {
                     position={"lg:flex-row-reverse"}
                     heading={
                         <div className='text-4xl font-semibold'>
-                            Unlock your
-                            <HighlightText text={"coding potential"}/>
-                            with our onlin courses
+                            Start
+                            <HighlightText text={"coding in seconds"}/>
+                            
                         </div>
                     }
-                    subheading={"Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you"}
+                    subheading={"Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."}
                     ctabtn1={{
-                        btntext: "try is yourself",
+                        btntext: "Continue Lesson",
                         linkto: "/signup",
                         active: true,
                     }}
@@ -143,6 +144,9 @@ const Home = () => {
                     {/* Review slider */}
         </div>
         {/* Footer  */}
+        <div className='mx-auto w-11/12 max-w-maxContent flex flex-row items-center justify-between gap-7 bg-[#161D29] shadow-richblack-700 shadow-lg px-[52px] py-[120px] mb-7'>
+                <Footer/>
+        </div>
     </div>
   )
 }
