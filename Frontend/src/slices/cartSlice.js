@@ -17,5 +17,5 @@ const cartSlice = createSlice({
     },
 });
 
-export const {setTotalItems}  = authSlice.actions;
+export const {setTotalItems}  = cartSlice.actions;
 export default cartSlice.reducer;
