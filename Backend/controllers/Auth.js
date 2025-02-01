@@ -10,7 +10,7 @@ require('dotenv').config();
 exports.sendOTP = async (req, res) => {
     try {
         const {email} = req.body;
-        console.log(email)
+        
         const checkUser = await User.findOne({email});
         if(checkUser){
             return res.status(401).json({
@@ -21,7 +21,6 @@ exports.sendOTP = async (req, res) => {
         
         //generateotp
         var otp = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false,specialChars: false });
-        console.log("otp generated: ",otp);
         
         const result = await OTP.findOne({otp:otp});
 
@@ -62,7 +61,7 @@ exports.signUp = async(req,res)=>{
                 message: "All fields are required",
             })
         }
-        console.log(otp)
+        console.log("req.body :", req.body);
         if(password !== confirmPassword){
             return res.status(400).json({
                 success: false,

@@ -30,9 +30,9 @@ exports.resetPasswordToken = async(req,res) =>{
                 resetPasswordExpires: Date.now() + 5*60*1000,
             },{new:true}
         );
-        const url = `http://localhost:3000/update-password/${token}`;
+        const url = `http://localhost:5173/update-password/${token}`;
         //sending mail
-        await mailSender(email,"Password Reset Link",`Password Reset Link: ${url}`);
+        await mailSender(email,"Password Reset Link : ",`Password Reset Link: ${url}`);
         
         return res.json({
             success: true,
@@ -50,14 +50,14 @@ exports.resetPasswordToken = async(req,res) =>{
 //resetPassword
 exports.resetPassword = async(req,res) =>{
     try {
-        const {newPassword,confirmPassword,token} = req.body;
-        if(!newPassword || !confirmPassword){
+        const {password,confirmPassword,token} = req.body;
+        if(!password || !confirmPassword){
             return res.status(403).json({
                 success:false,
                 message: "All fiels are required",
             })
         }
-        if(newPassword !== newPassword){
+        if(password !== confirmPassword){
             return res.status(401).json({
                 success:false,
                 message: "Password is not matching",
@@ -77,7 +77,7 @@ exports.resetPassword = async(req,res) =>{
                 message: "token is expired",
             })
         }
-        const hashedPassword = await bcrypt.hash(newPassword,10);
+        const hashedPassword = await bcrypt.hash(password,10);
     
         await User.findOneAndUpdate({token:token},
             {password: hashedPassword},{new:true});

@@ -25,10 +25,7 @@ const Navbar = () => {
             console.log("could not fetch the categories list")
         }
 
-    }
-
-    
-
+    }    
     useEffect(()=>{
         fetchSublinks();
     },[])
