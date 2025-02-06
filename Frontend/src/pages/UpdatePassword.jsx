@@ -25,7 +25,7 @@ const UpdatePassword = () => {
         e.preventDefault();
         const token  = location.pathname.split('/').at(-1);
         console.log(token);
-        dispatch(resetPassword(password,confirmPassword,token));
+        dispatch(resetPassword(password,confirmPassword,token)); 
     }
   return (
     <div>

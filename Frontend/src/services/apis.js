@@ -12,5 +12,10 @@ export const settingsEndpoints = {
     RESETPASSWORD_TOKEN_API: BASE_URL + "/auth/reset-password-token",
     RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
     SIGN_UP_API : BASE_URL + "/auth/signup",
-    SEND_OTP_API: BASE_URL + "/auth/sendotp"
+    SEND_OTP_API: BASE_URL + "/auth/sendotp",
+    LOGIN_API: BASE_URL + "/auth/login",
+}
+
+export const ContactUsEndpoints = {
+    CONTACT_US_API: BASE_URL + "/reach/contact",
 }

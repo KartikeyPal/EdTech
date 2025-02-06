@@ -33,6 +33,7 @@ exports.sendOTP = async (req, res) => {
 
         //creating opt entry in db
         const otpBody = await OTP.create(otpPayload);
+        
         console.log(otpBody);
 
         res.status(200).json({

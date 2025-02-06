@@ -1,7 +1,10 @@
-import {setLoading} from '../../slices/authSlice'
-import {apiConnector} from '../apiconnector'
+import {setLoading} from '../../slices/authSlice';
+import {apiConnector} from '../apiconnector';
 import toast, { Toaster } from 'react-hot-toast'; 
 import { settingsEndpoints } from '../apis';
+import {setUser} from '../../slices/profileSlice';
+import { setToken } from '../../slices/authSlice';
+import {resetCart} from '../../slices/cartSlice';
 export function getPasswordResetToken(email ,setEmailSent){
     return async(dispatch) =>{
         dispatch(setLoading(true));
@@ -78,4 +81,40 @@ export const sendOtp = (email,navigate)=>{
         dispatch(setLoading(false));
     }
     
+}
+
+export const logIn = (email,password,navigate)=>{
+    return async(dispatch)=>{
+        try {
+            dispatch(setLoading(true));
+            const res = await apiConnector("POST",settingsEndpoints.LOGIN_API,{email,password});
+            if(!res.data.success){
+                toast.error("unable to login");
+                throw new Error(res.data.message);
+            }
+            toast.success("logIn successfull");
+            dispatch(setToken(res.data.token));
+
+            const userImage = res.data.
+
+            
+            localStorage.setItem("token",JSON.stringify(token)); 
+            navigate('/dashboard/my-profile');
+        } catch (error) {
+            console.log("Error while login",error);
+            toast.error("not able to login");
+        }
+        dispatch(setLoading(false));
+    }
+}
+export const logOut = (navigate)=>{
+    return async(dispatch)=>{
+        dispatch(setToken(null));
+        dispatch(setUser(null));
+        dispatch(resetCart());
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        toast.success("logged Out successfully");
+        navigate('/')
+    }
 }
