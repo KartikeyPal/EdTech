@@ -3,22 +3,23 @@ import IconButton from './IconButton'
 
 const ConfirmationModal = ({modalData}) => {
   return (
-    <div>
+    <div className='text-white  z-30'>
         <div>
             <p>{modalData.text1}</p>
-            <p>{modalData.text2}</p>
-            <div >
+            <p>{modalData.text2}</p>    
+            <div className=' flex flex-row gap-3'>
                 <IconButton 
-                    onClick = {modalData?.btnHandler}
-                    text = {modalData?.btn1Text}
+                    onClick = {modalData?.btn1Handler}
+                    text={modalData?.btn1Text}
                 />
-                <button onClick={modalData?.btn2Handler}>
-                    {modalData?.btn2Text}
-                </button>
+                <IconButton 
+                    onClick={modalData?.btn2Handler} 
+                    text={modalData?.btn2Text}
+                />
             </div>
         </div>
     </div>
   )
 }
 
-export default ConfirmationModal
+export default ConfirmationModal;

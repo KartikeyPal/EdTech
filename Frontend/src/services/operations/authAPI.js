@@ -94,11 +94,13 @@ export const logIn = (email,password,navigate)=>{
             }
             toast.success("logIn successfull");
             dispatch(setToken(res.data.token));
-
-            const userImage = res.data.
+            const image = res.data.existingUser.image;
+            dispatch(setUser({...res.data.existingUser,image:image}));
 
             
-            localStorage.setItem("token",JSON.stringify(token)); 
+            localStorage.setItem("token",JSON.stringify(res.data.token)); 
+            localStorage.setItem("user",JSON.stringify(res.data.existingUser));
+
             navigate('/dashboard/my-profile');
         } catch (error) {
             console.log("Error while login",error);

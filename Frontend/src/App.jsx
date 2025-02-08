@@ -8,6 +8,9 @@ import UpdatePassword from "./pages/UpdatePassword.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import About from "./pages/About.jsx";
 import MyProfile from "./components/core/dashboard/MyProfile.jsx";
+import PrivateRoute from './components/core/auth/PrivateRoute.jsx';
+import Dashboard from './pages/Dashboard.jsx'
+import Error from './pages/Error.jsx'
 export default function App() {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -20,7 +23,13 @@ export default function App() {
         <Route path="/update-password/:id" element={<UpdatePassword/>}/>
         <Route path="/verify-email" element={<VerifyEmail/>}/>
         <Route path="/about" element={<About/>}/>
-        <Route path="/dashboard/my-profile" element={<MyProfile/>}/>
+        
+         {/* Nested Routes for dashboard */}
+        <Route  element={<PrivateRoute><Dashboard/></PrivateRoute>}>
+          <Route path="/dashboard/my-profile" element={<MyProfile/>}/>
+          <Route path="/Dashboard/settings" element={}/>
+        </Route>
+        <Route path="*" element={<Error/>}/>
       </Routes>
      
     </div>

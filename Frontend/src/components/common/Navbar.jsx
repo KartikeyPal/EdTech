@@ -8,6 +8,7 @@ import ProfileDrowDown from '../core/auth/ProfileDropDown'
 import {apiConnector} from '../../services/apiconnector'
 import { categories } from '../../services/apis';
 import { RiArrowDropDownLine } from "react-icons/ri";
+
 const Navbar = () => {
 
     const {token} = useSelector((state)=> state.auth);
@@ -19,7 +20,6 @@ const Navbar = () => {
     const fetchSublinks= async()=>{
         try {
                 const result =await  apiConnector("GET", categories.CATEGORIES_API );
-                console.log("printing sublinks result: ",result.data.allCategory);
                 setSublinks(result.data.allCategory);
         } catch (error) {
             console.log("could not fetch the categories list")
@@ -31,14 +31,11 @@ const Navbar = () => {
     },[])
 
     const matchRoute = (route) => {
-
         return matchPath({path:route}, location.pathname)
-
     }
-
-
+    
   return (
-    <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700  bg-richblack-700   '>
+    <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700  bg-richblack-800   '>
         <div className='w-11/12 flex flex-row max-w-maxContent items-center justify-between'>
             <Link to={"/"}>
             <div className='flex flex-row gap-2 items-center text-[#C5C7D4] text-l'>
@@ -54,13 +51,12 @@ const Navbar = () => {
                             <li key={index}>
                                 {
                                     link.title === "Catalog"?(
-                                        <Link to="">
-                                       <div className='flex flex-row items-center relative group'>
+                                    <Link to="">
+                                        <div className='flex flex-row items-center relative group'>
                                             <p>{link.title}</p>
                                             <RiArrowDropDownLine className='text-2xl' />
                                             <div className='invisible absolute left-[50%] translate-x-[-50%] translate-y-[20%] top-[50%]  flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200  group-hover:visible group-hover:opacity-100 lg:w-[260px] z-10 '>
-                                                <div className='absolute left-[50%] top-0 h-6 w-6 rotate-45 rounded-md bg-richblack-5 translate-x-[67%] translate-y-[-20%]'>
-                                                </div>
+                                                <div className='absolute left-[50%] top-0 h-6 w-6 rotate-45 rounded-md bg-richblack-5 translate-x-[67%] translate-y-[-20%]'></div>
                                                     <div>
                                                         {sublinks.length ? (
                                 
@@ -68,13 +64,12 @@ const Navbar = () => {
                                                                     <Link to={`catalog/${ele.name}`} key={ind} >
                                                                     <div className=''>{ele.name}</div>
                                                                     </Link>
-                                                                ))  
-                                                             
+                                                                ))
                                                         ) : (<div/>)}
                                                     </div>
                                             </div>
-                                       </div>
-                                       </Link>
+                                        </div>
+                                    </Link>
                                     ):(
                                         <Link to={link?.path}>
                                             <p className={`${matchRoute(link?.path)? "text-yellow-25" : "text-richblack-25"}`}> 
@@ -88,12 +83,14 @@ const Navbar = () => {
                     }
                 </ul>
             </nav>
+
             {/* Login and Sighup  and Dashboard*/}
-            <div className='flex gap-2 items-center   '>
+            <div className='flex gap-2 items-center'>
                     {
                         user && user.accountType != "Instructor" &&  (
                             <Link to="/dashboard/cart" className='relative'>
-                                <AiOutlineShoppingCart/>{
+                                <AiOutlineShoppingCart/>
+                                {
                                     totalItem>0 && (
                                         <span>{totalItem}</span>
                                     )
@@ -107,7 +104,8 @@ const Navbar = () => {
                             <Link to="/login">
                                 <button className='border border-richblack-700 bg-richblack-800  px-[12px] py-[12px] text-richblack-100 rounded-md hover:scale-95'>
                                     Login
-                                </button></Link>
+                                </button>
+                            </Link>
                         )
                     }
                     {
