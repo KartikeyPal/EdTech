@@ -8,36 +8,40 @@ const MyProfile = () => {
   const {user} = useSelector((state) => state.profile);
   const navigate = useNavigate();
   return (
-    <div className='text-white'>
-      <h1>My Profile</h1>
-      {/* section 1 */}
-      <div>
-        <div>
-          <img src={user?.image} alt={`profile-${user?.firstName }`} className='aspect-square w-[78px] rounded-full object-cover'/>
-          <div>
-            <p>{user?.firstName + " " + user?.lastName}</p>
-            <p></p>
+    <div className='w-11/12 '>
+      <h1 className='font-inter text-[30px] font-bold flex flex-row items-start   '>My Profile</h1>
+      {/* Main portion */}
+      <div className='w-full flex flex-col items-center  '>
+        {/* section 1 */}
+        <div className='flex flex-row w-[75%] gap-3 justify-between p-10 mt-8 rounded-lg bg-richblack-800 border-richblack-200 border-2'>
+          <div className='flex items-center gap-3 '>
+            <img src={user?.image} alt={`profile-${user?.firstName }`} className='aspect-square w-[78px] rounded-full object-cover'/>
+            <div className='flex flex-col'>
+              <p className=' text-lg font-inter font-bold text-richblue-25 '>{user?.firstName + " " + user?.lastName}</p>
+              <p>{user.email}</p>
+            </div>
+          </div>
+          <div className='flex  bg-white  text-richblack-900 '>
+          <IconButton text={"Edit"} onClick={()=>{
+            navigate("dashboard/settings")
+          }} />
           </div>
         </div>
-        <IconButton text={"Edit"} onClick={()=>{
-          navigate("dashboard/settings")
-        }} />
-      </div>
-      {/* Section 2 */}
-       <div>
-          <div>
-            <p>About</p>
+        {/* Section 2 */}
+        <div className='flex flex-row w-[75%] gap-3 justify-between p-10 mt-8 rounded-lg bg-richblack-800 border-richblack-200 border-2'>
+          <div className='flex flex-col gap-8 '>
+            <p className='-mt-6' >About</p>
+            <p className='text-richblack-300'>{user?.additionalDetails?.about ?? "Tell Something about yourself"}</p>
+          </div>
             <IconButton text={"edit"} onClick={()=>navigate("/dashboard/settings")}/>
-          </div>
-          <p>{user?.additionalDetails?.about ?? "Tell Something about yourself"}</p>
-       </div>
-       {/* section 3 */}
-       <div>
-          <div>
-              <p>Personal Details</p>
-              <IconButton text={"edit"} onClick={()=>navigate("/Dashboard/settings")}/>
-          </div>
-          <div>
+        </div>
+        {/* section 3 */}
+        <div className='flex flex-row w-[75%] gap-3 justify-between p-10 mt-8 rounded-lg bg-richblack-800 border-richblack-200 border-2'>
+          <div className='flex flex-col'>
+            <p className='-mt-6'>Personal Details</p> 
+           
+
+            <div>
               <div>
                 <p>First Name</p>
                 <p>{user?.firstName}</p>
@@ -62,9 +66,11 @@ const MyProfile = () => {
                 <p>Date of Birth</p>
                 <p>{user?.additionalDetails?.dateOfBirth ?? "add date of birth"}</p>
               </div>
+            </div>
           </div>
-       </div>
-
+            <IconButton text={"edit"} onClick={()=>navigate("/Dashboard/settings")}/>
+        </div>
+      </div>
     </div>
   )
 }

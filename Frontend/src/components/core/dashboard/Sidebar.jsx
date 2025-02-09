@@ -18,7 +18,7 @@ const Sidebar = () => {
         }
 
   return (
-    <div className='text-white'>
+    <div className='text-richblack-5'>
             <div className='flex min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 h-[calc(100vh-3.5rem)] bg-richblack-800 py-10'>
                 <div className='flex flex-col'>
                     {
@@ -30,12 +30,12 @@ const Sidebar = () => {
                         })
                     }
                 </div>
-                <div className='mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-600'></div>
+                <div className='mx-auto mt-6 mb-6 h-[2px] w-10/12 bg-richblack-700'></div>
                         <div className='flex flex-col'>
                             <SidebarLink 
                                 link={{ name: "Settings", path: "dashboard/settings" }}
                                 iconName="VscSettingsGear"
-                            />
+                        />
                         <button 
                             onClick={()=>setConfirmationModal({
                                 text1: "Are you sure ?",
@@ -47,14 +47,16 @@ const Sidebar = () => {
                             })}
                                 className='text-sm font-medium text-richblue-300 flex flex-col' 
                             >
-                                <div className='text-sm font-medium text-richblue-300 flex items-center gap-x-2'>
+                                <div className='text-sm font-medium px-8 py-2 text-white flex items-center gap-x-2'>
                                 <VscSignOut className='text-lg' />
                                 <span>Logout</span>
                                 </div>
                         </button>
                 </div>
             </div>
-            {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+            <div className={`${confirmationModal ? "absolute bottom-[50%] left-[50%] t px-11 bg-richblack-800 py-14  z-40 bg-transparent-[50%] border border-richblack-900 rounded-md m " :""} `}>
+                {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+            </div>
     </div>
   )
 }

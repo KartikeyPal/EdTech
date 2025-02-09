@@ -11,6 +11,7 @@ import MyProfile from "./components/core/dashboard/MyProfile.jsx";
 import PrivateRoute from './components/core/auth/PrivateRoute.jsx';
 import Dashboard from './pages/Dashboard.jsx'
 import Error from './pages/Error.jsx'
+import Index from './components/core/dashboard/Settings/Index.jsx'
 export default function App() {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -27,7 +28,7 @@ export default function App() {
          {/* Nested Routes for dashboard */}
         <Route  element={<PrivateRoute><Dashboard/></PrivateRoute>}>
           <Route path="/dashboard/my-profile" element={<MyProfile/>}/>
-          <Route path="/Dashboard/settings" element={}/>
+          <Route path="/dashboard/settings" element={<Index/>}/>
         </Route>
         <Route path="*" element={<Error/>}/>
       </Routes>
