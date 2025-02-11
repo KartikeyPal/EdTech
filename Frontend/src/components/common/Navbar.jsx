@@ -35,7 +35,7 @@ const Navbar = () => {
     }
     
   return (
-    <div className='flex w-full fixed h-14 items-center justify-center border-b-[1px] border-b-richblack-700  bg-richblack-800   '>
+    <div className='flex w-full fixed z-50 h-14 items-center justify-center border-b-[1px] border-b-richblack-700  bg-richblack-800   '>
         <div className='w-11/12 flex flex-row max-w-maxContent items-center justify-between fixed'>
             <Link to={"/"}>
             <div className='flex flex-row gap-2 items-center text-[#C5C7D4] text-l'>

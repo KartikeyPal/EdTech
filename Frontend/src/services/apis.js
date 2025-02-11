@@ -19,3 +19,8 @@ export const settingsEndpoints = {
 export const ContactUsEndpoints = {
     CONTACT_US_API: BASE_URL + "/reach/contact",
 }
+
+export const profileEndpoints = {
+    GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
+    GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses"
+}

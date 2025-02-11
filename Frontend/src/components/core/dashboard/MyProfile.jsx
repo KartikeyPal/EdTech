@@ -9,7 +9,7 @@ const MyProfile = () => {
   const navigate = useNavigate();
   return (
     <div className='w-11/12 '>
-      <h1 className='font-inter text-[30px] font-bold flex flex-row items-start   '>My Profile</h1>
+      <h1 className='font-inter text-[30px] font-bold flex flex-row items-start text-white mt-16   '>My Profile</h1>
       {/* Main portion */}
       <div className='w-full flex flex-col items-center  '>
         {/* section 1 */}

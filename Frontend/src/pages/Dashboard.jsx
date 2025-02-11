@@ -12,7 +12,7 @@ const Dashboard = () => {
 
     return (
         <div className='flex  text-white bg-richblack-900 w-full '>
-            <div className='w-[14%] flex '>
+            <div className='w-[14%] flex mt-10'>
             <Sidebar />
             </div>
             <div className='w-[86%] bg-richblack-900 flex justify-center'>
