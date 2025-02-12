@@ -11,29 +11,34 @@ import ContactForm from '../components/core/about/ContactForm'
 import Footer from '../components/common/Footer'
 const About = () => {
   return (
-    <div className='w-[100%] text-white mt-[100px]'>
+    <div className='w-full text-white mt-[55px]'>
       {/* section 1 */}
-      <section className='w-[11/12] flex flex-col items-center justify-center mx-11 text-center'>
-            <header>
-            Driving Innovation in Online Education for a
+      <section className='bg-richblack-800'>
+        <div className='w-[11/12] flex flex-col items-center justify-center mx-11 text-center gap-10 relative '>
+            <p className='text-richblack-200 p-2 font-inter font-semibold'>About Us</p>
+            <header className='text-richblack-5 font-semibold text-2xl w-[55%] '>
+            Driving Innovation in Online Education for a <br/>
             <HighlightText text={"Brighter Future"}/>
-            <p>Studynotion is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing a vibrant learning community.</p>
+            <p className="mx-auto mt-3 text-center text-base font-medium text-richblack-300 lg:w-[95%] mb-7">Studynotion is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing a vibrant learning community.</p>
             </header>
-            <div className='flex gap-x-3 '>
+            <div className='sm:h-[70px] lg:h-[150px] mt-11'></div>
+            <div className='absolute bottom-0 left-[50%] grid w-[75%] translate-x-[-50%] translate-y-[30%] grid-cols-3 gap-3 lg:gap-5 '>
                 <img src={aboutus1} alt="" />
                 <img src={aboutus2} alt="" />
                 <img src={aboutus3} alt="" />
             </div>
-      </section>
+        </div>
+      </section >
       {/* section 2 */}
-      <section>
-            <div>
+      <section className='mt-32'>
+            <div className='w-[11/12] flex flex-col items-center justify-center mx-11 text-center gap-10 relative '>
                 <Quote/>
             </div>
+            <div className='border-[1px] border-richblack-100 my-24'></div>
       </section>
       {/* section 3 */}
       <section>
-            <div>
+            <div className='w-[11/12] flex flex-col items-center justify-center mx-11 text-center gap-10 relative '>
                 {/* founding story  */}
                 <div>
                     {/* Founding story left box */}
