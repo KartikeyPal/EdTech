@@ -1,12 +1,23 @@
 import React from 'react'
-
-const Index = () => {
+import {useSelector} from 'react-redux'
+import RenderTotalAmount from './RenderTotalAmount'
+import RenderCartCourses from './RenderCartCourses'
+const Cart = () => {
+    const {total,totalItems} = useSelector((state)=>state.cart)
   return (
-    <div>
+    <div className='text-white flex justify-center items-center w-screen h-screen'>
         <h1>Your Cart</h1>
-        <p></p>
+        <p>{totalItems} Course in cart</p>
+        {
+            total>0? (
+            <div>
+                <RenderCartCourses/>
+                <RenderTotalAmount/>
+            </div>):
+            (<p>Your cart is Empty</p>)
+        }
     </div>
   )
 }
 
-export default Index
+export default Cart
