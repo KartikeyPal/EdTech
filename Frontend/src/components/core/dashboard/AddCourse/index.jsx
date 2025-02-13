@@ -2,8 +2,8 @@ import React from 'react'
 import RenderSteps from './RenderSteps';
 const AddCourse = () => {
   return (
-    <div>
-        <div>
+    <div className='mt-16'>
+        <div >
             <div>
                 <h1>Add Course</h1>
                 <div>
