@@ -37,7 +37,7 @@ export default function App() {
           <Route path="/dashboard/cart" element={<Cart/>}/>
           <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
           {
-            user.accountType === "Instructor" && (
+            user?.accountType === "Instructor" && (
               <>
                 <Route path="/dashboard/add-course" element={<AddCourse />}/>
               </>

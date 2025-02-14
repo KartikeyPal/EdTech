@@ -2,17 +2,17 @@ import React from 'react'
 import RenderSteps from './RenderSteps';
 const AddCourse = () => {
   return (
-    <div className='mt-16'>
-        <div >
-            <div>
-                <h1>Add Course</h1>
+    <div className='w-11/12'>
+        <div className=' mt-16 flex w-full items-start gap-x-10 justify-center ' >
+            <div className='flex flex-col w-[45%] '>
+                <h1 className='mb-14 text-3xl font-medium text-richblack-5'>Add Course</h1>
                 <div>
                     <RenderSteps/>
                 </div>
             </div>
-            <div>
-                <p>Code upload Tips</p>
-                <ul>
+            <div className="sticky top-10  max-w-[400px] rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6 ">
+                <p className="mb-8 text-lg text-richblack-5">⚡Code upload Tips</p>
+                <ul className='ml-5  list-disc space-y-4 text-xs text-richblack-5'>
                     <li>Set the Course Price option or make it free.</li>
                     <li>Standard size for the course thumbnail is 1024x576.</li>
                     <li>Video section controls the course overview video.</li>
