@@ -5,7 +5,8 @@ import { addCourseDetails, editCourseDetails, fetchCourseCategories } from '../.
 import { HiOutlineCurrencyRupee } from "react-icons/hi"
 import IconButton  from '../../../common/IconButton';
 import RequirementField from './RequirementField';
-import { setCourse,setEditCourse,setStep } from '../../../../slices/courseSlice';
+import { setCourse,setStep } from '../../../../slices/courseSlice';
+import TagsInput from './Tag/TagsInput';
 import toast from 'react-hot-toast';
 
 
@@ -137,10 +138,13 @@ const CourseInformation = () => {
         }
         setLoading(false);
     }
-
+    const checkKeyDown = (e) => {
+        if (e.key === 'Enter') e.preventDefault();
+      };    
 
   return (
     <form
+        onKeyDown={(e) => checkKeyDown(e)}
         onSubmit={handleSubmit(onSubmit)}
         className='rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-8'
     >
@@ -213,7 +217,7 @@ const CourseInformation = () => {
             }
         </div>
         {/* create a custom component for handling tags input */}
-        {/* <ChipInput
+        <TagsInput
             label = "Tags"
             name= "courseTags"
             placeholder= "enter tags and press enter"
@@ -221,7 +225,7 @@ const CourseInformation = () => {
             errors={errors}
             setValue={setValue}
             getValues={getValues}
-        /> */}
+        />
 
         {/* create a component for uploading and showing preview of media*/}
 
