@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const TagsInput = () => {
+const TagsInput = ({label,name,placeholder,register,errors,setValue,getValues}) => {
     const   [tags,setTags] = useState([]);
     const addTags = (e) => {
         if (e.key === "Enter" && e.target.value !== "") {
@@ -9,15 +9,21 @@ const TagsInput = () => {
             console.log(tags);
         }
     };
+    useEffect(()=>{
+        register(name,{required:true,validate:(value)=>value.length>0})
+    },[]);
+    useEffect(()=>{
+        setValue("courseTag",tags)
+    },[tags])
 
     function removeTags(index){
-        tags.splice(index,1);
-        setTags(tags);
+        const tagData =[...tags];
+        tagData.splice(index,1);
+        setTags(tagData);
     }
     const checkKeyDown = (e) => {
         if (e.key === 'click') e.preventDefault();
-      };
-
+      }; 
   return (
         <div className=" w-full bg-richblack-700 rounded-t-md p-3" >
             <ul className='flex gap-3 '>
@@ -33,12 +39,24 @@ const TagsInput = () => {
                     </li>
                 ))}
             </ul>
-            <input
-                type="text"
-                onKeyUp={e => addTags(e)}
-                placeholder="Press enter to add tags"
-                className='w-full text-richblack-800'
-            /> 
+            <div>
+                <label htmlFor="tag">{label}</label>
+                <input
+                    name={name}
+                    type="text"
+                    id={name}
+                    onKeyUp={e => addTags(e)}
+                    placeholder={placeholder}
+                    className='w-full text-richblack-800'
+                    
+                /> 
+                {
+                    errors.courseTag && (
+                        <span>At least one tag is required</span>
+                    )
+                }
+
+            </div>
         </div>
   )
 }

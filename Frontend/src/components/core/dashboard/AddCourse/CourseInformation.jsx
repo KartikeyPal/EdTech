@@ -8,6 +8,7 @@ import RequirementField from './RequirementField';
 import { setCourse,setStep } from '../../../../slices/courseSlice';
 import TagsInput from './Tag/TagsInput';
 import toast from 'react-hot-toast';
+import Upload from './Upload';
 
 
 const CourseInformation = () => {
@@ -57,11 +58,11 @@ const CourseInformation = () => {
         if( currentValues.courseTitle !== course.courseName ||
             currentValues.courseShortDesc !== course.courseDescription ||
             currentValues.coursePrice !== course.price ||
-            // currentValues.courseTag !== course.tag ||
+            currentValues.courseTag !== course.tag ||
             currentValues.courseBenefits !== course.whatYouWillLearn ||
             currentValues.courseCategory !== course.category ||
-            currentValues.courseRequirements.toString() !== course.instruction.toString() 
-            // currentValues.courseImage !== course.thumbnail
+            currentValues.courseRequirements.toString() !== course.instruction.toString() || 
+            currentValues.courseImage !== course.thumbnail
         ){
             return true;
         }
@@ -86,9 +87,9 @@ const CourseInformation = () => {
                 if(currentValues.coursePrice !== course.price){
                     formData.append("price",data.coursePrice);
                 }
-                // if(currentValues.courseTag !== course.tag){
-                //     formData.append("tag",data.courseTag);
-                // }
+                if(currentValues.courseTag !== course.tag){
+                    formData.append("tag",data.courseTag);
+                }
                 if(currentValues.courseBenefits !== course.whatYouWillLearn){
                     formData.append("whatYouWillLearn",data.courseBenefits);
                 }
@@ -99,9 +100,9 @@ const CourseInformation = () => {
                 if(currentValues.courseRequirements.toString() !== course.instruction.toString()){
                     formData.append("instruction",JSON.stringify(data.courseRequirements));
                 }
-                // if(currentValues.courseImage !== course.thumbnail){
-                //     formData.append("thumbnail",data.courseImage);
-                // }
+                if(currentValues.courseImage !== course.thumbnail){
+                    formData.append("thumbnail",data.courseImage);
+                }
                 setLoading(true);
                 const result = await editCourseDetails(formData,token);
                 console.log("result is ",result);
@@ -120,13 +121,13 @@ const CourseInformation = () => {
         const formData = new FormData();
         formData.append("courseName",data.courseTitle);
         formData.append("price",data.coursePrice);
-        // formData.append("tag",data.courseTag);
+        formData.append("tag",data.courseTag);
         formData.append("courseDescription",data.courseShortDesc);
         formData.append("whatYouWillLearn",data.courseBenefits);
         console.log(data.courseCategory);
         formData.append("categoryId",data.courseCategory);
         formData.append("instruction",JSON.stringify(data.courseRequirements));
-        // formData.append("thumbnail",data.courseImage);
+        formData.append("thumbnail",data.courseImage);
 
         setLoading(true);
         console.log(...formData);
@@ -229,15 +230,15 @@ const CourseInformation = () => {
 
         {/* create a component for uploading and showing preview of media*/}
 
-        {/* <Upload
-            label = "Tags"
-            name= "courseTags"
+        <Upload
+            label = "Thumbnail"
+            name= "courseImage"
             placeholder= "enter tags and press enter"
             register={register}
             errors={errors}
             setValue={setValue}
             getValues={getValues}
-        />    */}
+        />   
 
         {/* Benefits fo the course */}
         <div>

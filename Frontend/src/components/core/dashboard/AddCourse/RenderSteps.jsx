@@ -24,7 +24,7 @@ const RenderSteps = () => {
     <>
         <div className="relative mb-2 flex w-full justify-center">
             {steps.map((item)=>(
-                        <div>
+                        <div key={item.id}>
                             <div key={item.id} className={`${step === item.id? "bg-yellow-900 border-yellow-50 text-yellow-50 w-[33%]" : "border-richblack-100 bg-richblack-800 text-richblack-300 w-[33%]"}`}>
                                 {
                                     step>item.id ? (<FaCheck/>) : (item.id)
