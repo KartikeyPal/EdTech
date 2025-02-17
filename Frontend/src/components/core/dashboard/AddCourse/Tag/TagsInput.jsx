@@ -47,7 +47,7 @@ const TagsInput = ({label,name,placeholder,register,errors,setValue,getValues}) 
                     id={name}
                     onKeyUp={e => addTags(e)}
                     placeholder={placeholder}
-                    className='w-full text-richblack-800 p-2 mt-2 rounded-lg bg-richblack-700'
+                    className='w-full  p-2 mt-2 rounded-lg bg-richblack-700 outline-none text-richblack-5'
                     
                 /> 
                 {

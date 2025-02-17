@@ -155,7 +155,7 @@ const CourseInformation = () => {
             id='courseTitle'
             placeholder='Enter the course Title'
             {...register("courseTitle",{required:true})}
-            className='w-full text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 '
+            className='w-full text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 outline-none'
             />
             {
                 errors.courseTitle && (
@@ -172,7 +172,7 @@ const CourseInformation = () => {
             id='courseShortDesc'
             placeholder='Enter course short Description'
             {...register("courseShortDesc",{required:true})}
-            className='min-h-[140px] w-full text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 border-richblack-600 '
+            className='min-h-[140px] w-full text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 border-richblack-600 outline-none'
             />
             {
                 errors.courseShortDesc && (
@@ -186,7 +186,7 @@ const CourseInformation = () => {
                 id='coursePrice'
                 placeholder='enter course pricce'
                 {...register("coursePrice",{required:true,valueAsNumber:true})}
-                className='w-full px-9 text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 border-richblack-600 border-[2px]'
+                className='w-full px-9 text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 border-richblack-600 border-[2px] outline-none'
             />
             <HiOutlineCurrencyRupee className='absolute top-[41px] left-1 text-richblack-400 font-bold text-2xl '  />
             {
@@ -202,7 +202,7 @@ const CourseInformation = () => {
                 id="courseCategory" 
                 defaultValue=''
                 {...register("courseCategory",{required:true})}
-                className='w-full  p-2 my-2 rounded-lg bg-richblack-700 text-richblack-300'
+                className='w-full  p-2 my-2 rounded-lg bg-richblack-700 text-richblack-300 outline-none'
             >  
                 <option value="" disabled>Choose a category</option>
                 {

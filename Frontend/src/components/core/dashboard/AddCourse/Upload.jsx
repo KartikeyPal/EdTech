@@ -26,6 +26,7 @@ export default function Upload({
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0]
     if (file) {
+      console.log("my file",file);
       previewFile(file)
       setSelectedFile(file)
     }
@@ -49,7 +50,7 @@ export default function Upload({
 
   useEffect(() => {
     register(name, { required: true })
-  }, [register])
+  }, [])
 
   useEffect(() => {
     setValue(name, selectedFile)

@@ -39,18 +39,21 @@ const RequirementField = ({name,label,register,errors,setValue,getvalues}) => {
             </button>
         </div>
         {
-            requirementList.length && (
+            requirementList.length ?  (
                 <ul className='gap-3 flex m-2'>
                     {
-                        requirementList.map((ele,ind)=>(
-                            <li key={ind} className='gap-2 justify-evenly flex bg-pink-50 px-1   text-sm font-inter rounded-lg text-richblack-900'>
-                                <span>{ele}</span>
-                                <button type='button' onClick={()=>handleRemoveRequirement(ind)} className='text-richblack-900'>X</button>
-                            </li>
+                        requirementList?.map((ele,ind)=>(
+                          
+                                <li key={ind} className='gap-2 justify-evenly flex bg-pink-50 px-1   text-sm font-inter rounded-lg text-richblack-900'>
+                                    <span>{ele}</span>
+                                    <button type='button' onClick={()=>handleRemoveRequirement(ind)} className='text-richblack-900'>X</button>
+                                </li>
+
+                          
                         ))
                     } 
                 </ul>
-            )
+            ): <div></div>
         }
         {
             errors[name] && (
