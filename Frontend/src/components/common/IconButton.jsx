@@ -10,9 +10,9 @@ const IconButton = ({
     type,
 }) => {
   return (
-    <button disabled={disabled} onClick={onClick} type={type}>
+    <button disabled={disabled} onClick={onClick} type={type} className={`${customClasses}`}>
         {
-            children ? (
+            children ? (    
                 <>
                     <span>{text}</span>
                     {children}

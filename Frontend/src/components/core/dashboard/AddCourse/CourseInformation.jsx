@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import {useForm} from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux';
-import { addCourseDetails, editCourseDetails, fetchCourseCategories } from '../../../../services/operations/courseDetailsAPI';
+import toast from 'react-hot-toast';
+
 import { HiOutlineCurrencyRupee } from "react-icons/hi"
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setCourse,setStep } from '../../../../slices/courseSlice';
+
+import { addCourseDetails, editCourseDetails, fetchCourseCategories } from '../../../../services/operations/courseDetailsAPI';
+//components
 import IconButton  from '../../../common/IconButton';
 import RequirementField from './RequirementField';
-import { setCourse,setStep } from '../../../../slices/courseSlice';
 import TagsInput from './Tag/TagsInput';
-import toast from 'react-hot-toast';
 import Upload from './Upload';
 
 
 const CourseInformation = () => {
-
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        getValues,
-        formState:{errors},
-    } = useForm();
+    const {register,handleSubmit,setValue,getValues,formState:{errors}} = useForm();
 
     const dispatch = useDispatch();
-    const {token} = useSelector((state) => state.auth);
 
+    const {token} = useSelector((state) => state.auth);
     const {course,editCourse}  = useSelector((state)=>state.course);
+
     const [loading,setLoading]  = useState(false);
     const [courseCategory,setCourseCategory] = useState([]);
 
@@ -149,78 +147,81 @@ const CourseInformation = () => {
         onSubmit={handleSubmit(onSubmit)}
         className='rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-8'
     >
+        {/* Course Title */}
         <div >
-            <label htmlFor="">Course Title <sup>*</sup></label>
+            <label htmlFor="courseTitle">Course Title  <sup className='text-pink-300'>*</sup></label>
             <input 
             type="text" 
             id='courseTitle'
             placeholder='Enter the course Title'
             {...register("courseTitle",{required:true})}
-            className='w-full text-richblack-900'
+            className='w-full text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 '
             />
             {
                 errors.courseTitle && (
-                    <span>Course Title is required</span>
+                    <span className='text-pink-300 text-xs'>Course Title is required</span>
                 )
             }
         </div>
-        <div>
-            <label htmlFor=" ">Course Short Description</label>
+
+        {/* Course Description */}
+        <div className='w-full flex flex-col ' >
+            <label htmlFor="courseShortDesc">Course Short Description  <sup className='text-pink-300'>*</sup></label>
             <textarea 
             type="text"
             id='courseShortDesc'
             placeholder='Enter course short Description'
             {...register("courseShortDesc",{required:true})}
-            className='min-h-[140px] w-full text-richblack-900'
+            className='min-h-[140px] w-full text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 border-richblack-600 '
             />
             {
                 errors.courseShortDesc && (
-                    <span>Course Descrioption is required</span>
+                    <span className='text-pink-300 text-xs'>Course Descrioption is required</span>
                 )
             }
         </div>
-        <div>
-            <label htmlFor="">Course Price</label>
+        <div className='relative'>
+            <label htmlFor="coursePrice">Course Price  <sup className='text-pink-300'>*</sup></label>
             <input 
                 id='coursePrice'
                 placeholder='enter course pricce'
                 {...register("coursePrice",{required:true,valueAsNumber:true})}
-                className='w-full px-9 text-richblack-900'
+                className='w-full px-9 text-richblack-5 bg-richblack-700 p-2 rounded-lg my-2 border-richblack-600 border-[2px]'
             />
-            <HiOutlineCurrencyRupee />
+            <HiOutlineCurrencyRupee className='absolute top-[41px] left-1 text-richblack-400 font-bold text-2xl '  />
             {
                 errors.coursePrice && (
-                    <span>course Price is required</span>
+                    <span className='text-pink-300 text-xs'>course Price is required</span>
                 )
             }
 
         </div>
         <div>
-            <label htmlFor="">Course Category<sup>*</sup></label>
+            <label htmlFor="courseCategory">Course Category  <sup className='text-pink-300'>*</sup></label>
             <select 
                 id="courseCategory" 
                 defaultValue=''
                 {...register("courseCategory",{required:true})}
-                className='w-full text-richblack-900'
+                className='w-full  p-2 my-2 rounded-lg bg-richblack-700 text-richblack-300'
             >  
                 <option value="" disabled>Choose a category</option>
                 {
                   !loading &&  courseCategory.map((val,ind)=>(
-                        <option value={val._id} key={ind}>{val.name} </option>
+                        <option value={val._id} key={ind} className='text-richblack-5 '>{val.name} </option>
                         
                     ))
                 }
             </select>
             {
                 errors.courseCategory && (
-                    <span>select a course Category</span>
+                    <span className='text-pink-300 text-xs'>select a course Category</span>
                 )
             }
         </div>
         {/* create a custom component for handling tags input */}
         <TagsInput
-            label = "Tags"
-            name= "courseTags"
+            label = "Tag"
+            name= "courseTag"
             placeholder= "enter tags and press enter"
             register={register}
             errors={errors}
@@ -231,10 +232,10 @@ const CourseInformation = () => {
         {/* create a component for uploading and showing preview of media*/}
 
         <Upload
-            label = "Thumbnail"
+            label ="Thumbnail"
             name= "courseImage"
             placeholder= "enter tags and press enter"
-            register={register}
+            register={register} 
             errors={errors}
             setValue={setValue}
             getValues={getValues}
@@ -242,17 +243,17 @@ const CourseInformation = () => {
 
         {/* Benefits fo the course */}
         <div>
-            <label htmlFor="">Benefits fo the course <sup>*</sup></label>
+            <label htmlFor="courseBenefits">Benefits fo the course  <sup className='text-pink-300'>*</sup></label>
             <textarea 
             name="" 
             id="courseBenefits"
-            placeholder='Enter the penefits of the course'
+            placeholder='Benefits of the course'
             {...register("courseBenefits",{required:true})}
-            className='w-full min-h-[130px] text-richblack-900'
+            className='w-full min-h-[130px] text-richblack-5 bg-richblack-700  mt-2 p-2 rounded-lg outline-none'
             />
             {
                 errors.courseBenefits && (
-                    <span>Benefits of the course required**</span>
+                    <span  className='text-pink-300 text-xs'>Benefits of the course required</span>
                 )
             }
         </div>
@@ -272,11 +273,11 @@ const CourseInformation = () => {
                 >Continue without Saving</button>
             )}
             <IconButton
-                text={!editCourse ? "Next" : "Save" }
+                text={!editCourse ? "Next" : "Save" } customClasses={`bg-yellow-25 text-richblack-900 rounded-md p-2 my-2 px-4`}
             />
         </div>
     </form>
   )
 }
 
-export default CourseInformation
+export default CourseInformation     

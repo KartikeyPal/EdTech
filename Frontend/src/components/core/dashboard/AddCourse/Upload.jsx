@@ -58,7 +58,7 @@ export default function Upload({
   return (
     <div className="flex flex-col space-y-2">
       <label className="text-sm text-richblack-5" htmlFor={name}>
-        {label} {!viewData && <sup className="text-pink-200">*</sup>}
+        {label} {!viewData && <sup className="text-pink-300">*</sup>}
       </label>
       <div
         className={`${
@@ -89,7 +89,7 @@ export default function Upload({
                 Cancel
               </button>
             )}
-          </div>
+        </div>
         ) : (
           <div
             className="flex w-full flex-col items-center p-6"
@@ -112,7 +112,7 @@ export default function Upload({
         )}
       </div>
       {errors[name] && (
-        <span className="ml-2 text-xs tracking-wide text-pink-200">
+        <span className="ml-2 text-xs tracking-wide text-pink-300">
           {label} is required
         </span>
       )}

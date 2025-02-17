@@ -25,8 +25,9 @@ const TagsInput = ({label,name,placeholder,register,errors,setValue,getValues}) 
         if (e.key === 'click') e.preventDefault();
       }; 
   return (
-        <div className=" w-full bg-richblack-700 rounded-t-md p-3" >
-            <ul className='flex gap-3 '>
+        <div className=" w-full" >
+            <label htmlFor="tag">{label} <sup className='text-pink-300'>*</sup></label>
+            <ul className='flex gap-3 mt-2'>
                 {tags.map((tag, index) => (
                     <li key={index} className='space-x-2 p-2 border-yellow-25 border-[1px] h-7 mb-3 flex text-center items-center rounded-lg text-richblack-900 bg-yellow-25'>
                         <span>{tag}</span>
@@ -40,19 +41,18 @@ const TagsInput = ({label,name,placeholder,register,errors,setValue,getValues}) 
                 ))}
             </ul>
             <div>
-                <label htmlFor="tag">{label}</label>
                 <input
                     name={name}
                     type="text"
                     id={name}
                     onKeyUp={e => addTags(e)}
                     placeholder={placeholder}
-                    className='w-full text-richblack-800'
+                    className='w-full text-richblack-800 p-2 mt-2 rounded-lg bg-richblack-700'
                     
                 /> 
                 {
-                    errors.courseTag && (
-                        <span>At least one tag is required</span>
+                    errors[name] && (
+                        <span className='text-pink-300 text-xs'>{name} is required</span>
                     )
                 }
 

@@ -51,15 +51,15 @@ const Navbar = () => {
                             <li key={index}>
                                 {
                                     link.title === "Catalog"?(
-                                    <Link to="">
+                                    <div>
                                         <div className='flex flex-row items-center relative group'>
                                             <p>{link.title}</p>
                                             <RiArrowDropDownLine className='text-2xl' />
                                             <div className='invisible absolute left-[50%] translate-x-[-50%] translate-y-[20%] top-[50%]  flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200  group-hover:visible group-hover:opacity-100 lg:w-[260px] z-10 '>
-                                                <div className='absolute left-[50%] top-0 h-6 w-6 rotate-45 rounded-md bg-richblack-5 translate-x-[67%] translate-y-[-20%]'></div>
+                                                <div className='absolute left-[50%] top-0 h-6 w-6 rotate-45 rounded-md bg-richblack-5 translate-x-[67%] translate-y-[-20%]'>
+                                                </div>
                                                     <div>
-                                                        {sublinks.length ? (
-                                
+                                                        {sublinks?.length ? (
                                                                 sublinks.map((ele,ind)=>(
                                                                     <Link to={`catalog/${ele.name}`} key={ind} >
                                                                     <div className=''>{ele.name}</div>
@@ -69,7 +69,7 @@ const Navbar = () => {
                                                     </div>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                     ):(
                                         <Link to={link?.path}>
                                             <p className={`${matchRoute(link?.path)? "text-yellow-25" : "text-richblack-25"}`}> 
