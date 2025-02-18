@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 const TagsInput = ({label,name,placeholder,register,errors,setValue,getValues}) => {
     const   [tags,setTags] = useState([]);
     const addTags = (e) => {
-        if (e.key === "Enter" && e.target.value !== "") {
-            setTags([...tags, e.target.value]);
+        let s=e.target.value.trim();
+        if ((e.key === "Enter" || e.key ===","  || e.key === " ") && (s !== "")) {
+        if(e.key===",")s=s.slice(0,-1);
+            setTags([...tags,s]);
             e.target.value = "";
             console.log(tags);
         }
@@ -25,13 +27,14 @@ const TagsInput = ({label,name,placeholder,register,errors,setValue,getValues}) 
         if (e.key === 'click') e.preventDefault();
       }; 
   return (
-        <div className=" w-full" >
+        <div >
             <label htmlFor="tag">{label} <sup className='text-pink-300'>*</sup></label>
-            <ul className='flex gap-3 mt-2'>
+            <ul className='flex gap-3 flex-wrap'>
                 {tags.map((tag, index) => (
                     <li key={index} className='space-x-2 p-2 border-yellow-25 border-[1px] h-7 mb-3 flex text-center items-center rounded-lg text-richblack-900 bg-yellow-25'>
                         <span>{tag}</span>
                         <button className='tag-close-icon'
+                                type='button'
                                 onClick={() => removeTags(index)}
                                 onKeyDown={(e) => checkKeyDown(e)}
                         >
@@ -40,6 +43,9 @@ const TagsInput = ({label,name,placeholder,register,errors,setValue,getValues}) 
                     </li>
                 ))}
             </ul>
+              {tags.length>1 && (
+                <button onClick={()=>setTags([])} className='text-xs p-2 bg-pink-800 text-white rounded-xl'>Remove all Tags</button>
+              )}
             <div>
                 <input
                     name={name}

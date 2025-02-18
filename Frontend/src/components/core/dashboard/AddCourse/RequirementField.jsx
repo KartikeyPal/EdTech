@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 
-const RequirementField = ({name,label,register,errors,setValue,getvalues}) => {
+const RequirementField = ({name,label,register,errors,setValue,getValues}) => {
+    const {course} = useSelector(state=>state.course);
     const [requirement,setRequirement]  = useState("");
     const [requirementList,setrequirementList] = useState([]);
 
     useEffect(()=>{
         register(name,{required:true,validate:(value)=>value.length>0})
+        console.log("value of reuqirement" ,getValues(name));
+        setrequirementList(getValues(name));
     },[]);
 
     useEffect(()=>{
@@ -40,11 +44,11 @@ const RequirementField = ({name,label,register,errors,setValue,getvalues}) => {
         </div>
         {
             requirementList.length ?  (
-                <ul className='gap-3 flex m-2'>
+                <ul className='gap-3  m-2 flex'>
                     {
                         requirementList?.map((ele,ind)=>(
                           
-                                <li key={ind} className='gap-2 justify-evenly flex bg-pink-50 px-1   text-sm font-inter rounded-lg text-richblack-900'>
+                                <li key={ind} className='gap-2 flex item bg-pink-50 px-1 text-sm font-inter rounded-lg text-richblack-900'>
                                     <span>{ele}</span>
                                     <button type='button' onClick={()=>handleRemoveRequirement(ind)} className='text-richblack-900'>X</button>
                                 </li>

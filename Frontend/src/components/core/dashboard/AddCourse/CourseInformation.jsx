@@ -22,7 +22,7 @@ const CourseInformation = () => {
 
     const {token} = useSelector((state) => state.auth);
     const {course,editCourse}  = useSelector((state)=>state.course);
-
+    console.log(course);
     const [loading,setLoading]  = useState(false);
     const [courseCategory,setCourseCategory] = useState([]);
 
@@ -32,7 +32,6 @@ const CourseInformation = () => {
             const  categories = await fetchCourseCategories();
             if(categories){
                 setCourseCategory(categories);
-                console.log("course categorures", courseCategory);
             }
             setLoading(false);
         }   
@@ -43,10 +42,8 @@ const CourseInformation = () => {
             setValue("courseTag",course.tag)
             setValue("courseBenefits",course.whatYouWillLearn)
             setValue("courseCategory",course.category)
-            setValue("courseRequirements",course.instruction)
+            setValue("courseRequirements",course.instructions)
             setValue("courseImage",course.thumbnail)
-
-
         }
         getCategories();
     },[])
@@ -73,6 +70,7 @@ const CourseInformation = () => {
     const onSubmit = async(data)=>{
         if(editCourse){
             if(isFormUpdated()){
+                console.log("form is updated")
                 const currentValues = getValues();
                 const formData = new FormData();
                 formData.append("courseId",course._id);
@@ -95,7 +93,7 @@ const CourseInformation = () => {
                     formData.append("categoryId",data.courseCategory);
                     console.log("Course Category : ", data.courseCategory);
                 }
-                if(currentValues.courseRequirements.toString() !== course.instruction.toString()){
+                if(currentValues.courseRequirements.toString() !== course.instructions.toString()){
                     formData.append("instruction",JSON.stringify(data.courseRequirements));
                 }
                 if(currentValues.courseImage !== course.thumbnail){
@@ -228,7 +226,6 @@ const CourseInformation = () => {
             setValue={setValue}
             getValues={getValues}
         />
-
         {/* create a component for uploading and showing preview of media*/}
 
         <Upload
@@ -268,8 +265,8 @@ const CourseInformation = () => {
         <div>
             {editCourse &&(
                 <button
-                    onClick={dispatch(setStep(2))}
-                    className='flex items-center gap-x-2 bg-richblack-300'
+                    onClick={()=>dispatch(setStep(2))}
+                    className='flex items-center gap-x-2 bg-pink-50 p-2 rounded-lg text-richblack-900'
                 >Continue without Saving</button>
             )}
             <IconButton
