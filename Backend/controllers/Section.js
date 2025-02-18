@@ -46,8 +46,8 @@ exports.updateSection = async(req,res)=>{
                 message: "All fields are required",
             })
         }
-        
 
+        
         const updatedSectionDetails = await Section.findByIdAndUpdate(sectionId,
             {sectionName},{new:true}
         );
@@ -75,19 +75,21 @@ exports.updateSection = async(req,res)=>{
 
 exports.deleteSection = async(req,res)=>{
     try {
-        
-        const {sectionId} = req.params;
-        if(!sectionId){
+        const {sectionId,courseId} = req.body;
+        if(!sectionId || courseId){
             return res.status(400).json({
                 success:false,
                 message:"unable to delete section",
             })
         }
+        const updatedCourseDetails =await Course.findByIdAndUpdate(courseId,{
+            $pull: {courseContent: sectionId}
+        });
         await Section.findByIdAndDelete(sectionId);
-        //do we need to delete the entry from course schema??
         return res.status(200).json({
             success:true,
             message:"Section deleted SuccessFully",
+            updatedCourseDetails,
         })
     } catch (error) {
         return res.status(500).json({
