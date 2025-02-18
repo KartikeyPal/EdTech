@@ -60,7 +60,6 @@ exports.createCourse = async(req,res)=>{
             instructions:instruction,
         }
         
-        
         console.log(whatYouWillLearn);
         const newCourse = await Course.create(coursePayload);
         console.log("course created")

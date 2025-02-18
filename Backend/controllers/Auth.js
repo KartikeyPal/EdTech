@@ -145,7 +145,6 @@ exports.login =async(req,res) =>{
                 message: "User does not exist",
             })
         }
-        console.log("working");
         if(!(await bcrypt.compare(password, existingUser.password))){
             return res.status(403).json({
                 success: false,

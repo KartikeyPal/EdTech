@@ -15,7 +15,12 @@ exports.createSection = async(req,res)=>{
             $push:{
                 courseContent:newSection._id,
             }
-        },{new:true});
+        },{new:true}).populate({
+            path: "courseContent",
+            populate: {
+                path:"subSection",
+            },
+        });
         //populate section and subsection
 
         return res.status(200).json({
@@ -34,22 +39,29 @@ exports.createSection = async(req,res)=>{
 
 exports.updateSection = async(req,res)=>{
     try {
-        const {sectionName,sectionId}=req.body;
+        const {sectionName,sectionId,courseId}=req.body;
         if(!sectionId || !sectionName){
             return res.status(400).json({
                 success:false,
                 message: "All fields are required",
             })
         }
+        
 
-        const updatedSectionDetails = await Section.findById({sectionId},
+        const updatedSectionDetails = await Section.findByIdAndUpdate(sectionId,
             {sectionName},{new:true}
         );
-
+        const courseDetails = await Course.findById(courseId).populate({
+            path: "courseContent",
+            populate: {
+                path:"subSection"
+            },
+        });
         return res.status(200).json({
             success:true,
             message: "Section updated Successfully",
             updatedSectionDetails,
+            courseDetails,
         })
 
     } catch (error) {
