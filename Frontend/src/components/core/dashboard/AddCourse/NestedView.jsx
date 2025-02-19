@@ -5,6 +5,10 @@ import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdArrowDropDown } from "react-icons/md";
 import { BsPlusCircle } from "react-icons/bs";
+import SubSectionModal from './SubSectionModal';
+import { deleteSection, deleteSubSection } from '../../../../services/operations/courseDetailsAPI.js';
+import { setCourse } from '../../../../slices/courseSlice.js';
+import ConfirmationModal from '../../../common/ConfirmationModal';
 const NestedView = ({handleChangeEditSectionName}) => {
     const {course}=useSelector(state=>state.course);
     const {token} = useSelector(state=>state.auth);
@@ -14,8 +18,36 @@ const NestedView = ({handleChangeEditSectionName}) => {
     const [editSubSection,setEditSubSection] = useState(null);
     const [confirmationModal,setConfirmationModal] = useState(null);
 
-    const handleDeleteSection=async(sectionId)=>{
+    // Funtion for sections
 
+    const handleDeleteSection=async(sectionId)=>{
+        const res = await deleteSection({
+            sectionId,
+            courseId: course._id,
+            token,
+        })
+        if(res){
+            console.log(res);
+            dispatch(setCourse(res))
+        }
+        setConfirmationModal(null)
+    }
+    
+
+
+    //Function for SubSection
+    const handleDeleteSubSection = async(sectionId,subSectionId)=>{
+        const res = await deleteSubSection({
+            sectionId,
+            subSectionId,
+            courseId: course._id,
+            token,
+        })
+        if(res){
+            console.log(res);
+            // dispatch(setCourse(res));
+        }
+        setConfirmationModal(null);
     }
 
   return (
@@ -65,7 +97,7 @@ const NestedView = ({handleChangeEditSectionName}) => {
                                             text2:"Current lec will be deleted",
                                             btn1Text: "Delete",
                                             btn2Text: "Cancel",
-                                            btn1Handler: ()=> handleDeleteSection(subSection._id,section._id),
+                                            btn1Handler: ()=> handleDeleteSubSection(subSection._id,section._id),
                                             btn2Handler: ()=>setConfirmationModal(null),
                                         })}> <MdDelete />    </button>
                                     </div>
@@ -83,6 +115,16 @@ const NestedView = ({handleChangeEditSectionName}) => {
                 </details>
             ))}
         </div>
+
+            {
+            addSubSection ?(<SubSectionModal  modalData={addSubSection}  setModalData = {setAddSubSection} add={true}/>): 
+            viewSubSection?(<SubSectionModal modalData={viewSubSection} setModalData = {setViewSubSection} view={true}/>): 
+            editSubSection?(<SubSectionModal modalData={editSubSection} setModalData = {setEditSubSection} edit={true}/>): 
+            (<div/>)
+            }
+ 
+            {confirmationModal? (<ConfirmationModal  modalData={confirmationModal} setModalData={setConfirmationModal} /> ): (<div/>)}
+
     </div>
   )
 }
