@@ -21,6 +21,7 @@ const SubSectionModal = ({modalData,setModalData,add=false,view=false,edit=false
     const {token} = useSelector(state=>state.auth);
 
     useEffect(()=>{
+        console.log("modalData is  : ",modalData);
         if(view || edit){
             setValue("lectureTitle",modalData.title);
             setValue("lectureDesc",modalData.description);
@@ -45,12 +46,53 @@ const SubSectionModal = ({modalData,setModalData,add=false,view=false,edit=false
         if(edit){
             if(!isFormUpdated) {
                 toast.error("No changes made in the form");
-                // console.log("first")
             }
- 
-        }
+            const formData =new FormData();
+            if(modalData.lectureTitle !== data.lectureTitle){
+                formData.append("title",data.lectureTitle)
+            }
+            if(modalData.lectureDesc !== data.lectureDesc){
+                formData.append("description",data.lectureDesc);
+            }
+            if(modalData.lectureVideo !== data.lectureVideo){
+                formData.append("videoUrl",data.lectureVideo);
+            }
+            formData.append("subSectionId",modalData._id);
+            console.log("formData is : ",...formData)
+            const res = await updateSubSection(formData,token);
+            console.log(res);
+            if(res){
+                console.log("working inside edit")
+                const sectionInd = course?.courseContent?.findIndex(section=>section._id === modalData.sectionId);
+                const subSectionId = course?.courseContent[sectionInd]?.subSection?.findIndex(subSection=>subSection._id === modalData._id);
+                if(subSectionId >=0){
+                    console.log("first")
+                    const updatedSubSection  = [...course.courseContent[sectionInd].subSection.slice(0,subSectionId),res,...course.courseContent[sectionInd].subSection.slice(subSectionId+1)];
+                    console.log("updated sub sectino : ",updatedSubSection);
+                    
+                    const updatedSection = {
+                        ...course.courseContent[sectionInd],
+                        subSection: updatedSubSection,
+                    };
+                    console.log("Updated sections : ",updatedSection);
 
-        const formData = new FormData();
+                    const updatedCourseContent = [
+                        ...course.courseContent.slice(0, sectionInd),
+                        updatedSection,
+                        ...course.courseContent.slice(sectionInd + 1),
+                    ];
+                    console.log("updated course content",updatedCourseContent);
+
+                    const updatedCourse = {
+                        ...course,
+                        courseContent: updatedCourseContent
+                    };
+                    console.log("updated course : ",updatedCourse);
+                    // dispatch(setCourse(updatedCourse));
+                }
+            }
+        }
+        else{const formData = new FormData();
         formData.append("sectionId",modalData);
         formData.append("title",data.lectureTitle);
         formData.append("description",data.lectureDesc);
@@ -60,9 +102,16 @@ const SubSectionModal = ({modalData,setModalData,add=false,view=false,edit=false
         const res=await createSubSection(formData,token);
         if(res){
             // TODO: updation
-            console.log(res);
-            // dispatch(setCourse(res));
+            const index = course.courseContent.findIndex(section=>section._id === modalData)
+            if(index>=0){
+                // console.log(index);
+                const courseData = [...course.courseContent.slice(0,index),res,...course.courseContent.slice(index+1),]
+                const updatedCourse ={...course,courseContent:courseData};
+                // console.log(updatedCourse);
+                dispatch(setCourse(updatedCourse));
+            };
         }
+    }
         setModalData(null);
         setLoading(false); 
         

@@ -84,14 +84,18 @@ const NestedView = ({handleChangeEditSectionName}) => {
                             section.subSection?.map((subSection)=>(
                                 <div 
                                 key={subSection?._id}
-                                onClick={()=>setViewSubSection(subSection)} 
-                                className='flex items-center justify-between gap-x-3 border-b-[1px]'
-                                >   <div className='flex items-center gap-x-3'>
+                                
+                                className='flex items-center ml-3 h-9 justify-between gap-x-3 border-b-[1px]'
+                                >   
+                                    <div 
+                                    className='flex  items-center gap-x-3'
+                                    onClick={()=>setViewSubSection(subSection)} 
+                                    >
                                         <RxDropdownMenu />
-                                        <p>{subSection.sectionName}</p>
+                                        <p>{subSection.title}</p>
                                     </div>
                                     <div className='flex items-center gap-x-3'>
-                                        <button onClick={()=>setEditSubSection({...data,sectionId: section._id})}><MdModeEdit /></button>
+                                        <button onClick={()=>setEditSubSection({...subSection,sectionId: section._id})}><MdModeEdit/></button>
                                         <button onClick={()=> setConfirmationModal({
                                             text1:"delete This Sub Section",
                                             text2:"Current lec will be deleted",

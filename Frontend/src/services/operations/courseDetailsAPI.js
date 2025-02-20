@@ -166,7 +166,8 @@ export const createSubSection = async (data, token) => {
       throw new Error("Could Not Add Lecture")
     }
     toast.success("Lecture Added")
-    result = response?.data?.data
+    result = response?.data?.updatedSection;
+    console.log("Result is " ,result);
   } catch (error) {
     console.log("CREATE SUB-SECTION API ERROR............", error)
     toast.error(error.message)
@@ -211,7 +212,7 @@ export const updateSubSection = async (data, token) => {
       throw new Error("Could Not Update Lecture")
     }
     toast.success("Lecture Updated")
-    result = response?.data?.data
+    result = response?.data?.updatedSubsection;
   } catch (error) {
     console.log("UPDATE SUB-SECTION API ERROR............", error)
     toast.error(error.message)
