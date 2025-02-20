@@ -3,18 +3,17 @@ const Section = require('../models/Section');
 const {uploadImageToCloudinary}= require('../utils/imageUploader');
 exports.createSubSection = async(req,res)=>{
     try {
-        const {title,description,timeDuration,sectionId} = req.body;
-        const video = req.files.videoFile;
-        if(!title || !description ||!timeDuration ||!sectionId ||!video) {
+        const {title,description,sectionId} = req.body;
+        const video = req.files.video;
+        if(!title || !description ||!sectionId ||!video) {
             return res.status(400).json({
                 success: false,
-                message:"all fields are required",
+                message:`all fields are required ${title? '\n title is required' : description? '\n description is required ' : sectionId ? '\n Section Id is required ': "video is required"}`,
             })
         }
         const uploadDetails = await uploadImageToCloudinary(video,process.env.FOLDER_NAME);
         const SubSectionDetails =await  SubSection.create({
             title:title,
-            timeDuration:timeDuration,
             description:description,
             videoUrl:uploadDetails.secure_url
         })
@@ -23,9 +22,9 @@ exports.createSubSection = async(req,res)=>{
             $push:{
                 subSection:SubSectionDetails._id,
             }
-        },{new:true});
-        console.log("update completed");
-        //log updated section here after adding populate quiery
+        },{new:true}).populate("subSection").exec();
+        //log updated section here after adding populate quiery 
+
         return res.status(200).json({
             success:true,
             message:"SubSection created successfully",
@@ -43,7 +42,36 @@ exports.createSubSection = async(req,res)=>{
 //pending updateSubsection
 exports.updateSubSection = async(req,res)=>{
     try {
-        
+        const {title,description,subSectionId} =req.body;
+        const video = req.files?.videoUrl;
+        console.log(req.files);
+        if(!subSectionId){
+            return res.status(401).json({
+                success:false,
+                message: "subSection Id is required",
+            })
+        }
+        if(!title && !description  && !video){
+            return res.status(401).json({
+                success:false,
+                message: "No changes were made in subSection",
+            })
+        }
+
+        const updateSubsectionData = {};
+        if(video){
+            console.log("This is running");
+            const uploadDetails = await uploadImageToCloudinary(video,process.env.FOLDER_NAME);
+            updateSubsectionData.video = uploadDetails.secure_url; 
+        }
+        if(title) updateSubsectionData.title = title;
+        if(description) updateSubsectionData.description = description;
+        const updatedSubsection = await SubSection.findByIdAndUpdate(subSectionId,updateSubsectionData,{new:true});
+        return res.status(201).json({
+            success:true,
+            message: "subSection updated Successfully",
+            updatedSubsection,
+        })
     } catch (error) {
         return res.status(500).json({
             success:false,
