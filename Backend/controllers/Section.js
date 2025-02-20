@@ -1,6 +1,6 @@
 const Section = require('../models/Section');
 const Course = require('../models/Course');
- 
+ const SubSection = require('../models/SubSection')
 exports.createSection = async(req,res)=>{
     try {
         const {sectionName, courseId} = req.body;
@@ -83,6 +83,15 @@ exports.deleteSection = async(req,res)=>{
                 message:"All fields are required for deleting section",
             })
         }
+        const section = await Section.findById(sectionId);
+        if(!section){
+            return res.status(404).json({
+                success:false,
+                message: "section not found or already deleted",
+            })
+        }
+        await SubSection.deleteMany({_id: {$in: section?.subSection}});
+        await Section.findByIdAndDelete(sectionId);
         const updatedCourseDetails =await Course.findByIdAndUpdate(courseId,{
             $pull: {courseContent: sectionId}
         },{new:true}).populate({
@@ -91,8 +100,6 @@ exports.deleteSection = async(req,res)=>{
                 path: "subSection"
             }
         }).exec();
-        const updatedSection = await Section.findByIdAndDelete(sectionId);
-        console.log("updated section : ",updatedSection)
         return res.status(200).json({
             success:true,
             message:"Section deleted SuccessFully",
