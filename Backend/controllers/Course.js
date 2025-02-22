@@ -5,10 +5,9 @@ const {uploadImageToCloudinary} = require('../utils/imageUploader');
 
 exports.createCourse = async(req,res)=>{
     try {
-        //fetching data
         const {courseName,courseDescription,whatYouWillLearn,price,tag,categoryId,instruction} = req.body;
-        
         const {thumbnail} = req.files;
+
         console.log("text data = ", req.body);
         console.log("image data = ",req.files);
 
@@ -54,6 +53,7 @@ exports.createCourse = async(req,res)=>{
             tag,
             instructions:instruction,
         }
+        console.log("course payload ", coursePayload);
         const newCourse = await Course.create(coursePayload);
 
         //adding the new course to userSchema of instructor
@@ -147,4 +147,55 @@ exports.getCourseDetails = async(req,res)=>{
             message: error.message, 
         })
     }
+}
+
+exports.editCourse = async(req,res) =>{
+    try {
+        const {courseName,courseDescription,whatYouWillLearn,price,tag,categoryId,instruction,courseId,status} = req.body;
+        const updatedCourseData = {};
+        if(req.files?.thumbnail){
+            const {thumbnail} = req.files;
+            const thumbnailImage = await uploadImageToCloudinary(thumbnail,process.env.FOLDER_NAME); 
+            updatedCourseData.thumbnail = thumbnailImage.secure_url;
+        }
+        console.log("adsfafd")
+        if(courseName) updatedCourseData.courseName= courseName;
+        if(courseDescription) updatedCourseData.courseDescription  = courseDescription;
+        if(whatYouWillLearn) updatedCourseData.whatYouWillLearn = whatYouWillLearn;
+        if(price) updatedCourseData.price = price;
+        if(tag) updatedCourseData.tag = tag;
+        if(instruction) updatedCourseData.instructions=instruction;
+        if(status) updatedCourseData.status = status;
+        console.log(updatedCourseData);
+        //if categoryId is precent
+    
+        console.log("workign");
+        const updatedCourse = await Course.findByIdAndUpdate(courseId,updatedCourseData).populate({
+            path: "courseContent",
+            populate:{
+                path: "subSection"
+            }
+        });
+        console.log("fisrt")
+        if(!updatedCourse){
+            return res.status(401).json({
+                success:false,
+                message: "unable to update the course",
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            message: "successfully updated the course",
+            updatedCourse,
+        })
+
+    } catch (error) {
+            return res.status(500).json({
+                success:false,
+                message: "edit course error",
+                error,
+            })
+    }
+
+
 }

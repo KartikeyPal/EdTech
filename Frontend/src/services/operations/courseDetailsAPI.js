@@ -107,7 +107,6 @@ export const addCourseDetails = async (data, token) => {
 
 // edit the course details
 export const editCourseDetails = async (data, token) => {
-  console.log("in api call : token", token ,"data : " , data);
   let result = null
   const toastId = toast.loading("Loading...")
   try {
@@ -120,8 +119,8 @@ export const editCourseDetails = async (data, token) => {
       throw new Error("Could Not Update Course Details")
     }
     toast.success("Course Details Updated Successfully")
-    result = response?.data?.data
-    console.log("restulg : " ,result);
+    result = response?.data?.updatedCourse;
+    console.log("result : " ,result);
   } catch (error) {
     console.log("EDIT COURSE API ERROR............", error)
     toast.error(error.message)

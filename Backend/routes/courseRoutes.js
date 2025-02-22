@@ -6,6 +6,7 @@ const{
     createCourse,
     showAllCourses,
     getCourseDetails, 
+    editCourse,
 } = require('../controllers/Course'); // all ok 
 
 
@@ -37,6 +38,9 @@ const {
 
 //courses can only be created by instructor
 router.post('/createCourse',auth,isInstructor,createCourse);
+router.get('/showAllCourses',showAllCourses);
+router.post('/getCourseDetails',getCourseDetails);
+router.post('/editCourse',auth,isInstructor,editCourse);
 // Section Routes
 router.post('/addSection',auth,isInstructor,createSection);
 router.post('/updateSection',auth,isInstructor,updateSection);
@@ -45,8 +49,6 @@ router.post('/deleteSection',auth,isInstructor,deleteSection);
 router.post('/updateSubSection',auth,isInstructor,updateSubSection);
 router.post('/deleteSubSection',auth,isInstructor,deleteSubSection);
 router.post('/addSubSection',auth,isInstructor,createSubSection);
-router.get('/showAllCourses',showAllCourses);
-router.post('/getCourseDetails',getCourseDetails);
 
 
 //category can only be create by admin
