@@ -17,18 +17,17 @@ const SubSectionModal = ({modalData,setModalData,add=false,view=false,edit=false
     } = useForm();
     const dispatch = useDispatch();
     const [loading,setLoading]  = useState(false);
-    const   {course} = useSelector(state=>state.course);
+    const  {course} = useSelector(state=>state.course);
     const {token} = useSelector(state=>state.auth);
 
     useEffect(()=>{
-        console.log("modalData is  : ",modalData);
         if(view || edit){
             setValue("lectureTitle",modalData.title);
             setValue("lectureDesc",modalData.description);
             setValue("lectureVideo",modalData.videoUrl);
         }
     },[]);
-// 
+
     const isFormUpdated=()=>{
         const currValue  = getValues();
         if(currValue.lectureTitle !== modalData.title || 
@@ -47,6 +46,7 @@ const SubSectionModal = ({modalData,setModalData,add=false,view=false,edit=false
             if(!isFormUpdated) {
                 toast.error("No changes made in the form");
             }
+            //Handling edit subsection
             const formData =new FormData();
             if(modalData.lectureTitle !== data.lectureTitle){
                 formData.append("title",data.lectureTitle)
@@ -58,87 +58,54 @@ const SubSectionModal = ({modalData,setModalData,add=false,view=false,edit=false
                 formData.append("videoUrl",data.lectureVideo);
             }
             formData.append("subSectionId",modalData._id);
-            console.log("formData is : ",...formData)
+            setLoading(true);   
             const res = await updateSubSection(formData,token);
-            console.log(res);
             if(res){
-                console.log("working inside edit")
                 const sectionInd = course?.courseContent?.findIndex(section=>section._id === modalData.sectionId);
                 const subSectionId = course?.courseContent[sectionInd]?.subSection?.findIndex(subSection=>subSection._id === modalData._id);
                 if(subSectionId >=0){
-                    console.log("first")
-                    const updatedSubSection  = [...course.courseContent[sectionInd].subSection.slice(0,subSectionId),res,...course.courseContent[sectionInd].subSection.slice(subSectionId+1)];
-                    console.log("updated sub sectino : ",updatedSubSection);
+                    const updatedSubSections  = [...course.courseContent[sectionInd].subSection.slice(0,subSectionId),res,...course.courseContent[sectionInd].subSection.slice(subSectionId+1)];
                     
                     const updatedSection = {
-                        ...course.courseContent[sectionInd],
-                        subSection: updatedSubSection,
+                        ...course.courseContent[sectionInd],subSection: updatedSubSections,
                     };
-                    console.log("Updated sections : ",updatedSection);
 
                     const updatedCourseContent = [
                         ...course.courseContent.slice(0, sectionInd),
                         updatedSection,
                         ...course.courseContent.slice(sectionInd + 1),
                     ];
-                    console.log("updated course content",updatedCourseContent);
-
                     const updatedCourse = {
                         ...course,
                         courseContent: updatedCourseContent
                     };
-                    console.log("updated course : ",updatedCourse);
-                    // dispatch(setCourse(updatedCourse));
+                    dispatch(setCourse(updatedCourse));
                 }
             }
         }
-        else{const formData = new FormData();
-        formData.append("sectionId",modalData);
-        formData.append("title",data.lectureTitle);
-        formData.append("description",data.lectureDesc);
-        formData.append("video",data.lectureVideo);
-        setLoading(true);
+        else{
+            const formData = new FormData();
+            formData.append("sectionId",modalData);
+            formData.append("title",data.lectureTitle);
+            formData.append("description",data.lectureDesc);
+            formData.append("video",data.lectureVideo);
+            setLoading(true);
 
-        const res=await createSubSection(formData,token);
-        if(res){
-            // TODO: updation
-            const index = course.courseContent.findIndex(section=>section._id === modalData)
-            if(index>=0){
-                // console.log(index);
-                const courseData = [...course.courseContent.slice(0,index),res,...course.courseContent.slice(index+1),]
-                const updatedCourse ={...course,courseContent:courseData};
-                // console.log(updatedCourse);
-                dispatch(setCourse(updatedCourse));
-            };
-        }
+            const res=await createSubSection(formData,token);
+            if(res){
+                const index = course.courseContent.findIndex(section=>section._id === modalData)
+                if(index>=0){
+                    // console.log(index);
+                    const courseData = [...course.courseContent.slice(0,index),res,...course.courseContent.slice(index+1),]
+                    const updatedCourse ={...course,courseContent:courseData};
+                    // console.log(updatedCourse);
+                    dispatch(setCourse(updatedCourse));
+                };
+            }
     }
         setModalData(null);
         setLoading(false); 
         
-    }
-    
-    const handleEditSubSection = async ()=>{
-        const currValue  = getValues();
-        const formData = new FormData();
-        formData.append("sectionId",modalData.sectionId);
-        formData.append("subSectionId",modalData._id)
-        if(currValue.lectureTitle !== modalData.title){
-            formData.append("title",currValue.lectureTitle);
-        }
-        if(currValue.videoUrl !== modalData.videoUrl){
-            formData.append("video",currValue.videoUrl);
-        }
-        if(currValue.lectureDesc !== modalData.description){
-            formData.append("description",currValue.lectureDesc);
-        }
-        setLoading(true);
-        const res= await updateSubSection(formData,token);
-        if(res){
-            console.log(res);
-            // dispatch(setCourse(res));
-        }
-        setModalData(null);
-        setLoading(null);
     }
 
 

@@ -16,6 +16,8 @@ import EnrolledCourses from "./components/core/dashboard/EnrolledCourses.jsx";
 import Cart from './components/core/dashboard/Cart/Index.jsx'
 import { useSelector } from "react-redux";
 import AddCourse from './components/core/dashboard/AddCourse/index.jsx'
+import MyCourses from './components/core/dashboard/MyCourses.jsx'
+import EditCourse from "./components/core/dashboard/EditCourse/index.jsx";
 export default function App() {
   const {user} = useSelector((state)=>state.profile)
   return (
@@ -32,10 +34,12 @@ export default function App() {
         
          {/* Nested Routes for dashboard */}
         <Route  element={<PrivateRoute><Dashboard/></PrivateRoute>}>
+          <Route path="/dashboard/my-courses" element={<MyCourses/>}/>
           <Route path="/dashboard/my-profile" element={<MyProfile/>}/>
           <Route path="/dashboard/settings" element={<Settings/>}/>
           <Route path="/dashboard/cart" element={<Cart/>}/>
           <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+          <Route path="/dashboard/edit-course/:courseId" element={<EditCourse/>}/>
           {
             user?.accountType === "Instructor" && (
               <>

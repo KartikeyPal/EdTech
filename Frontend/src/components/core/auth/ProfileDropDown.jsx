@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logOut } from '../../../services/operations/authAPI';
 import { VscDashboard } from "react-icons/vsc";
 import { IoMdLogOut } from "react-icons/io";
@@ -9,9 +9,9 @@ import { IoMdLogOut } from "react-icons/io";
 const ProfileDropDown = () => {
     const {user} = useSelector((state) => state.profile);
     const dispatch = useDispatch();
-    
+    const navigate = useNavigate()
     const handleLogout = ()=>{
-      dispatch(logOut())
+      dispatch(logOut(navigate))
     }
   return (
     <div className='   mr-9 w-auto '>

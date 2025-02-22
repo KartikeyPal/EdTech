@@ -59,6 +59,9 @@ exports.categoryPageDetails = async(req,res) =>{
         const differentCategories = await Category.find({_id: {$ne: categoryId},}).populate("courses").exec();
 
         //how can i get top selling courses
+        const allCategory = await Category.find().populate("courses").exec();
+        const allCourses = allCategory.flatMap((catagory)=>categoryId.courses);
+        const mostSellingCourses = allCourses.sort((a,b) => b.sold-a.sold).slice(1,10);
 
         return res.status(200).json({
             success:true,
@@ -66,6 +69,7 @@ exports.categoryPageDetails = async(req,res) =>{
                 selectedCategory,
                 differentCategories,
                 //top courses pending
+                mostSellingCourses,
             }
         })
 
