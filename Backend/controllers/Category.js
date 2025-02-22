@@ -49,6 +49,7 @@ exports.showAllCategory = async (req,res) =>{
 exports.categoryPageDetails = async(req,res) =>{
     try {
         const {categoryId} = req.body;
+        console.log(categoryId);
         const selectedCategory =await Category.findById(categoryId).populate("courses").exec();  
         if(!selectedCategory){
             return res.status(404).json({
@@ -60,8 +61,8 @@ exports.categoryPageDetails = async(req,res) =>{
 
         //how can i get top selling courses
         const allCategory = await Category.find().populate("courses").exec();
-        const allCourses = allCategory.flatMap((catagory)=>categoryId.courses);
-        const mostSellingCourses = allCourses.sort((a,b) => b.sold-a.sold).slice(1,10);
+        const allCourses = allCategory.flatMap((catagory)=>catagory.courses);
+        // const mostSellingCourses = allCourses.sort((a,b) => b.sold-a.sold).slice(1,10);
 
         return res.status(200).json({
             success:true,
@@ -69,7 +70,7 @@ exports.categoryPageDetails = async(req,res) =>{
                 selectedCategory,
                 differentCategories,
                 //top courses pending
-                mostSellingCourses,
+                // mostSellingCourses,
             }
         })
 

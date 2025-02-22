@@ -1,6 +1,5 @@
 const Category = require('../models/Category');
 const Course = require('../models/Course');
-const Tag = require('../models/Tags');
 const User = require('../models/User');
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
 
@@ -36,8 +35,6 @@ exports.createCourse = async(req,res)=>{
                 message: "Instructor Details now found",
             })
         }
-
-        //tags validation
         const categoryDetails = await Category.findById(categoryId);
         if(!categoryDetails){
             return res.status(404).json({
@@ -45,8 +42,6 @@ exports.createCourse = async(req,res)=>{
                 message: "category Details not found",
             })
         }
-
-        //uploading image to cloudinary
         const thumbnailImage = await uploadImageToCloudinary(thumbnail,process.env.FOLDER_NAME); 
         const coursePayload = {
             courseName,
@@ -59,10 +54,7 @@ exports.createCourse = async(req,res)=>{
             tag,
             instructions:instruction,
         }
-        
-        console.log(whatYouWillLearn);
         const newCourse = await Course.create(coursePayload);
-        console.log("course created")
 
         //adding the new course to userSchema of instructor
         await User.findByIdAndUpdate({_id:instructorDetails._id},{
@@ -74,7 +66,7 @@ exports.createCourse = async(req,res)=>{
         //updating tagSchema
         await Category.findByIdAndUpdate({_id:categoryDetails._id},{
             $push:{
-                course:newCourse._id,
+                courses:newCourse._id,
             }
         },{new:true});
 
