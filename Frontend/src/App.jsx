@@ -1,4 +1,4 @@
-import { Routes,Route } from "react-router-dom"
+import { Routes,Route, Router } from "react-router-dom"
 import Home from "./pages/Home";
 import Signup from './pages/SignUp.jsx'
 import Navbar from './components/common/Navbar.jsx'
@@ -19,6 +19,7 @@ import AddCourse from './components/core/dashboard/AddCourse/index.jsx'
 import MyCourses from './components/core/dashboard/MyCourses.jsx'
 import EditCourse from "./components/core/dashboard/EditCourse/index.jsx";
 import Catelog from "./pages/Catelog.jsx";
+import CoursePage from "./pages/CoursePage.jsx";
 export default function App() {
   const {user} = useSelector((state)=>state.profile)
   return (
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/update-password/:id" element={<UpdatePassword/>}/>
         <Route path="/verify-email" element={<VerifyEmail/>}/>
         <Route path="/about" element={<About/>}/>
+        <Route path="/courses/:id" element={<CoursePage/>} />
         
          {/* Nested Routes for dashboard */}
         <Route  element={<PrivateRoute><Dashboard/></PrivateRoute>}>

@@ -108,7 +108,7 @@ exports.showAllCourses = async(req,res) =>{
     }
 }
 
-//get coursse details
+//GET FULL DETAILS
 exports.getCourseDetails = async(req,res)=>{
     try {
         const {courseId} = req.body;
@@ -120,12 +120,22 @@ exports.getCourseDetails = async(req,res)=>{
                 }
             }
         )
+        // .populate({
+        //     path: "instructor",
+        //     populate:{
+        //         path:"additionalDetails"
+        //     },
+        //     populate:{
+        //         path: "courseContent"
+        //     }
+        // })
+        .populate("studentEnrolled")
         .populate("category")
         // .populate("ratingAndReview")
         .populate({
             path:"courseContent",
             populate:{
-                path:"subsection",
+                path:"subSection",
             }, 
         }).exec();
 
@@ -139,7 +149,7 @@ exports.getCourseDetails = async(req,res)=>{
         return res.status(200).json({
             success:true,
             message:"course fetched successfully",
-            data: courseDetails,
+            courseDetails,
         })
     } catch (error) {
         return res.status(500).json({
