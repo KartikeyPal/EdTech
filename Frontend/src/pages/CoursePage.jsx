@@ -6,6 +6,7 @@ import GetAvgRating from '../../utils/avgRating';
 import Footer from '../components/common/Footer'
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { PiMonitorFill } from "react-icons/pi";
+import { CiGlobe } from "react-icons/ci";
 const CoursePage = () => {
     const {id} = useParams();
     const [course,setCourse] = useState();
@@ -30,43 +31,55 @@ const CoursePage = () => {
 
   return (
     <div className='text-white mt-[40px] h-auto bg-richblack-900 '>
-            <div>
-                {/* section 1 */}
                 <div className='w-full h-[318px] bg-richblack-800 p-10 px-40 space-y-1 relative border-r-2'>
-                    <div className='w-11/12 mr-96'>
-                        <p className='text-richblack-400'>Home / Learning / <span className='text-yellow-25'>{course?.category?.name}</span></p>
-                        <div className='text-[30px] text-richblack-25 font-bold'>{course?.courseName}</div>
-                        <p className='text-richblack-100'> {course?.courseDescription}</p>
-                    </div>
-                    <div className='flex gap-x-3 items-center'>
-                        <span>{averageReviewCount || 0}</span>
-                        <RatingStars Review_Count={averageReviewCount}/>
-                        <span>{`( ${course?.ratingAndReview.length} )`}</span>
-                    </div>
-                    <p>{course?.instructor.firstName} {course?.instructor.lastName}</p>
-                    <div className='flex gap-x-3'>
-                        <p>time</p>
-                        <p>language</p>
-                    </div>
-                    <div className='flex flex-col w-[384px] rounded-lg bg-richblack-700 h-[670px] absolute right-60 top-16   '>
-                        <img src={course?.thumbnail} alt='Course Image' className=''></img>
-                        <div className='mt-6 p-3 font-bold text-3xl'>Rs. {course?.price}</div>
-                        <div className='flex flex-col p-2 m-2 space-y-6'>
-                            <button className='p-2 bg-yellow-25 text-richblack-900 rounded-lg font-bold hover:scale-95'>Add to Cart</button>
-                            <button className='p-2 bg-richblack-800 text-richblack-25 font-bold rounded-lg hover:scale-95'>Buy now</button>
+                        {/*This is Section 1 */}
+                        <div className='border-r-2 py-7 lg:w-[790px] border-richblack-500'>
+                            <div className='w-11/12 mr-96'>
+                                <p className='text-richblack-400'>Home / Learning / <span className='text-yellow-25'>{course?.category?.name}</span></p>
+                                <div className='text-[30px] text-richblack-25 font-bold'>{course?.courseName}</div>
+                                <p className='text-richblack-100'> {course?.courseDescription}</p>
+                            </div>
+                            <div className='flex gap-x-3 items-center'>
+                                <span>{averageReviewCount || 0}</span>
+                                <RatingStars Review_Count={averageReviewCount}/>
+                                <span>{`( ${course?.ratingAndReview.length} )`}</span>
+                            </div>
+                            <p className=''>{course?.instructor.firstName} {course?.instructor.lastName}</p>
+                            <div className='flex gap-x-4 mt-6'>
+                                <p>created at Time</p>
+                                <div className='flex items-center gap-2'>
+                                    <CiGlobe />
+                                    <p>language</p>
+                                </div>
+                            </div>
                         </div>
-                        <p>30-Day Money-Back Gurantee</p>
-
-                        <p>THis course includes: </p>
-                        <div>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                        </div>
-                        <p>Share</p>
-                    </div>
-                </div>
+                        {/* Course buy and add to cart section */}
+                        <div className='flex flex-col w-[384px] rounded-3xl bg-richblack-700  absolute right-40 top-8   '>
+                            <img src={course?.thumbnail} alt='Course Image' className=' rounded-t-3xl'></img>
+                            <div className='mt-6 p-4 font-bold text-3xl'>Rs. {course?.price}</div>
+                            <div className='flex flex-col p-2 m-2 space-y-6'>
+                                <button 
+                                    className='p-2 bg-yellow-25 text-richblack-900 rounded-lg font-bold hover:scale-95'
+                                    
+                                >
+                                    Add to Cart
+                                </button>
+                                <button 
+                                    className='p-2 bg-richblack-800 text-richblack-25 font-bold rounded-lg hover:scale-95'
+                                    
+                                >
+                                    Buy now
+                                </button>
+                            </div>
+                            <div className='px-5 text-caribbeangreen-50 space-y-1'>
+                                <p className='text-white mb-2'>This Course Includes: </p>
+                                <p>30-Day Money-Back Gurantee</p>
+                                <p>THis course includes: </p>
+                            </div>
+                            <div className='flex justify-center items-center my-10'>                             
+                                <p className='text-yellow-50'>Share</p>
+                            </div>
+                            </div>
             </div>
             <div>
                 <div className='flex flex-col items-start px-40 mt-10 space-y-9'>
@@ -88,7 +101,7 @@ const CoursePage = () => {
                                 onClick={()=>setShowSection(!showSection)}>{showSection ? "Collapse all section": "Show section"}</button>
                             </div>
                         </div>
-                        <div className='mt-6 border-[1px] border-richblack-600'>
+                        <div className='mt-6 border-[1px] border-richblack-600 rounded-lg' >
                             {showSection? (<div>
                                 {course?.courseContent?.map((section)=>(
                                     <details key={section._id} close>
@@ -109,12 +122,17 @@ const CoursePage = () => {
                                                 </p>
                                             </div>
                                         </summary>
-                                            <div className='px-4 ml-1 mt-3'>
+                                            <div className='px-4 ml-1 mt-3 mb-4'>
                                                 {section?.subSection?.map((subsection,ind)=>(
                                                     <details key={subsection._id} close>
-                                                        <summary className='flex  items-center gap-2 '>
-                                                            <PiMonitorFill />
-                                                            <div>{subsection.title}</div>
+                                                        <summary className='flex  items-center justify-between '>
+                                                            <div className='flex items-center gap-2'>
+                                                                <PiMonitorFill />
+                                                                <div>{subsection.title}</div>
+                                                            </div>
+                                                            <div>
+                                                                duration
+                                                            </div>
                                                         </summary>
                                                         <div className='ml-6'>
                                                             <p>{subsection.description}</p>           
@@ -139,14 +157,19 @@ const CoursePage = () => {
                         <p className='flex text-md'>{course?.instructor?.firstName + " " + course?.instructor?.lastName}</p>
                     </div>
                     <p>About</p>
+                </div> 
+                <div className='text-richblack-5 mt-9 flex justify-center items-center text-4xl'>
+                    Review from other learners
                 </div>
+            
 
                 <footer className='mt-36'>
                     <Footer/>
                 </footer>
             </div>
             {/* section 3 */}
-            
+            {/* Review slider */}
+           
     </div>
   )
 }
