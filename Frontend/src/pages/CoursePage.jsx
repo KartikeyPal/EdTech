@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { fetchCourseDetails } from '../services/operations/courseDetailsAPI';
 import RatingStars from '../components/common/RatingStars';
 import GetAvgRating from '../../utils/avgRating';
 import Footer from '../components/common/Footer'
 import { MdKeyboardArrowUp } from "react-icons/md";
-import { PiMonitorFill } from "react-icons/pi";
+import { PiMonitorFill, PiStrategyDuotone } from "react-icons/pi";
 import { CiGlobe } from "react-icons/ci";
+import {useDispatch,useSelector} from 'react-redux'
+import { buyCourse } from '../services/operations/studentFeatureAPI';
 const CoursePage = () => {
     const {id} = useParams();
     const [course,setCourse] = useState();
     const [showSection,setShowSection] = useState(false);
     const [averageReviewCount,setAverageReviewCount] = useState(0);
+    
+
+    const {user} = useSelector((state)=>state.profile);
+    const {token} = useSelector(state=>state.auth);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+
+
     useEffect(()=>{
         const fetchCourse = async () =>{
             const res = await fetchCourseDetails(id);
@@ -28,6 +39,18 @@ const CoursePage = () => {
         const count = GetAvgRating(course?.ratingAndReview);
         setAverageReviewCount(count);
     },[course])
+
+
+
+    const handleBuyCourse = () =>{
+        if(token){
+            buyCourse(token,[id],user,navigate,dispatch);
+            return;
+        }
+    }
+
+
+
 
   return (
     <div className='text-white mt-[40px] h-auto bg-richblack-900 '>
@@ -66,7 +89,7 @@ const CoursePage = () => {
                                 </button>
                                 <button 
                                     className='p-2 bg-richblack-800 text-richblack-25 font-bold rounded-lg hover:scale-95'
-                                    
+                                    onClick={()=>handleBuyCourse()}
                                 >
                                     Buy now
                                 </button>
