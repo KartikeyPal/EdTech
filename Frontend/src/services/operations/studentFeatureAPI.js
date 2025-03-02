@@ -86,7 +86,6 @@ const sendPaymentSuccessEmail=async(response,amount,token)=>{
         },{
             Authorization: `Bearer ${token}`
         })
-        console.log("emial working")
     } catch (error) {
         console.log("payment success email error : ",error);
         console.log(error.message);
@@ -108,7 +107,7 @@ const verifyPayment=async(bodyData,token,navigate,dispatch)=>{
             throw new Error(res.data.message);
         }
         toast.success("payment Successfull");
-        // navigate("/dashboard/enrolled-courses")
+        navigate("/dashboard/enrolled-courses")
         dispatch(resetCart());
     } catch (error) {
         console.log("Payment verify error",error);

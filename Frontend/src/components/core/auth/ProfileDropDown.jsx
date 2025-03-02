@@ -18,12 +18,12 @@ const ProfileDropDown = () => {
         <div className='  flex flex-row gap-2 items-center group '>
           <img src={`${user.image}`} alt="user image" className='w-9 rounded-full'/>
           <IoIosArrowDropdownCircle className='text-white'/>  
-          <div className='w-min invisible absolute right-[6.2%] top-12 h-min border-collapse  flex flex-col rounded-md bg-richblack-700 p-4 text-richblack-900 opacity-0 transition-all duration-200  group-hover:visible group-hover:opacity-100 z-10  '>
-              <Link to={"/dashboard/my-profile"} className='flex  items-center gap-x-1 border-richblack-700 rounded-md hover:bg-richblack-800 z-20 p-2 hover:text-white   '>
+          <div className='w-min invisible absolute right-[2%] top-12 h-min border-collapse  flex flex-col rounded-md bg-richblack-300 p-4 text-richblack-900 opacity-0 transition-all duration-200  group-hover:visible group-hover:opacity-100 z-10  '>
+              <Link to={"/dashboard/my-profile"} className='flex -mx-4 -mt-4 items-center gap-x-1 border-richblack-700 hover:bg-richblack-800 z-20 p-2 hover:text-white   '>
                 <VscDashboard />
                 <div>Dashboard</div>
               </Link>
-              <Link to={"/"} className='flex  items-center gap-x-1 border-richblack-700 rounded-md hover:bg-richblack-800 z-20 p-2 hover:text-white'>
+              <Link to={"/"} className='flex -mx-4 -mb-4 items-center gap-x-1 border-richblack-700 hover:bg-richblack-800 z-20 p-2 hover:text-white'>
                 <IoMdLogOut />
                 <div onClick={handleLogout}>Logout</div>
               </Link>

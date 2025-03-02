@@ -13,7 +13,7 @@ const MyProfile = () => {
       {/* Main portion */}
       <div className='w-full flex flex-col items-center  '>
         {/* section 1 */}
-        <div className='flex flex-row w-[75%] gap-3 justify-between p-10 mt-8 rounded-lg bg-richblack-800 border-richblack-200 border-2'>
+        <div className='flex flex-row w-[75%] gap-3 justify-between items-center p-10 mt-8 rounded-lg bg-richblack-800 border-richblack-200 border-2'>
           <div className='flex items-center gap-3 '>
             <img src={user?.image} alt={`profile-${user?.firstName }`} className='aspect-square w-[78px] rounded-full object-cover'/>
             <div className='flex flex-col'>
@@ -21,8 +21,14 @@ const MyProfile = () => {
               <p>{user.email}</p>
             </div>
           </div>
-          <div className='flex  bg-white  text-richblack-900 '>
-          <IconButton text={"Edit"} onClick={()=>{
+          <div 
+          className='flex  bg-yellow-25 rounded-lg  text-richblack-900 items-center h-9 w-24 hover:scale-90 justify-center transition delay-150 ease-in-out '
+          >
+            
+          <IconButton 
+          text={"Edit"}
+           
+          onClick={()=>{
             navigate("dashboard/settings")
           }} />
           </div>

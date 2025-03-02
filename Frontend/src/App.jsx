@@ -20,6 +20,8 @@ import MyCourses from './components/core/dashboard/MyCourses.jsx'
 import EditCourse from "./components/core/dashboard/EditCourse/index.jsx";
 import Catelog from "./pages/Catelog.jsx";
 import CoursePage from "./pages/CoursePage.jsx";
+import ViewCourse from "./pages/ViewCourse.jsx";
+import VideoDetails from "./components/core/viewCourse/VideoDetails.jsx";
 export default function App() {
   const {user} = useSelector((state)=>state.profile)
   return (
@@ -43,6 +45,14 @@ export default function App() {
           <Route path="/dashboard/settings" element={<Settings/>}/>
           <Route path="/dashboard/cart" element={<Cart/>}/>
           <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+          <Route element={<PrivateRoute><ViewCourse/></PrivateRoute>}>
+            {user?.accountType === "Student" && 
+              <>
+                <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoDetails/>}/>
+              
+              </>
+            }
+          </Route>
           <Route path="/dashboard/edit-course/:courseId" element={<EditCourse/>}/>
           {
             user?.accountType === "Instructor" && (
@@ -52,6 +62,7 @@ export default function App() {
             )
           }
         </Route>
+
         <Route path="*" element={<Error/>}/>
       </Routes>
      

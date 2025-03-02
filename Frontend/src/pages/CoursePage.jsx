@@ -137,24 +137,22 @@ const CoursePage = () => {
                                             </div>
                                             <div className='flex gap-3'>
                                                 <p  className='text-yellow-50'>
-                                                {section?.subSection?.length} Lecture
-                                                </p>
-                                                <p>
-                                                    {/* Modify the subsection model and store the video duration there */}
-                                                    51min
+                                                {section?.subSection?.length} Lecture(s)
                                                 </p>
                                             </div>
                                         </summary>
                                             <div className='px-4 ml-1 mt-3 mb-4'>
                                                 {section?.subSection?.map((subsection,ind)=>(
-                                                    <details key={subsection._id} close>
+                                                    <details key={subsection._id}
+                                                        className='transition-[height] delay-200 duration-1000 ease-in-out'
+                                                    close>
                                                         <summary className='flex  items-center justify-between '>
                                                             <div className='flex items-center gap-2'>
                                                                 <PiMonitorFill />
                                                                 <div>{subsection.title}</div>
                                                             </div>
                                                             <div>
-                                                                duration
+                                                                {subsection.timeDuration || "duration"}
                                                             </div>
                                                         </summary>
                                                         <div className='ml-6'>

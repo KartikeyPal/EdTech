@@ -15,14 +15,15 @@ exports.createSubSection = async(req,res)=>{
         const SubSectionDetails =await  SubSection.create({
             title:title,
             description:description,
-            videoUrl:uploadDetails.secure_url
+            videoUrl:uploadDetails.secure_url,
+            timeDuration:`${uploadDetails.duration}`,
         })
-        console.log("updating section")
         const updatedSection = await Section.findByIdAndUpdate({_id: sectionId},{
             $push:{
                 subSection:SubSectionDetails._id,
             }
         },{new:true}).populate("subSection").exec();
+        
         //log updated section here after adding populate quiery 
 
         return res.status(200).json({
@@ -63,6 +64,7 @@ exports.updateSubSection = async(req,res)=>{
             console.log("This is running");
             const uploadDetails = await uploadImageToCloudinary(video,process.env.FOLDER_NAME);
             updateSubsectionData.video = uploadDetails.secure_url; 
+            updateSubsectionData.timeDuration = `${uploadDetails.duration}`;
         }
         if(title) updateSubsectionData.title = title;
         if(description) updateSubsectionData.description = description;
