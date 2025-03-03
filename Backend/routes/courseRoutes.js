@@ -35,6 +35,10 @@ const {
     getAllRatingAndReview,
 } = require('../controllers/RatingAndReview'); //all ok
 
+const {
+    updateCourseProgress,
+} = require('../controllers/CourseProgress')
+
 //                                          Course Routes
 
 //courses can only be created by instructor
@@ -64,5 +68,9 @@ router.post('/getCategoryPageDetails',categoryPageDetails);
 router.post('/createRating',auth,isStudent,createRating);
 router.get('/getAverageRating',getAverageRating);
 router.get('/getReviews',getAllRatingAndReview)
+
+//courseProgress related routes
+
+router.post('/updateCourseProgress',auth,isStudent,updateCourseProgress); 
 
 module.exports = router;
