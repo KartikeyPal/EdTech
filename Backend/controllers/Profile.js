@@ -146,7 +146,15 @@ exports.getEnrolledCourses = async(req, res) => {
             });
         }
 
-        const userData = await User.findById(userId).populate('courses').exec();
+        const userData = await User.findById(userId).populate({
+            path:'courses',
+            populate:{
+                path: 'courseContent',
+                populate:{
+                    path:'subSection'
+                }
+            }
+        }).exec();
         if (!userData) {
             return res.status(404).json({
                 success: false,

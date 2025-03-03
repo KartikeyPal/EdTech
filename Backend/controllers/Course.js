@@ -202,9 +202,7 @@ exports.editCourse = async(req,res) =>{
 
 
 }
-
 exports.getFullCourseDetails= async(req,res)=>{
-
     try {
         const {courseId} = req.body;
         const userId = req.user.id;
@@ -214,26 +212,28 @@ exports.getFullCourseDetails= async(req,res)=>{
                 message: "course Id is needed"
             })
         }
-        const course = await Course.findOne(courseId).populate({
-            path:"courseContent",
-            populate:{
-                path:"subSection"
-            }
-        })
-        .populate("instructor")
-        .populate("category")
-        .populate("ratingAndReview")
-        .exec();
-
+        console.log("Working");
+        const course = await Course.findOne({_id:courseId})
+            .populate("instructor")
+            .populate({
+                path: "courseContent",
+                populate: {
+                    path: "subSection"
+                }
+            })
+            .populate("ratingAndReview")
+            .populate("category")
+            .exec();
+        
+        course.instructor.password= undefined;
         // const courseProgress = await courseProgress
-    
         if(!course){
             return res.status(404).json({
                 success:false,
                 message: "Course with given id is not found",
             })
         }
-        return res.status(400).json({
+        return res.status(200).json({
             success:true,
             message:"course fetched successfully",
             course
@@ -242,7 +242,7 @@ exports.getFullCourseDetails= async(req,res)=>{
         return res.status(500).json({
             success:false,
             message: "error while fetching full course details",
-            error,
+            error: error.message,
         })
     }
 }

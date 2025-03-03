@@ -17,7 +17,7 @@ import Cart from './components/core/dashboard/Cart/Index.jsx'
 import { useSelector } from "react-redux";
 import AddCourse from './components/core/dashboard/AddCourse/index.jsx'
 import MyCourses from './components/core/dashboard/MyCourses.jsx'
-import EditCourse from "./components/core/dashboard/EditCourse/index.jsx";
+import EditCourse from "./components/core/dashboard/EditCourse/Index.jsx";
 import Catelog from "./pages/Catelog.jsx";
 import CoursePage from "./pages/CoursePage.jsx";
 import ViewCourse from "./pages/ViewCourse.jsx";
@@ -37,22 +37,20 @@ export default function App() {
         <Route path="/verify-email" element={<VerifyEmail/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/courses/:id" element={<CoursePage/>} />
-        
-         {/* Nested Routes for dashboard */}
+        <Route element={<PrivateRoute><ViewCourse/></PrivateRoute>}>
+          {user?.accountType === "Student" && 
+            <>
+              <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoDetails/>}/>            
+            </>
+            }
+          </Route>
+        {/* Nested Routes for dashboard */}
         <Route  element={<PrivateRoute><Dashboard/></PrivateRoute>}>
           <Route path="/dashboard/my-courses" element={<MyCourses/>}/>
           <Route path="/dashboard/my-profile" element={<MyProfile/>}/>
           <Route path="/dashboard/settings" element={<Settings/>}/>
           <Route path="/dashboard/cart" element={<Cart/>}/>
           <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
-          <Route element={<PrivateRoute><ViewCourse/></PrivateRoute>}>
-            {user?.accountType === "Student" && 
-              <>
-                <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoDetails/>}/>
-              
-              </>
-            }
-          </Route>
           <Route path="/dashboard/edit-course/:courseId" element={<EditCourse/>}/>
           {
             user?.accountType === "Instructor" && (

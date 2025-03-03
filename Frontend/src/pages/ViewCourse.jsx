@@ -15,11 +15,12 @@ const ViewCourse = () => {
     useEffect(()=>{
         const setCourseSpecificDetails = async()=>{
             const courseData = await getFullDetailsOfCourse(courseId,token);
-            dispatch(setCourseSectionData(courseData.courseDetails.courseContent));
-            dispatch(setCourseEntireData(courseData.courseDetails));
-            dispatch(setCompletedLecture(courseData.completedVideos));
+
+            dispatch(setCourseSectionData(courseData.course.courseContent));
+            dispatch(setCourseEntireData(courseData.course));
+            // dispatch(setCompletedLecture(courseData?.completedVideos));
             let lec = 0;
-            courseData?.courseDetails?.courseContent?.forEach(sec => {
+            courseData?.course?.courseContent?.forEach(sec => {
                 lec+=sec.subSection.length;
             });
             dispatch(setTotalNoOfLecture(lec));
@@ -30,9 +31,12 @@ const ViewCourse = () => {
 
   return (
     <div>
-        <div>
-            <VideoDetailsSideBar setReviewModal = {setReviewModal} />
-            <div>
+        <div className='flex w-screen'>
+            <div className='w-[15%]'>
+                 <VideoDetailsSideBar setReviewModal = {setReviewModal} />
+
+            </div>
+            <div className='w-[85%]'>
                 <Outlet/>
             </div>
         </div>

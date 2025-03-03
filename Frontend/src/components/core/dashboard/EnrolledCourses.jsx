@@ -43,10 +43,11 @@ const EnrolledCourses = () => {
                     </div>
                     {/* Course Names */}
                     {enrolledCourses.map((course, i, arr) => (
-                    <div
+                        <div
                         className={`flex items-center border border-richblack-700 ${i===arr.length-1?"rounded-b-lg":"rounded-none"}`}
                         key={i}
                         >
+                            {console.log(course)}
                         <div
                             className="flex w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
                             onClick={() => {

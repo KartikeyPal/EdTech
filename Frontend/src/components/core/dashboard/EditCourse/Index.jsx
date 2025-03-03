@@ -17,7 +17,7 @@ const EditCourse = () => {
             setLoading(true);
             const res= await getFullDetailsOfCourse(courseId,token);
             if(res?.courseDetails){
-                dispatch(setEditCourse=true);
+                dispatch(setEditCourse(true));
                 dispatch(setCourse(res?.courseDetails));
             }
             setLoading(false);

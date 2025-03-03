@@ -9,22 +9,22 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
     const [videoBarActive,setVideoBarActive] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
-    const {sectionId,sebSectionId} = useParams();
-    const{
+    const {sectionId,subSectionId} = useParams();
+    const {
         courseSectionData,
         courseEntireData,
+        CompletedLecture,
         totalNoOfLectures,
-        CompletedLectures,
     } = useSelector(state=>state.viewCourse);
-
+    console.log(courseEntireData);
     useEffect(()=>{
         ;(()=>{
             if(!courseSectionData.length){
                 return
             }
+            console.log("courseSectionData : ", courseSectionData);
             const CurrentSectionIndex = courseSectionData.findIndex((data) => data._id === sectionId);
-            const currentSubSectionIndex = courseSectionData?.[CurrentSectionIndex].findIndex((data)=>data._id ===sebSectionId);
-
+            const currentSubSectionIndex = courseSectionData[CurrentSectionIndex]?.subSection.findIndex((data)=>data._id ===subSectionId);
             const activeSubSectionId = courseSectionData[currentSubSectionIndex]?.subSection[currentSubSectionIndex]?._id;
             setActiveStatus(courseSectionData?.[CurrentSectionIndex]?._id);
             setVideoBarActive(activeSubSectionId);
@@ -32,34 +32,41 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
     },[courseSectionData,courseEntireData,location.pathname])
 
   return (
-    <div>
+    <div className='bg-richblack-100 flex flex-col mt-[30px] py-8 max-w-52 text-richblack-900 h-screen'>
             {/* button and heading */}
         <div>
             {/* buttons  */}
-            <div>
+            <div className='flex gap-5'>
                 <div
+                    
                     onClick={()=>navigate("/dashboard/enrolled-courses")}
+                    className='p-2 bg-richblack-800 text-white rounded-lg hover:cursor-pointer hover:scale-95 m-2'
                 >
                     back
                 </div>
                 <div>
-                    <IconButton text={'Add Review'} onClick={()=>setReviewModal(true)}/>
+                    <IconButton 
+                        text={'Add Review'} 
+                        onClick={()=>setReviewModal(true)}
+                        customClasses={'p-2 bg-yellow-25 text-richblack-900 rounded-lg hover:cursor-pointer hover:scale-95 m-2'}
+                    />
                 </div>
             </div>
             {/* heading or title */}
             <div>
                 <p>{courseEntireData?.courseName}</p>
-                <p>{CompletedLectures?.length} / {totalNoOfLectures}</p>
+                <p>{CompletedLecture?.length} / {totalNoOfLectures}</p>
             </div>
         </div>
         {/* for section and subSection */}
-        <div>
+        <div className='flex flex-col'>
+            
             {
-                courseSectionData.map((section,ind)=>{
+                courseSectionData.map((section,ind)=>(
                     <div
                         onClick={()=>setActiveStatus(section._id)}
                         key={ind}
-                    >
+                    >   
                         {/* section */}
                         <div>
                             <div>{section.sectionName}</div>
@@ -81,7 +88,7 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
                                                 >
                                                     <input 
                                                         type="checkbox" 
-                                                        checked= {CompletedLectures.includes(subsection._id)}
+                                                        checked= {CompletedLecture.includes(subsection._id)}
                                                         onChange={()=>{}}
                                                     />
                                                     <span>{subsection.title}</span>
@@ -92,9 +99,8 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
                                 )
                             }
                         </div>
-
                     </div>
-                })
+                ))
             }
         </div>
     </div>
