@@ -14,7 +14,6 @@ exports.createCategory= async(req,res)=>{
             name:name, 
             description:description,
         })
-        console.log(categoryDetails);
 
         return res.status(200).json({
             success:true,
@@ -55,14 +54,13 @@ exports.categoryPageDetails = async(req,res) =>{
                 message: "categoryId not found"
             })
         }
-        console.log("category Id ",categoryId);
+
         const selectedCategory =await Category.findById(categoryId).populate({
             path : "courses",
             populate:{
                path: "instructor"
             }
         }).exec();   
-        console.log("Selected Category",selectedCategory);
         if(!selectedCategory){
             return res.status(404).json({
                 success:false,
@@ -75,7 +73,7 @@ exports.categoryPageDetails = async(req,res) =>{
                path: "instructor"
             }
         }).exec();
-        console.log("different Categorires", differentCategories);
+        
         const allCategory = await Category.find().populate({
             path : "courses",
             populate:{
@@ -83,9 +81,9 @@ exports.categoryPageDetails = async(req,res) =>{
             }
         }).exec();
         const allCourses = allCategory.flatMap((catagory)=>catagory.courses);
-        console.log("all courses : ",allCourses);   
+
         const mostSellingCourses = allCourses.sort((a,b) => b.sold-a.sold).slice(0,10);
-        console.log("Most Selling courses");
+
 
         return res.status(200).json({
             success:true,

@@ -212,7 +212,6 @@ exports.getFullCourseDetails= async(req,res)=>{
                 message: "course Id is needed"
             })
         }
-        console.log("Working");
         const course = await Course.findOne({_id:courseId})
             .populate("instructor")
             .populate({
@@ -226,17 +225,21 @@ exports.getFullCourseDetails= async(req,res)=>{
             .exec();
         
         course.instructor.password= undefined;
-        // const courseProgress = await courseProgress
         if(!course){
             return res.status(404).json({
                 success:false,
                 message: "Course with given id is not found",
             })
         }
+        const courseProgress = await CourseProgress.findOne({
+            courseID: courseId,
+            userId: userId,
+        });
         return res.status(200).json({
             success:true,
             message:"course fetched successfully",
-            course
+            course,
+            courseProgress
         })
     } catch (error) {
         return res.status(500).json({

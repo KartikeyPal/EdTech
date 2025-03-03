@@ -45,7 +45,7 @@ exports.updateSubSection = async(req,res)=>{
     try {
         const {title,description,subSectionId} =req.body;
         const video = req.files?.videoUrl;
-        console.log(req.files);
+
         if(!subSectionId){
             return res.status(401).json({
                 success:false,
@@ -61,7 +61,7 @@ exports.updateSubSection = async(req,res)=>{
 
         const updateSubsectionData = {};
         if(video){
-            console.log("This is running");
+
             const uploadDetails = await uploadImageToCloudinary(video,process.env.FOLDER_NAME);
             updateSubsectionData.video = uploadDetails.secure_url; 
             updateSubsectionData.timeDuration = `${uploadDetails.duration}`;

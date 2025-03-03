@@ -41,7 +41,7 @@ exports.updateProfile = async (req,res)=>{
 exports.deleteAccount = async(req,res)=>{
     try {
         const userId = req.user.id;
-        console.log(userId);
+
         const userDetails = await User.findById(userId);
         if(!userDetails){
             return res.status(404).json({
@@ -119,7 +119,7 @@ exports.updateDisplayPicture = async(req,res) =>{
             })
         }
         const uploadDetails = await uploadImageToCloudinary(displayPicture,process.env.FOLDER_NAME);
-        console.log(uploadDetails.secure_url);
+
         userDetails.image=uploadDetails.secure_url;
         userDetails.save();
         return res.status(200).json({

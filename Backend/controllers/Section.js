@@ -76,7 +76,7 @@ exports.updateSection = async(req,res)=>{
 exports.deleteSection = async(req,res)=>{
     try {
         const {sectionId,courseId} = req.body;
-        console.log(req.body)
+
         if(!sectionId || !courseId){
             return res.status(400).json({
                 success:false,

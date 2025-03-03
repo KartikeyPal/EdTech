@@ -33,9 +33,7 @@ exports.sendOTP = async (req, res) => {
 
         //creating opt entry in db
         const otpBody = await OTP.create(otpPayload);
-        
         console.log(otpBody);
-
         res.status(200).json({
             success: true,
             message: "otp generated successfully",
@@ -62,7 +60,6 @@ exports.signUp = async(req,res)=>{
                 message: "All fields are required",
             })
         }
-        console.log("req.body :", req.body);
         if(password !== confirmPassword){
             return res.status(400).json({
                 success: false,

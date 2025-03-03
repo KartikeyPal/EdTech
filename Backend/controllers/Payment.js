@@ -4,6 +4,7 @@ const Course  = require ('../models/Course');
 const User = require('../models/User');
 const mailSender = require('../utils/mailSender');
 const crypto = require('crypto');
+const CourseProgress = require('../models/CourseProgress');
 
 //capture the payment
 //initiates the razor pay order
@@ -71,8 +72,6 @@ exports.capturePayments = async(req,res)=>{
 }
 
 exports.verifyPayment =  async(req,res)=>{
-    console.log("verifying payment")
-    console.log(req.body);
     const razorpay_order_id = req.body?.razorpay_order_id;
     const razorpay_payment_id = req.body?.razorpay_payment_id;
     const razorpay_signature = req.body?.razorpay_signature;
@@ -118,8 +117,13 @@ exports.verifyPayment =  async(req,res)=>{
                         success:false,
                         message: "course not found",
                     })
-                }
-                const enrolledStudent = await User.findByIdAndUpdate({_id: userId},{$push:{courses: courseId}},{new: true});
+                }   
+                const courseProgres = await CourseProgress.create({
+                    courseID: courseId,
+                    userId: userId,
+                    completedVideos:[], 
+                })
+                const enrolledStudent = await User.findByIdAndUpdate({_id: userId},{$push:{courses: courseId,courseProgress: courseProgres._id}},{new: true});
     
                 const emailRes = await mailSender(enrolledStudent.email,`Successfully enrolled into ${enrolledCourse.courseName}`, "congratulation, you are onboarded into new course");
                 console.log("Email send successfully : ",emailRes)
@@ -134,10 +138,9 @@ exports.verifyPayment =  async(req,res)=>{
 
 
 exports.sendPaymentSuccessMail = async(req,res)=>{
-    console.log("sending email");
+
     const {orderId,paymentId, amount} = req.body;
-    console.log(req.body);
-    console.log(req.user);
+
     const userId = req.user.id;
 
     if(!orderId || !paymentId || !amount) {
