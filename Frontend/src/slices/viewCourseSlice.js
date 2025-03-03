@@ -21,7 +21,7 @@ const viewCourseSlice = createSlice({
             state.CompletedLecture = action.payload;
         },
         updateCompletedLecture:(state,action)=>{
-            state.CompletedLecture = [...state,action.payload];
+            state.CompletedLecture = [...state.CompletedLecture,action.payload];
         },
         setTotalNoOfLecture: (state,action)=>{
             state.totalNoOfLectures = action.payload;

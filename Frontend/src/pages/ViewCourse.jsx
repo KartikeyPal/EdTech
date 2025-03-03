@@ -15,10 +15,10 @@ const ViewCourse = () => {
     useEffect(()=>{
         const setCourseSpecificDetails = async()=>{
             const courseData = await getFullDetailsOfCourse(courseId,token);
-
+            console.log("course data from video course : ", courseData);
             dispatch(setCourseSectionData(courseData.course.courseContent));
             dispatch(setCourseEntireData(courseData.course));
-            // dispatch(setCompletedLecture(courseData?.completedVideos));
+            dispatch(setCompletedLecture(courseData.courseProgress.completedVideos));
             let lec = 0;
             courseData?.course?.courseContent?.forEach(sec => {
                 lec+=sec.subSection.length;

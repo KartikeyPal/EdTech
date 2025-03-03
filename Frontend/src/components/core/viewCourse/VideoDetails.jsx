@@ -75,12 +75,12 @@ const VideoDetails = () => {
 
       if(currentSubSectionIndex !== noOfSubSection-1) {
           const nextSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSubSectionIndex+1]._id;
-          navigate(`/view-course/:courseId/section/${sectionId}/sub-section/${nextSubSectionId}`);
+          navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${nextSubSectionId}`);
       }
       else{
           const nextSectionId = courseSectionData[currentSectionIndex+1]._id;
           const firstSubSectionId = courseSectionData[currentSectionIndex+1].subSection[0]._id;
-          navigate(`view-course/:courseId/section/${nextSectionId}/sub-section/${firstSubSectionId}`);
+          navigate(`view-course/${courseId}/section/${nextSectionId}/sub-section/${firstSubSectionId}`);
       }
     }
 
@@ -91,18 +91,18 @@ const VideoDetails = () => {
 
       if(currentSubSectionIndex !== 0) {
           const prevSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSubSectionIndex-1]._id;
-          navigate(`/view-course/:courseId/section/${sectionId}/sub-section/${prevSubSectionId}`);
+          navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${prevSubSectionId}`);
       }
       else{
           const prevSectionId = courseSectionData[currentSectionIndex-1]._id;
           const prevSubSectionLength = courseSectionData[currentSectionIndex-1].subSection.length;
           const lastSubSectionId = courseSectionData[currentSectionIndex-1].subSection[prevSubSectionLength-1]._id;
-          navigate(`view-course/:courseId/section/${prevSectionId}/sub-section/${lastSubSectionId}`);
+          navigate(`view-course/${courseId}/section/${prevSectionId}/sub-section/${lastSubSectionId}`);
       }
     }
 
     const handleLectureCompletion = async() =>{
-      //controller isn't completed for handling lecture completion
+
       setLoading(true);
       const res = await markLectureAsComplete({courseId,subSectionId},token);
       if(res){
