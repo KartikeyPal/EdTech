@@ -103,11 +103,17 @@ exports.getAllRatingAndReview = async(req,res) =>{
             path:"course",
             select:"courseName"
         }).exec();
-
+        if(!allReview){
+            return res.status(404).json({
+                success:false,
+                message: "No review is found"
+            })
+        }
+        
         return res.status(200).json({
             success:true,
             message:"all data fetched successfully",
-            data: allReview,
+            allReview,
         })
 
     } catch (error) {

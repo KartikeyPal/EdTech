@@ -10,6 +10,7 @@ import LearningLanguageSection from "../components/core/homepage/LearningLanguag
 import InstructorSection from '../components/core/homepage/InstructorSection.jsx';
 import ExploreMore from '../components/core/homepage/ExploreMore.jsx';
 import Footer from '../components/common/Footer.jsx';
+import ReviewSlider from '../components/common/ReviewSlider.jsx';
 
 const Home = () => {
 
@@ -142,6 +143,7 @@ const Home = () => {
                     <InstructorSection/>
                     <h2 className=' text-center text-4xl font-semibold m-10'>Review from other learners</h2>
                     {/* Review slider */}
+                    <ReviewSlider/> 
         </div>
         {/* Footer  */}
         <div className='mx-auto w-11/12 max-w-maxContent flex flex-row items-center justify-between gap-7 bg-[#161D29] shadow-richblack-700 shadow-lg px-[52px] py-[120px] mb-7'>

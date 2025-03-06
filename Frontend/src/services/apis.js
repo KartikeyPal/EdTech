@@ -53,3 +53,7 @@ export const courseEndpoints = {
     COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
     SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessMail",
   }
+
+  export const reviewAndRatingEndpoints = {
+    GET_ALL_REVIEWS:BASE_URL + "/course/getAllReviews",
+  }

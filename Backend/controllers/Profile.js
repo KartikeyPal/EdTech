@@ -1,6 +1,7 @@
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
+const Course = require("../models/Course");
 exports.updateProfile = async (req,res)=>{
     try {
         const {dateOfBirth="",about="",contactNumber,gender} =req.body;
@@ -173,5 +174,42 @@ exports.getEnrolledCourses = async(req, res) => {
             message: "Failed to retrieve enrolled courses",
             error: error.message,
         });
+    }
+}
+
+exports.instructorDashboard = async (req,res)=>{
+    try {
+        const userId = req.user.id;
+        if(!userId){
+            return res.status.json({
+                success:false,
+                message: 'invalid user'
+            })
+        }
+        console.log(userId)
+        const courseDetails = await Course.find({instructor:userId});
+        const courseData = courseDetails.map((course)=>{
+            const totalStudentEnrolled = course.studentEnrolled.length;
+            const totalAmountGenerated = totalStudentEnrolled * course.price;
+
+            const courseDataWithStats = {
+                _id: course._id,
+                courseName: course.courseName,
+                courseDescription: course.courseDescription,
+                totalStudentEnrolled,
+                totalAmountGenerated,
+            }
+            return courseDataWithStats;
+        })
+        return res.status(200).json({
+            success:true,
+            courses: courseData
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            success:false,
+            message:"SomeThing went wrong while retriving instructor dashboard details"
+        })
     }
 }

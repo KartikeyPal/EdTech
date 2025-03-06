@@ -22,6 +22,7 @@ import Catelog from "./pages/Catelog.jsx";
 import CoursePage from "./pages/CoursePage.jsx";
 import ViewCourse from "./pages/ViewCourse.jsx";
 import VideoDetails from "./components/core/viewCourse/VideoDetails.jsx";
+import Instructor from "./components/core/dashboard/InstructorDashboard/Instructor.jsx";
 export default function App() {
   const {user} = useSelector((state)=>state.profile)
   return (
@@ -56,6 +57,7 @@ export default function App() {
             user?.accountType === "Instructor" && (
               <>
                 <Route path="/dashboard/add-course" element={<AddCourse />}/>
+                <Route path="/dashboard/instructor" element={<Instructor/>}/>
               </>
             )
           }

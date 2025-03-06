@@ -33,3 +33,18 @@ export const getUserEnrolledCourses = async(token)=>{
         }
 }
 
+
+export async function getInstructorData(token){
+    const toastId = toast.loading("Loading...");
+    let result = [];
+    try {
+        const res= await apiConnector("GET",profileEndpoints.GET_INSTRUCTOR_DATA_API,null,{Authorization:`Bearer ${token}`})
+        console.log("get Instructor data : ",res?.data?.courses)
+        result = res?.data?.courses;
+    } catch (error) {
+        console.log("get Instructor api error",error)
+        toast.error("courld not get instructor data")
+    }
+    toast.dismiss(toastId);
+    return result;
+}
