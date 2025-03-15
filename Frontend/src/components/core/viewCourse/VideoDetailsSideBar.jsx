@@ -53,7 +53,7 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
                 </div>
             </div>
             {/* heading or title */}
-            <div>
+            <div className=' bg-richblack-900 text-white '>
                 <p>{courseEntireData?.courseName}</p>
                 <p>{CompletedLecture?.length} / {totalNoOfLectures}</p>
             </div>

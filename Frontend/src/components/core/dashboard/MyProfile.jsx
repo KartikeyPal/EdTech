@@ -27,10 +27,8 @@ const MyProfile = () => {
             
           <IconButton 
           text={"Edit"}
-           
-          onClick={()=>{
-            navigate("dashboard/settings")
-          }} />
+          onClick={()=>navigate("/dashboard/settings")}
+          />
           </div>
         </div>
         {/* Section 2 */}
@@ -39,42 +37,53 @@ const MyProfile = () => {
             <p className='-mt-6' >About</p>
             <p className='text-richblack-300'>{user?.additionalDetails?.about ?? "Tell Something about yourself"}</p>
           </div>
-            <IconButton text={"edit"} onClick={()=>navigate("/dashboard/settings")}/>
+            <IconButton 
+                text={"Edit"} 
+                onClick={()=>navigate("/dashboard/settings")}
+                customClasses={'flex  bg-yellow-25 rounded-lg  text-richblack-900 items-center h-9 w-24 hover:scale-90 justify-center transition delay-150 ease-in-out '}
+                />
         </div>
         {/* section 3 */}
         <div className='flex flex-row w-[75%] gap-3 justify-between p-10 mt-8 rounded-lg bg-richblack-800 border-richblack-200 border-2'>
           <div className='flex flex-col'>
             <p className='-mt-6'>Personal Details</p> 
            
-
-            <div>
-              <div>
-                <p>First Name</p>
-                <p>{user?.firstName}</p>
+            <div className=' flex p-3 my-3 -ml-3 gap-32 justify-evenly'>
+                <div className='space-y-3'>
+                  <div> 
+                    <p className='text-richblack-300 text-sm'>First Name</p>
+                    <p className='text-richblack-25 text-sm'>{user?.firstName}</p>
+                  </div>
+                  <div>
+                    <p className='text-richblack-300 text-sm'>Email Name</p>
+                    <p className='text-richblack-25 text-sm'>{user?.email}</p>
+                  </div>
+                  <div>
+                    <p className='text-richblack-300 text-sm'>Gender</p>
+                    <p className='text-richblack-25 text-sm'>{user?.additionalDetails?.gender ?? " add gender"}</p>
+                  </div>
+                </div>
+                <div className='space-y-3'>
+                  <div>
+                    <p className='text-richblack-300 text-sm'>Last Name</p>
+                    <p className='text-richblack-25 text-sm'>{user?.lastName}</p>
+                  </div>
+                  <div>
+                    <p className='text-richblack-300 text-sm'>Phone Number</p>
+                    <p className='text-richblack-25 text-sm'>{user?.additionalDetails?.contactNumber ?? "add contact number"}</p>
+                  </div>
+                  <div>
+                    <p className='text-richblack-300 text-sm'>Date of Birth</p>
+                    <p className='text-richblack-25 text-sm'>{user?.additionalDetails?.dateOfBirth ?? "add date of birth"}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p>Email Name</p>
-                <p>{user?.email}</p>
-              </div>
-              <div>
-                <p>Gender</p>
-                <p>{user?.additionalDetails?.gender ?? " add gender"}</p>
-              </div>
-              <div>
-                <p>Last Name</p>
-                <p>{user?.lastName}</p>
-              </div>
-              <div>
-                <p>Phone Number</p>
-                <p>{user?.additionalDetails?.contactNumber ?? "add contact number"}</p>
-              </div>
-              <div>
-                <p>Date of Birth</p>
-                <p>{user?.additionalDetails?.dateOfBirth ?? "add date of birth"}</p>
-              </div>
-            </div>
           </div>
-            <IconButton text={"edit"} onClick={()=>navigate("/Dashboard/settings")}/>
+            <IconButton 
+                text={"Edit"} 
+                onClick={()=>navigate("/Dashboard/settings")}
+                customClasses={'flex  bg-yellow-25 rounded-lg  text-richblack-900 items-center h-9 w-24 hover:scale-90 justify-center transition delay-150 ease-in-out '}
+                />
         </div>
       </div>
     </div>
