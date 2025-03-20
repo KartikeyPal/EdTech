@@ -7,6 +7,8 @@ import { FaEdit } from 'react-icons/fa';
 const MyProfile = () => {
   const {user} = useSelector((state) => state.profile);
   const navigate = useNavigate();
+
+  
   return (
     <div className='w-11/12 '>
       <h1 className='font-inter text-[30px] font-bold flex flex-row items-start text-white mt-16   '>My Profile</h1>

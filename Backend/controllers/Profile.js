@@ -4,7 +4,9 @@ const {uploadImageToCloudinary} = require('../utils/imageUploader');
 const Course = require("../models/Course");
 exports.updateProfile = async (req,res)=>{
     try {
-        const {dateOfBirth="",about="",contactNumber,gender} =req.body;
+        console.log(req.body);
+        const {dateOfBirth="",about="",contactNumber,gender,firstName, lastName} =req.body;
+
         const id = req.user.id;
         if(!contactNumber ||!gender || !id){
             return res.status(400).json({
@@ -22,10 +24,12 @@ exports.updateProfile = async (req,res)=>{
         profileDetails.contactNumber = contactNumber;
         await profileDetails.save();
 
+        const updatedUser = await User.findById(id).populate("additionalDetails").exec();
+
         return res.status(200).json({
             success:true,
             message: "Profile details updated successfully",
-            profileDetails,
+            updatedUser,
         })
 
     } catch (error) {
