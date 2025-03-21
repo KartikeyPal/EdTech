@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import IconButton from '../../../common/IconButton'
 import {useDispatch, useSelector} from 'react-redux'
@@ -9,22 +9,20 @@ const ProfileInformationEditSection = () => {
   const {user} = useSelector(state=>state.profile);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log("Updated user data:", user);
+  }, [user]);
 
   const {
     register,
-    setValue,
-    getvalues,
     handleSubmit,
     formState:{errors}
   } = useForm();
 
-
   const onSubmit = async(data)=>{
-    //forming action
     const res = await updateProfile(data,token);
-    console.log(res?.data?.updatedUser);
-    dispatch(setUser(res?.data?.updatedUser));
-    console.log(user);
+   const updatedUser = res.data.updatedUser;
+    dispatch(setUser(updatedUser));
   }
 
   return (

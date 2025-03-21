@@ -4,27 +4,56 @@ const {uploadImageToCloudinary} = require('../utils/imageUploader');
 const Course = require("../models/Course");
 exports.updateProfile = async (req,res)=>{
     try {
-        console.log(req.body);
         const {dateOfBirth="",about="",contactNumber,gender,firstName, lastName} =req.body;
-
-        const id = req.user.id;
-        if(!contactNumber ||!gender || !id){
+        const userId = req.user.id;
+        if(!contactNumber ||!gender){
             return res.status(400).json({
                 success:false,
                 message: "minimum fields are required",
             })
         }
+        if(!userId) {
+            return res.status(404).json({
+                success:false,
+                message: "user is not found",
+            })
+        }
 
-        const userDetails = await User.findById(id);
-        const profileId = userDetails.additionalDetails;
-        const profileDetails = await Profile.findById(profileId);
-        profileDetails.dateOfBirth = dateOfBirth;
-        profileDetails.about = about;
-        profileDetails.gender = gender;
-        profileDetails.contactNumber = contactNumber;
-        await profileDetails.save();
+        const userDetails = await User.findById(userId);
+        if(!userDetails) {
+            return res.status(404).json({
+                success:false,
+                message: "User not found",
+            });
+        }
 
-        const updatedUser = await User.findById(id).populate("additionalDetails").exec();
+        const [updatedProfile,updatedUser] = await Promise.all([
+            Profile.findByIdAndUpdate(
+                userDetails.additionalDetails,
+                {
+                    dateOfBirth,
+                    gender,
+                    about,
+                    contactNumber
+                },
+                { new: true }
+            ),
+            User.findByIdAndUpdate(
+                userId,
+                {
+                    firstName,
+                    lastName
+                },
+                { new: true }
+            ).populate("additionalDetails")
+        ]);
+
+        if(!updatedUser || !updatedProfile) {
+            return res.status(404).json({
+                success:false,
+                message: "Failed to update profile",
+            });
+        }
 
         return res.status(200).json({
             success:true,
