@@ -7,7 +7,6 @@ import { setUser } from '../../../../slices/profileSlice';
 const ProfileInformationEditSection = () => {
   const {token} = useSelector(state=>state.auth);
   const {user} = useSelector(state=>state.profile);
-  // console.log(token  , ' ', "user : ", user)
   const dispatch = useDispatch();
 
 

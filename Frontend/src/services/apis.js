@@ -8,7 +8,7 @@ export const categories ={
 export const settingsEndpoints = {
     UPDATE_DISPLAY_PICTURE_API: BASE_URL+ "/profile/updateDisplayPicture",
     UPDATE_PROFILE_API:  BASE_URL+ "/profile/updateProfile",
-    UPDATE_PASSWORD_API: BASE_URL+ "/auth/reset-password-token",
+    UPDATE_PASSWORD_API: BASE_URL+ "/auth/changepassword",
     DELETE_PROFILE_API:  BASE_URL+ "/profile/deleteProfile",
     RESETPASSWORD_TOKEN_API: BASE_URL + "/auth/reset-password-token",
     RESETPASSWORD_API: BASE_URL + "/auth/reset-password",

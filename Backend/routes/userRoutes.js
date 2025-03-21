@@ -16,7 +16,7 @@ const {
 router.post('/sendotp',sendOTP);
 router.post('/signup',signUp);
 router.post('/login',login);
-router.put('/changerpassword',auth,changePassword);
+router.put('/changepassword',auth,changePassword);
 // reset Password
 
 router.post('/reset-password-token',resetPasswordToken);

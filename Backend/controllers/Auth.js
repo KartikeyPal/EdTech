@@ -165,7 +165,6 @@ exports.login =async(req,res) =>{
             expires: new Date(Date.now() + 3*24*60*60*1000),
             httpOnly: true,
         }
-    
         return res.cookie('token',token,options).json({
             success: true,
             message: "User login successfully",
@@ -184,23 +183,22 @@ exports.login =async(req,res) =>{
 //changepassword
 exports.changePassword = async (req,res) =>{
     try {
-        const {currentPassword, newPassword, confirmNewPassword} = req.body;
-        if(!(await bcrypt.compare(currentPassword, req.user.password))){
+        const {currentPassword, newPassword} = req.body;
+        const currentUser = await User.findById(req.user.id); 
+        
+        if(!(await bcrypt.compare(currentPassword, currentUser.password))){
             return res.status(400).json({
                 success: false,
                 message: "incorrect currentPassword",
             })
         }
-        if(newPassword !== confirmNewPassword){
-            return res.status(400).json({
-                success: false,
-                message: "new Password and Confirm Password",
-            })
-        }
-        const hashedPassword = bcrypt.hash(newPassword,10);
-        const currentUser = req.user;
+        const hashedPassword = await bcrypt.hash(newPassword,10);
         currentUser.password = hashedPassword,
         currentUser.save();
+        return res.status(202).json({
+            success:true,
+            message: "Password is  updated",
+        })
     } catch (error) {
         return res.status(500).json({
             success: false,

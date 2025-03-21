@@ -1,7 +1,7 @@
 import React from 'react'
 import ProfileEditSection from './ProfileEditSection'
 import ProfileInformationEditSection from './ProfileInformationEditSection'
-import PasswordEditSection from './ProfileEditSection'
+import PasswordEditSection from './PasswordEditSection'
 import DeleteAccountSection from './DeleteAccountSection'
 
 const Settings = () => {
