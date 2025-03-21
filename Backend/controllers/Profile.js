@@ -116,20 +116,14 @@ exports.updateDisplayPicture = async(req,res) =>{
                 message: "Please login first",
             })
         }
-        const userDetails = await User.findById(userId);
-        if(!userDetails){
-            return res.status(404).json({
-                success:false,
-                message:"user is not registered",
-            })
-        }
         const uploadDetails = await uploadImageToCloudinary(displayPicture,process.env.FOLDER_NAME);
-
-        userDetails.image=uploadDetails.secure_url;
-        userDetails.save();
+        const updatedUser = await User.findByIdAndUpdate(userId,{
+            image: uploadDetails.secure_url,
+        },{new:true});
         return res.status(200).json({
             success:true,
             message: "Display picture updated successfully",
+            updatedUser,
         });
     } catch (error) {
         console.log(error);

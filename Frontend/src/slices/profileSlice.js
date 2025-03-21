@@ -12,6 +12,7 @@ const profileSlice = createSlice({
         setUser(state,value){
             console.log(value)
             state.user = value.payload;
+            console.log("State is " , state)
         },
         setLoading(state,value){
             state.loading = value.payload;
