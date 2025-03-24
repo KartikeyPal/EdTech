@@ -9,18 +9,20 @@ import { PiMonitorFill, PiStrategyDuotone } from "react-icons/pi";
 import { CiGlobe } from "react-icons/ci";
 import {useDispatch,useSelector} from 'react-redux'
 import { buyCourse } from '../services/operations/studentFeatureAPI';
+import { addToCart } from '../slices/cartSlice';
+import toast from 'react-hot-toast';
 const CoursePage = () => {
     const {id} = useParams();
     const [course,setCourse] = useState();
     const [showSection,setShowSection] = useState(false);
     const [averageReviewCount,setAverageReviewCount] = useState(0);
-    
 
+    
+    const {cart,totalItems,total} = useSelector(state => state.cart);
     const {user} = useSelector((state)=>state.profile);
     const {token} = useSelector(state=>state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
 
 
     useEffect(()=>{
@@ -30,11 +32,7 @@ const CoursePage = () => {
         }
             fetchCourse();
     },[id]);
-    useEffect(()=>{
-        if(course){
-        console.log(course)
-        }
-    },[course]);
+  
     useEffect(()=>{
         const count = GetAvgRating(course?.ratingAndReview);
         setAverageReviewCount(count);
@@ -48,7 +46,14 @@ const CoursePage = () => {
             return;
         }
     }
-
+    const handleAddToCart = () =>{
+        if(!user){
+            toast.error("Please log in");
+            navigate('/login')
+            return;
+        }
+        dispatch(addToCart(course));
+    }
 
 
 
@@ -83,7 +88,7 @@ const CoursePage = () => {
                             <div className='flex flex-col p-2 m-2 space-y-6'>
                                 <button 
                                     className='p-2 bg-yellow-25 text-richblack-900 rounded-lg font-bold hover:scale-95'
-                                    
+                                    onClick={handleAddToCart}
                                 >
                                     Add to Cart
                                 </button>

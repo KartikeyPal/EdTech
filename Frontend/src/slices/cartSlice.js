@@ -16,9 +16,14 @@ const cartSlice = createSlice({
             const index = state.cart.findIndex((item)=> item._id === course._id);
             if(index>=0){
                 toast.error("course already in cart");
+                return;
             }
             state.cart.push(course);
             state.totalItems++;
+            state.total+=course.price;
+            localStorage.setItem("cart", JSON.stringify(state.cart))
+            localStorage.setItem("totalItems", JSON.parse(state.totalItems));
+            localStorage.setItem("total", JSON.parse(state.total));
         },
         setTotalItems(state,value){
             state.totalItems = value.payload;
