@@ -51,7 +51,6 @@ const Navbar = () => {
                             <li key={index}>
                                 {
                                     link.title === "Catalog"?(
-                                    <div>
                                         <div className='flex flex-row items-center relative group'>
                                             <p>{link.title}</p>
                                             <RiArrowDropDownLine className='text-2xl' />
@@ -62,14 +61,14 @@ const Navbar = () => {
                                                         {sublinks?.length ? (
                                                                 sublinks.map((ele,ind)=>(
                                                                     <Link to={`catalog/${ele.name}`} key={ind} >
-                                                                    <div className=''>{ele.name}</div>
+                                                                    <div className='w-full hover:bg-richblue-700 hover:text-richblack-5 rounded-xl p-3 mt-1'>{ele.name}</div>
                                                                     </Link>
                                                                 ))
                                                         ) : (<div/>)}
                                                     </div>
                                             </div>
                                         </div>
-                                    </div>
+                               
                                     ):(
                                         <Link to={link?.path}>
                                             <p className={`${matchRoute(link?.path)? "text-yellow-25" : "text-richblack-25"}`}> 

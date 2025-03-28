@@ -54,8 +54,11 @@ const Sidebar = () => {
                         </button>
                 </div>
             </div>
-            <div className={`${confirmationModal ? "absolute bottom-[50%] left-[50%] t px-11 bg-richblack-800 py-14  z-40 bg-transparent-[50%] border border-richblack-900 rounded-md m " :""} `}>
+            <div className={`${confirmationModal ? "absolute flex justify-center items-center h-[calc(100%-42px)] t px-11 bg-richblack-900/ w-full text-center py-14  z-40 backdrop-blur-sm bg- border  rounded-md " :""} `}>
+                <div className='max-w-maxContent border-solid border-richblack-400 border-[2px] p-10 text-left bg-richblue-900'>
                 {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+
+                </div>
             </div>
     </div>
   )
