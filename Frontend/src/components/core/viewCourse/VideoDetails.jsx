@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { markLectureAsComplete } from '../../../services/operations/courseDetailsAPI';
 import { updateCompletedLecture } from '../../../slices/viewCourseSlice';
-import { Player } from 'video-react';
+import { Player ,BigPlayButton,LoadingSpinner  } from 'video-react';
 import "../../../../node_modules/video-react/dist/video-react.css";
 import { FaPlayCircle } from "react-icons/fa";
 import IconButton from '../../common/IconButton';
@@ -113,23 +113,23 @@ const VideoDetails = () => {
 
       setLoading(false);
     }
-
-
   return (
-      <div className='text-white bg-richblack-800 w-screen h-screen flex flex-col mt-[60px] '>
-     {   console.log(videoData)}
+      <div className='text-white bg-richblack-800  h-screen flex  items-center flex-col mt-[57px] p-3 w-full'>
           {
             !videoData ? (<div>no data found</div>) : (
-              <div className='w-[700px] m-10 p-3 '>
+              <div className='w-full h-[50vh]'>
                   <Player
+                      fluid={true}
                       ref={playerRef}
-                      aspectRatio="16:9"
+                      width="100%"
+                      height="100%"
                       playsInLine
                       onEnded={()=>setVideoEnded(true)}
                       src={videoData?.videoUrl}
+                      
                   >
-                    <FaPlayCircle className='position'/>
-
+                        <LoadingSpinner />
+                    <BigPlayButton position="center" />
                       {
                           videoEnded && (
                             <div>

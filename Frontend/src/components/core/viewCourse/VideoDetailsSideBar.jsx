@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import IconButton from '../../common/IconButton';
-
+import { IoIosArrowDown } from "react-icons/io";
+import { BiVideo } from "react-icons/bi";
 const VideoDetailsSideBar = ({setReviewModal}) => {
 
     const [activeStatus,setActiveStatus] =  useState("");
@@ -32,7 +33,7 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
     },[courseSectionData,courseEntireData,location.pathname])
 
   return (
-    <div className='bg-richblack-100 flex flex-col mt-[30px] py-8 max-w-52 text-richblack-900 h-screen'>
+    <div className='bg-richblack-900 flex flex-col mt-[30px] py-8 w-full text-richblack-25 h-screen'>
             {/* button and heading */}
         <div>
             {/* buttons  */}
@@ -53,13 +54,15 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
                 </div>
             </div>
             {/* heading or title */}
-            <div className=' bg-richblack-900 text-white '>
-                <p>{courseEntireData?.courseName}</p>
-                <p>{CompletedLecture?.length} / {totalNoOfLectures}</p>
+            <div className='w-[100%] bg-richblack-900 text-white  py-3 flex items-center gap-3'>
+                <p className='font-bold text-2xl w-[80%]'>{courseEntireData?.courseName}</p>
+                <p className='w-[20%]'>{CompletedLecture?.length} / {totalNoOfLectures}</p>
             </div>
+
+            <hr />
         </div>
         {/* for section and subSection */}
-        <div className='flex flex-col'>
+        <div className='flex flex-col mt-3'>
             
             {
                 courseSectionData.map((section,ind)=>(
@@ -68,19 +71,19 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
                         key={ind}
                     >   
                         {/* section */}
-                        <div>
+                        <div className='flex items-center gap-2 px-3 bg-richblack-600 py-2 justify-between text-white'>
                             <div>{section.sectionName}</div>
-                            {/* add arrow icon */}
+                            <IoIosArrowDown className={`${sectionId === section._id ? "rotate-180 " : ""}`}/>
                         </div>
                         {/* {subSection} */}
-                        <div>
+                        <div className='w-full flex '>
                             {
                                 activeStatus === section._id && (
-                                    <div>
+                                    <div className='w-full'> 
                                         {
                                             section.subSection.map((subsection,ind)=>(
                                                 <div 
-                                                    className={`flex gap-3 p-3${videoBarActive===subsection._id?"bg-yellow-25 text-richblack-900" : "bg-richblack-900 text-white"}`}
+                                                    className={`w-full flex gap-3 p-1  ${videoBarActive===subsection._id?"bg-yellow-25 text-richblack-900 items-center " : "bg-richblack-700 text-white items-center"}`}
                                                     key={ind}
                                                     onClick={()=>{navigate(`view-course/${courseEntireData?._id}/section/${section._id}/sub-section/${subsection._id}`)
                                                     setVideoBarActive(subsection?._id);
@@ -91,7 +94,8 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
                                                         checked= {CompletedLecture.includes(subsection._id)}
                                                         onChange={()=>{}}
                                                     />
-                                                    <span>{subsection.title}</span>
+                                                    <span >{subsection.title}</span>
+                                                    <BiVideo />
                                                 </div>
                                             ))
                                         }

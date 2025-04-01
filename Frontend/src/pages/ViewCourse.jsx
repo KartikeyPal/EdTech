@@ -31,10 +31,9 @@ const ViewCourse = () => {
 
   return (
     <div>
-        <div className='flex w-screen'>
-            <div className='w-[15%]'>
+        <div className='flex w-full'>
+            <div className='w-[20%]'>
                  <VideoDetailsSideBar setReviewModal = {setReviewModal} />
-
             </div>
             <div className='w-[85%]'>
                 <Outlet/>
