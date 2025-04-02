@@ -15,7 +15,7 @@ const Dashboard = () => {
             <div className='w-[14%] flex mt-10'>
             <Sidebar />
             </div>
-            <div className='w-[86%] h-screen bg-richblack-900 flex justify-center '>
+            <div className='w-[86%] h-full bg-richblack-900 flex justify-center '>
                 <Outlet/>
             </div>
         </div>
