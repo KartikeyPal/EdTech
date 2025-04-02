@@ -80,7 +80,8 @@ const VideoDetails = () => {
       else{
           const nextSectionId = courseSectionData[currentSectionIndex+1]._id;
           const firstSubSectionId = courseSectionData[currentSectionIndex+1].subSection[0]._id;
-          navigate(`view-course/${courseId}/section/${nextSectionId}/sub-section/${firstSubSectionId}`);
+          console.log(firstSubSectionId);
+          navigate(`/view-course/${courseId}/section/${nextSectionId}/sub-section/${firstSubSectionId}`);
       }
     }
 
@@ -97,7 +98,7 @@ const VideoDetails = () => {
           const prevSectionId = courseSectionData[currentSectionIndex-1]._id;
           const prevSubSectionLength = courseSectionData[currentSectionIndex-1].subSection.length;
           const lastSubSectionId = courseSectionData[currentSectionIndex-1].subSection[prevSubSectionLength-1]._id;
-          navigate(`view-course/${courseId}/section/${prevSectionId}/sub-section/${lastSubSectionId}`);
+          navigate(`/view-course/${courseId}/section/${prevSectionId}/sub-section/${lastSubSectionId}`);
       }
     }
 
@@ -117,28 +118,28 @@ const VideoDetails = () => {
       <div className='text-white bg-richblack-800  h-screen flex  items-center flex-col mt-[57px] p-3 w-full'>
           {
             !videoData ? (<div>no data found</div>) : (
-              <div className='w-full h-[50vh]'>
-                  <Player
-                      fluid={true}
-                      ref={playerRef}
-                      width="100%"
-                      height="100%"
-                      playsInLine
-                      onEnded={()=>setVideoEnded(true)}
-                      src={videoData?.videoUrl}
-                      
-                  >
-                        <LoadingSpinner />
-                    <BigPlayButton position="center" />
-                      {
+                      <div className='w-full h-[70%] flex  flex-col'>
+                        <Player
+                            fluid={false}
+                            ref={playerRef}
+                            width="100%"
+                            height="80%"
+                            playsInLine
+                            onEnded={()=>setVideoEnded(true)}
+                            src={videoData?.videoUrl}  
+                        >
+                          <LoadingSpinner />
+                          <BigPlayButton position="center" />
+                        {
                           videoEnded && (
-                            <div>
+                            <div className='flex justify-center items-center h-full w-full flex-col  border-[2px] border-solid bg-richblue-900 text-white '>
                               {
                                 !CompletedLecture.includes(subSectionId) && (
                                   <IconButton
                                       disabled={loading}
                                       onClick={()=>handleLectureCompletion()}
                                       text={!loading? ("Mark as completed") : ("Loading...")}
+                                      customClasses={"z-50 m-3 font-semibold text-richblack-5 text-xl bg-richblack-900 rounded-lg p-2" }
                                   />
                                 )
                               }
@@ -152,15 +153,15 @@ const VideoDetails = () => {
                                     }
                                   }}
                                   text={"Rewatch"}
-                                  customClasses={""}
+                                  customClasses={"z-50  font-semibold text-richblack-5 text-xl bg-richblack-900 rounded-lg p-2"}
                               />
 
-                              <div>
+                              <div className='z-50  mt-3 '>
                                 {!isFirstVideo() && (
                                   <button 
                                     disabled={loading} 
                                     onClick={goToPrevVideo}
-                                    className=''
+                                    className='z-50 bg-richblack-800 text-white p-2 rounded-lg mx-2 font-semi'
                                     >Prev</button>
                                 )}
                                 {
@@ -168,7 +169,7 @@ const VideoDetails = () => {
                                     <button
                                       disabled={loading}
                                       onClick={goToNextVideo}
-                                      className=''
+                                      className='z-50 bg-yellow-50 text-richblack-900 p-2 rounded-lg hover:scale-95 mx-2'
 
                                     >Next</button>
                                   ) 
@@ -176,18 +177,19 @@ const VideoDetails = () => {
                               </div>
                             </div>
                           )
-                      }
-
-                  </Player>
-              </div>
+                        }
+                        </Player>
+                      </div>
             )
           }
-          <div className='flex  gap-4 m-10 p-3'>
+          <div className='flex flex-col justify-start w-full p-3 -mt-11'>
 
-            <h1>{videoData.title}</h1>
-            <p> {videoData?.description} </p>
+            <h1 className='font-bold text-3xl text-richblack-50'>{videoData.title}</h1>
+            <p className='text-lg font-semibold'>Description : </p>
+            <p className='font'> {videoData?.description} </p> 
+
           </div>
-      </div>
+    </div>
   )
 }
 
