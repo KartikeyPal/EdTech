@@ -8,9 +8,9 @@ const RenderCartCourses = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className='w-[86%]  mt-[100px] mx-24 px-10'>
+        <div className='w-[70%] '>
             {!cart.length ? (
-                <p className="grid h-[10vh] w-full place-content-center text-richblack-5">
+                <p className="text-3xl font-bold">
                     Your cart is empty.
                 </p>
             ) : (
@@ -38,8 +38,8 @@ const RenderCartCourses = () => {
                                     </p>
                                 </div>
                             </div>
-                            <div className="w-1/4 px-2 py-3">Rs {course?.price}</div>
-                            <div className="flex w-1/5 items-center gap-2 px-2 py-3">
+                            <div className="w-1/4 px-2 py-3 text-caribbeangreen-25">Rs {course?.price}</div>
+                            <div className="flex w-1/5 items-center gap-2 px-2 py-3 text-pink-300">
                                 <button 
                                     onClick={() => dispatch(removeFromCart(course?._id))}
                                     className="flex items-center gap-2 text-red-500 hover:text-red-600"

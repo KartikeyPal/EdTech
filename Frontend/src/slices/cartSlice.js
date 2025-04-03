@@ -23,18 +23,27 @@ const cartSlice = createSlice({
             state.total+=course.price;
             localStorage.setItem("cart", JSON.stringify(state.cart))
             localStorage.setItem("totalItems", JSON.parse(state.totalItems));
-            localStorage.setItem("total", JSON.parse(state.total));
+            localStorage.setItem("total", state.total);
         },
         setTotalItems(state,value){
             state.totalItems = value.payload;
         },
         // remove from the cart
         removeFromCart(state,value){
+            console.log("working");
             const course = value.payload;
+            console.log(value.payload); 
             const index = state.cart.findIndex((item) => item._id === course);
+          
+            const price = state.cart[index].price;
+            console.log(typeof(price));
             if (index >= 0) {
                 state.cart.splice(index, 1);
                 state.totalItems--;
+                state.total = state.total - price;
+                localStorage.setItem("cart", JSON.stringify(state.cart));
+                localStorage.setItem("totalItems", JSON.stringify(state.totalItems));
+                localStorage.setItem("total", JSON.stringify(state.total));
             } else {
                 toast.error("Course not found in cart");
             }
