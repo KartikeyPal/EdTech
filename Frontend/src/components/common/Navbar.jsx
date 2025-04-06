@@ -51,11 +51,11 @@ const Navbar = () => {
                             <li key={index}>
                                 {
                                     link.title === "Catalog"?(
-                                        <div className='flex flex-row items-center relative group'>
-                                            <p>{link.title}</p>
-                                            <RiArrowDropDownLine className='text-2xl' />
-                                            <div className='invisible absolute left-[50%] translate-x-[-50%] translate-y-[20%] top-[50%]  flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200  group-hover:visible group-hover:opacity-100 lg:w-[260px] z-10 '>
-                                                <div className='absolute left-[50%] top-0 h-6 w-6 rotate-45 rounded-md bg-richblack-5 translate-x-[67%] translate-y-[-20%]'>
+                                        <div className='flex items-center relative group'>
+                                            <p className='group-hover:text-yellow-25'>{link.title}</p>
+                                            <RiArrowDropDownLine className='text-2xl group-hover:rotate-180 transition-transform delay-150 group-hover:text-yellow-25' />
+                                            <div className='invisible absolute left-[50%] translate-x-[-50%] translate-y-[20%] top-[50%]  flex flex-col rounded-md bg-richblack-900 p-4 text-richblack-25 opacity-0 transition-all delay-100 group-hover:visible group-hover:opacity-100 lg:w-[260px] z-10 group-hover:border-[1px] group-hover:border-richblack-500 '>
+                                                <div className='absolute left-[50%] top-0 h-6 w-6 rotate-45 rounded-md bg-richblack-900 translate-x-[67%] translate-y-[-20%]'>
                                                 </div>
                                                     <div>
                                                         {sublinks?.length ? (
