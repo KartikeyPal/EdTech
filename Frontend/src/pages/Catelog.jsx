@@ -37,34 +37,34 @@ const Catelog = () => {
     },[categoryId]);
 
   return (
-    <div className='text-white mt-[60px]' >
-        <div className=' flex flex-col mx-20 justify-center'>
-            <div>
-                <p>{`Home / Catalog /`} <span className='text-yellow-50'> {catelogPageData?.selectedCategory?.name}</span></p>
-                <p>{catelogPageData?.selectedCategory?.name}</p>
-                <p>{catelogPageData?.selectedCategory?.description}</p> 
+    <div className='text-white mt-[60px] ' >
+        <div className='flex flex-col justify-center'>
+            <div className='w-full py-16 bg-richblue-900 px-40'>
+                <p className='font-light text-sm mb-3'>{`Home / Catalog  /`} <span className='text-yellow-50'> {catelogPageData?.selectedCategory?.name}</span></p>
+                <p className='text-3xl font-semibold text-richblack-200 py-3'>{catelogPageData?.selectedCategory?.name} Courses</p>
+                <p className='text-richblack-300'>{catelogPageData?.selectedCategory?.description}</p> 
             </div>
-            <div>
+            <div className='mx-40'>
                 {/* Section 1 */}
-                <div>
-                    <div>Courses to get you started</div>
-                    <div className='flex gap-x-3'>
-                        <p>Most Popular</p>
+                <div className='pt-10'>
+                    <div className='text-4xl text-richblack-100 font-bold pb-3'>Courses to get you started</div>
+                    {/* <div className='flex gap-x-3'>
+                        <p className=''>Most Popular</p>
                         <p>New</p>
-                    </div>
+                    </div> */}
                     <CourseSlider courses={catelogPageData?.selectedCategory?.courses}/>
                 </div>
 
                 {/* section 2 */}
-                <div>
-                    <p>Top Courses in {catelogPageData?.selectedCategory?.name}</p>
+                <div >
+                    <p className='text-4xl text-richblack-100 font-bold pb-3 mt-16'>Top Courses in {catelogPageData?.selectedCategory?.name}</p>
                     <div><CourseSlider courses={catelogPageData?.differentCategories}/></div>
                     {console.log(catelogPageData    )}
                 </div>
                 {/* ?section 3 */}
 
                 <div>
-                    <div>Frequently Bought</div>
+                    <div className='text-4xl text-richblack-100 font-bold pb-3 mt-16'>Frequently Bought</div>
                     <div className='py-8'>
                             <div className='grid grid-cols-1 lg:grid-cols-3 gap-x-3'>
                                 {
