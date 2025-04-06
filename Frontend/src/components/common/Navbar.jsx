@@ -13,7 +13,7 @@ const Navbar = () => {
 
     const {token} = useSelector((state)=> state.auth);
     const {user} = useSelector((state)=>state.profile);
-    const {totalItem} = useSelector((state)=>state.cart);
+    const {totalItems} = useSelector((state)=>state.cart);
     const location = useLocation(); 
     const [sublinks,setSublinks] = useState([])
 
@@ -90,8 +90,8 @@ const Navbar = () => {
                             <Link to="/dashboard/cart" className='relative'>
                                 <AiOutlineShoppingCart className='text-white text-xl'/>
                                 {
-                                    totalItem>0 && (
-                                        <span>{totalItem}</span>
+                                    totalItems>0 && (
+                                        <span className='boder-richblack-900  text-xs rounded-full text-richblack-5 bg-richblack-900   absolute -top-1 -right-1 px-1 py-0'>{totalItems}</span>
                                     )
                                 }
                             </Link>
