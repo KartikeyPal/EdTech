@@ -50,7 +50,7 @@ function ContactUsForm() {
                             name="firstName"
                             id="firstName"
                             placeholder='Enter First name'
-                            className='text-richblack-800'
+                            className='text-richblack-25 bg-richblack-800 border-richblack-500 border-[1px] p-2 rounded-lg'
                             {...register("firstName",{required:true})}
                         />
                         {
@@ -65,7 +65,7 @@ function ContactUsForm() {
                             name="lastName"
                             id="lastName"
                             placeholder='Enter Last name'
-                            className='text-richblack-800'
+                             className='text-richblack-25 bg-richblack-800 border-richblack-500 border-[1px] p-2 rounded-lg'
                             {...register("lastName",{required:false})}
                         />
                         {
@@ -80,7 +80,7 @@ function ContactUsForm() {
                             name="email"
                             id="email"
                             placeholder='Enter Email address'
-                            className='text-richblack-800'
+                             className='text-richblack-25 bg-richblack-800 border-richblack-500 border-[1px] p-2 rounded-lg'
                             {...register("email",{required:true})}
                         />
                         {
@@ -93,10 +93,10 @@ function ContactUsForm() {
                        
                         <div className='flex flex-row gap-5'>
                              {/* country code dropdown */}
-                                <select name="dropdown" id="dropdown" className='w-[53px]' {...register("countrycode",{required: true})} >
+                                <select name="dropdown" id="dropdown"  className='w-[69px]  text-richblack-25 bg-richblack-800 border-richblack-500 border-[1px] p-2 rounded-lg' {...register("countrycode",{required: true})} >
                                     {
                                         CountryCode.map((ele,ind)=>(
-                                            <option value={ ele.code} key={ind} className=''>{ele.code} - {ele.country}</option>
+                                            <option value={ ele.code} key={ind} className='hover:bg-caribbeangreen-300'>{ele.code} - {ele.country}</option>
                                         ))
                                     }
                                 </select>
@@ -107,7 +107,7 @@ function ContactUsForm() {
                                     name='phonenumber'
                                     id='phonenumber'
                                     placeholder='12345 67890'
-                                    className=''
+                                     className='text-richblack-25 bg-richblack-800 border-richblack-500 border-[1px] p-2 rounded-lg [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                                     {...register('phonenumber',{
                                         required:{value: true, message: "Invalid phone number"},
                                         maxLength:{value:10,message:"invalid phone number"},
@@ -123,7 +123,7 @@ function ContactUsForm() {
                         }
                     </div>
                     {/* message box */}
-                    <div className='flex flex-col mb-5'>
+                    <div className='flex flex-col mb-5 gap-2 mt-6'>
                         <label htmlFor="message">Message</label>
                         <textarea
                             name="message"
@@ -131,14 +131,14 @@ function ContactUsForm() {
                             cols={30}
                             rows={7}
                             placeholder='Enter your Message'
-                            className='text-richblack-800'  
+                            className='text-richblack-25 bg-richblack-800 border-richblack-500 border-[1px] p-2 rounded-lg' 
                             {...register("message",{required: true})}   
                         />
                         {
                             errors.message && (<span>Please Enter Your Message</span>)
                         }
                     </div>
-                    <button type='submit' className='bg-yellow-5 text-richblack-900'>Send Message</button>
+                    <button type='submit' className='bg-yellow-5 text-richblack-900 p-2 rounded-lg hover:scale-95 transition-all delay-100 '>Send Message</button>
             </div>
         </form>
     </div>
