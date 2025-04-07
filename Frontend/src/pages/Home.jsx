@@ -146,7 +146,7 @@ const Home = () => {
                     <ReviewSlider/> 
         </div>
         {/* Footer  */}
-        <div className='mx-auto w-11/12 max-w-maxContent flex flex-row items-center justify-between gap-7 bg-[#161D29] shadow-richblack-700 shadow-lg px-[52px] py-[120px] mb-7'>
+        <div className='mx-auto w-full flex flex-row items-center justify-between gap-7 bg-[#161D29] shadow-richblack-700 shadow-lg px-[52px] pt-[120px] '>
                 <Footer/>
         </div>
     </div>

@@ -9,6 +9,7 @@ import StatsComponent from '../components/core/about/StatsComponent'
 import LearningGrid from '../components/core/about/LearningGrid'
 import ContactForm from '../components/core/about/ContactForm'
 import Footer from '../components/common/Footer'
+import ReviewSlider from '../components/common/ReviewSlider'
 const About = () => {
   return (
     <div className='w-full text-white mt-[55px]'>
@@ -103,8 +104,12 @@ const About = () => {
         <ContactForm/>
       </section>
       <section>
-            Review from other learners
-            {/* <ReviewSlider/> */}
+      <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7 text-white'>
+          
+                    <h2 className=' text-center text-4xl font-semibold m-10'>Review from other learners</h2>
+                    {/* Review slider */}
+                    <ReviewSlider/> 
+        </div>
       </section>
         <Footer/>
     </div>
