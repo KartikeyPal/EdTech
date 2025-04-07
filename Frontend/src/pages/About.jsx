@@ -107,7 +107,7 @@ const About = () => {
       <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7 text-white'>
           
                     <h2 className=' text-center text-4xl font-semibold m-10'>Review from other learners</h2>
-                    {/* Review slider */}
+                    
                     <ReviewSlider/> 
         </div>
       </section>
