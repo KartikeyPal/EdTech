@@ -1,4 +1,4 @@
-import { profileEndpoints } from "../apis";
+import { profileEndpoints,settingsEndpoints } from "../apis";
 import { apiConnector } from "../apiconnector";
 import { setLoading,setUser } from "../../slices/profileSlice";
 import toast from 'react-hot-toast'; 
@@ -47,4 +47,22 @@ export async function getInstructorData(token){
     }
     toast.dismiss(toastId);
     return result;
+}
+
+export async function deleteAccount(token){
+    const toastId = toast.loading("Loading...");
+    let result;
+    try {
+        const res = await apiConnector("DELETE",settingsEndpoints.DELETE_PROFILE_API,null,{Authorization:`Bearer ${token}`});
+        if(!res.data.success){
+            throw new Error("Unable to delete the account")
+        }
+        result = res.data.success;
+    } catch (error) {
+        console.log(error.message);
+        toast.error("Unable to delete the account");
+    }
+    toast.dismiss(toastId);
+    return result;
+
 }

@@ -13,39 +13,58 @@ const ForgotPassword = () => {
         e.preventDefault()
         dispatch(getPasswordResetToken(email,setEmailSend));
     }
+
+
   return (
-    <div className='text-richblack-5 flex justify-center items-center ' >
-        {   
-                loading?(<div> loading.... </div>):(
-                <div className='text-white '>
-                        <h1>{!emailSend? ("Reset Your Password"): ("check Your Email")}</h1>
-                        <p>
+    <div className=' w-screen h-screen text-white flex flex-col justify-center items-center' >
+        {
+        loading?(<div> loading.... </div>):(
+        <div className=' text-white bg-richblack-800 rounded-xl hover:shadow-richblue-200 hover:shadow-2xl flex flex-col justify-center px-16 py-6 transition-shadow delay-100   '>
+                        <h1 className='font-bold text-xl text-richblack-100 '>{!emailSend? ("Reset Your Password"): ("check Your Email")}</h1>
+                        <p className='text-lg pt-1 text-richblack-200'>
                             {
-                                !emailSend?("Have no fear. We’ll email you instructions to reset your password. If you dont have access to your email we can try account recovery"):(`We have sent the reset email to
+                                !emailSend?("Enter your Email for resetting your password"):(`We have sent the reset email to
                                 ${email}`)
                             }
                         </p>
-                        <form onSubmit={handleSubmit}>
-                            {
-                                !emailSend && (
-                                    <label>
-                                        <p>Email Address:</p>
-                                        <input required type='email' name='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='Enter Your Email Address' className='bg-richblack-800'/>
-                                    </label>
-                                )
-                            }
-                            <button type='submit'>
+                    <div className=''>
+                        <form onSubmit={handleSubmit}
+                            className=' '
+                        >
+
+                            <div className=' py-3'>
                                 {
-                                    !email? ("Reset Password") : ("Resend Email")
+                                    !emailSend && (
+                                        <div className='flex flex-col gap-y-2 '>
+                                            <label htmlFor="email" className='font-semibold text-richblack-25'>Enter Your Email</label>
+                                            <input 
+                                            required 
+                                            type='email' 
+                                            name='email' 
+                                            value={email} 
+                                            onChange={(e)=>setEmail(e.target.value)} 
+                                            placeholder='Enter Your Email Address' 
+                                            className='bg-richblack-800'/>
+                                        </div>
+                                        
+                                    )
                                 }
-                            </button>
+                                <button type='submit' 
+                                    className='bg-richblack-700 p-2 rounded-lg mt-6 text-richblack-25 hover:scale-95 hover:shadow-richblack-500 hover:shadow-md transition-all delay-100'>
+                                    {
+                                        !emailSend? ("Reset Password") : ("Resend Email")
+                                    }
+                                </button>
+                            </div>
                         </form>
-                        <div>
+                        <div className=''>
                             <Link to={"/login"}>
-                            <p>Back to Login page</p></Link>
+                                <button className='bg-yellow-25 p-2 text-richblack-900 rounded-lg hover:scale-95 transition-transform duration-200 delay-100 '>Back To Login Page</button>
+                            </Link>
                         </div>
-                </div>
-            )
+                    </div>
+        </div>
+        )
         }
     </div>
   )

@@ -18,7 +18,7 @@ const Settings = () => {
           <div className='flex flex-row w-[75%] gap-3 justify-between items-center p-10 mt-8 rounded-lg bg-richblack-800 border-richblack-200 border-2'>
               <PasswordEditSection/>
           </div>
-          <div className='flex flex-row w-[75%] gap-3 justify-between items-center p-10 mt-8 rounded-lg bg-richblack-800 border-pink-200 border-2'>
+          <div className='flex flex-row w-[75%] gap-3 justify-between items-center p-10 mt-8 rounded-lg bg-pink-800 border-pink-200 border-2 bg-opacity-50 mb-10'>
               <DeleteAccountSection/>
           </div>
       </div>
