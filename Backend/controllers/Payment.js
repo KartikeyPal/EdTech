@@ -12,54 +12,32 @@ const CourseProgress = require('../models/CourseProgress');
 exports.capturePayments = async(req,res)=>{
     const {courses}= req.body;
     const userId = req.user.id;
-
     if(courses.length===0){
          return res.json({
             success: false,
             message: "Please provide courseId"
          })
     }
-    let totalAmount =0;
-    for(const   course_id of courses){
-        let course;
+    let totalAmount = 0;
+    let courseDetails = [];
+    for(const course_id of courses){
         try {
-            course = await Course.findById(course_id);
+            const course = await Course.findById(course_id);
             if(!course){
                 return res.status(200).json({
                     success:false,
-                    message: "Could not find the course"
+                    message: `Could not find the course with ID: ${course_id}`
                 })
             }
             const uid = new mongoose.Types.ObjectId(userId);
             if(course.studentEnrolled.includes(uid)){
                 return res.status(200).json({
                     success:false,
-                    message: "student is already enrolled",
+                    message: `You are already enrolled in course: ${course.courseName}`
                 })
             }
-            totalAmount+=course.price;
-
-            const options = {
-                amount: totalAmount*100,
-                currency: "INR",
-                receipt: Math.random(Date.now()).toString(),
-            }
-
-            try {
-                const paymentResponse = await instance.orders.create(options);
-                res.status(200).json({
-                    success:true,
-                    message: "order created successfully",
-                    paymentResponse,
-                })
-            } catch (error) {
-                    console.log(error);
-                    return res.status(500).json({
-                        success:false,
-                        message: "could not initiate the order "
-                    })
-            }
-
+            totalAmount += course.price;
+            courseDetails.push(course);
         } catch (error) {
             console.log(error);
             return res.status(500).json({
@@ -68,7 +46,27 @@ exports.capturePayments = async(req,res)=>{
             })
         }
     }
+    try {
+        const options = {
+            amount: totalAmount * 100,
+            currency: "INR",
+            receipt: Math.random(Date.now()).toString(),
+        }
 
+        const paymentResponse = await instance.orders.create(options);
+        return res.status(200).json({
+            success:true,
+            message: "Order created successfully",
+            paymentResponse,
+            courseDetails
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message: "Could not initiate the order"
+        })
+    }
 }
 
 exports.verifyPayment =  async(req,res)=>{

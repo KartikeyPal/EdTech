@@ -24,8 +24,6 @@ const {COURSE_PAYMENT_API,COURSE_VERIFY_API,SEND_PAYMENT_SUCCESS_EMAIL_API}  = s
 }
 
 export const buyCourse = async(token,courses,userDetails,navigate,dispatch)=>{
-    console.log(token)
-    console.log(courses);
     const toastId = toast.loading("loading...");
     try {
         //load the script
@@ -73,7 +71,7 @@ export const buyCourse = async(token,courses,userDetails,navigate,dispatch)=>{
         console.log("payment api error...  ",error);
         toast.error("could not make payment");
     }       
-    toast.dismiss();
+    toast.dismiss(toastId);
 }
 
 const sendPaymentSuccessEmail=async(response,amount,token)=>{
