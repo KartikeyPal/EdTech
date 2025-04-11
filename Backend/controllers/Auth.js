@@ -9,8 +9,9 @@ require('dotenv').config();
 // send otp
 exports.sendOTP = async (req, res) => {
     try {
-        const {email} = req.body;
         
+        const {email} = req.body;
+        console.log(email)
         const checkUser = await User.findOne({email});
         if(checkUser){
             return res.status(401).json({

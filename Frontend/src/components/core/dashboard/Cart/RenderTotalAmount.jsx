@@ -15,7 +15,7 @@ const RenderTotalAmount = () => {
         <p className='font-semibold text-xl text-caribbeangreen-50'>Rs {total}</p>
         <IconButton
             text="Buy Now"
-            onclick={handleBuyCourse}
+            onClick={handleBuyCourse}
             customClasses={"w-full justify-content bg-yellow-25 text-richblack-900 p-2 rounded-xl my-2 hover:scale-95"}
             
         />

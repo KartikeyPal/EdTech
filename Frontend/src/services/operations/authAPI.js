@@ -64,10 +64,13 @@ export const signUp = (accountType,firstName,lastName,email,password,confirmPass
 }
 
 export const sendOtp = (email,navigate)=>{
+    console.log(email," my email")
+    const toastId = toast.loading("Loading...");
     return async(dispatch)=>{
         try {
             dispatch(setLoading(true));
             const response = await apiConnector("POST",settingsEndpoints.SEND_OTP_API,{email});
+            console.log(response);
             if(!response.data.success){
                 toast.error("Unable to signup");
                 throw new Error(response.data.message);
@@ -78,6 +81,7 @@ export const sendOtp = (email,navigate)=>{
                 console.log("error in sending otp",error);
                 toast.error("could not send otp");
         }
+        toast.dismiss(toastId);
         dispatch(setLoading(false));
     }
     
@@ -88,6 +92,7 @@ export const logIn = (email,password,navigate)=>{
         try {
             dispatch(setLoading(true));
             const res = await apiConnector("POST",settingsEndpoints.LOGIN_API,{email,password});
+            
             if(!res.data.success){
                 toast.error("unable to login");
                 throw new Error(res.data.message);
@@ -103,6 +108,11 @@ export const logIn = (email,password,navigate)=>{
 
             navigate('/dashboard/my-profile');
         } catch (error) {
+            if(error.response.data.message === "User does not exist"){
+                toast.error("User does not exist, please signUp")
+                navigate("/Signup")
+                return;
+            }
             console.log("Error while login",error);
             toast.error("not able to login");
         }
