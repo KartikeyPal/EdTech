@@ -182,7 +182,13 @@ exports.getEnrolledCourses = async(req, res) => {
                     path:'subSection'
                 }
             }
-        }).exec();
+        }).populate({
+            path:'courseProgress',
+            populate:{
+                path:'completedVideos',
+            }
+        })
+
         if (!userData) {
             return res.status(404).json({
                 success: false,
@@ -190,10 +196,32 @@ exports.getEnrolledCourses = async(req, res) => {
             });
         }
         
+        const courses = userData.courses.map((course, index) => {
+            const plainCourse = course.toObject();
+            let courseCompletedPercentage = 0;
+            let totalSubSection = 0;
+            let completedSubSection = 0;
+            
+            for(let j = 0; j < course.courseContent.length; j++) {
+                totalSubSection += course.courseContent[j].subSection.length;
+            }
+            for(let j = 0; j < userData.courseProgress.length; j++) {
+                if(course._id.toString() === userData.courseProgress[j].courseID.toString()) {
+                    completedSubSection += userData.courseProgress[j].completedVideos.length;
+                    break;
+                }
+            }
+            
+            courseCompletedPercentage = (completedSubSection / totalSubSection) * 100;
+            courseCompletedPercentage = Math.round(courseCompletedPercentage);
+            
+            plainCourse.courseCompletedPercentage = courseCompletedPercentage;
+            return plainCourse;
+        });
         return res.status(200).json({
             success: true,
             message: "Enrolled courses retrieved successfully",
-            courses: userData.courses,
+            courses: courses,
         });
     } catch (error) {
         return res.status(500).json({

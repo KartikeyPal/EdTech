@@ -9,19 +9,25 @@ const EnrolledCourses = () => {
     const {token} = useSelector((state)=>state.auth);
     const navigate = useNavigate();
     const [enrolledCourses,setEnrolledCourses] = useState(null);
-
+    const [user,setUser] = useState();
     const getEnrolledCourses =async ()=>{
         try {
             const res = await getUserEnrolledCourses(token);
-            console.log("res",res);
+            
             setEnrolledCourses(res);
+            setUser(res.user);
         } catch (error) {
-                console.log("Unable to fetch enrooled courses");
+                console.log("Unable to fetch enrolled courses");
         }
     }
     useEffect(()=>{
         getEnrolledCourses();
     },[])
+
+    
+
+
+
   return (
     <div className='w-screen h-screen mt-[100px] mx-24 px-10'>
         <div className="text-3xl text-richblack-50">Enrolled Courses</div>
@@ -47,7 +53,6 @@ const EnrolledCourses = () => {
                         className={`flex items-center border border-richblack-700 ${i===arr.length-1?"rounded-b-lg":"rounded-none"}`}
                         key={i}
                         >
-                            {console.log(course)}
                         <div
                             className="flex w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
                             onClick={() => {
@@ -68,9 +73,9 @@ const EnrolledCourses = () => {
                     </div>
                     <div className="w-1/4 px-2 py-3">{course?.totalDuration}</div>
                     <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
-                        <p>Progress: 50%</p>
+                        <p>Progress: {course.courseCompletedPercentage || 0}%</p>
                         <ProgressBar
-                            completed='50'
+                            completed={course.courseCompletedPercentage || 0}
                             height="8px"
                             isLabelVisible={false}
                         />

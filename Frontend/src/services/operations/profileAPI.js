@@ -21,11 +21,12 @@ export const getUserDetails = (userId)=>{
 export const getUserEnrolledCourses = async(token)=>{
         try {
             const res = await apiConnector("GET",profileEndpoints.GET_USER_ENROLLED_COURSES_API,null,{Authorization:`Bearer ${token}`});
+          
             if(!res.data.success){
                 toast.error("not able to fetch data");
                 throw new Error(res.data.message)
             }
-            return res?.data?.courses;
+            return  res?.data?.courses
         } catch (error) {
             console.error("error is " ,error.message);
             console.log(error);
