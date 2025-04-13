@@ -22,7 +22,7 @@ const CourseReviewModal = ({setReviewModal}) => {
     useEffect(()=>{
       setValue("courseExperience",'');
       setValue("courseRating",0)
-    },[])
+    },[]);
 
     const onSubmit =async (data) =>{
       await createRating({

@@ -37,7 +37,7 @@ const VideoDetailsSideBar = ({setReviewModal}) => {
         <div className='bg-richblack-900 flex flex-col w-full text-richblack-25 h-screen overflow-y-auto mt-12'>
             {/* Header Section */}
             <div className='sticky top-0 bg-richblack-900 z-10 p-4 border-b border-richblack-700'>
-                {/* Action Buttons */}
+                {/*Buttons*/}
                 <div className='flex items-center justify-between mb-6'>
                     <button
                         onClick={()=>navigate("/dashboard/enrolled-courses")}

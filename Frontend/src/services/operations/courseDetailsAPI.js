@@ -361,6 +361,7 @@ export const markLectureAsComplete = async (data, token) => {
 
 // create a rating for course
 export const createRating = async (data, token) => {
+  console.log(data);
   const toastId = toast.loading("Loading...")
   let success = false
   try {
