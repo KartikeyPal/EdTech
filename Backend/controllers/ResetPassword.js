@@ -30,7 +30,7 @@ exports.resetPasswordToken = async(req,res) =>{
                 resetPasswordExpires: Date.now() + 5*60*1000,
             },{new:true}
         );
-        const url = `https://edtech-glfo.onrender.com/update-password/${token}`;
+        const url = `https://cheery-crostata-b5a5ba.netlify.app/update-password/${token}`;
         //sending mail
         await mailSender(email,"Password Reset Link : ",`Password Reset Link: ${url}`);
         
