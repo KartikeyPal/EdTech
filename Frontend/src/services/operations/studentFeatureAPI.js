@@ -43,7 +43,7 @@ export const buyCourse = async(token,courses,userDetails,navigate,dispatch)=>{
         }
         // "key": process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
         const option ={
-            "key": "rzp_test_PG7OzXR68vb2Oo", //Enter the Key ID generated from the Dashboard
+            "key": import.meta.env.VITE_RAZORPAY_KEY, //Enter the Key ID generated from the Dashboard
             "amount": orderRes.data.paymentResponse.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise.
             "currency": orderRes.data.paymentResponse.currency,
             "order_id": orderRes.data.paymentResponse.id, //This is a sample Order id. Pass the `id` obtained in the response of Step 1.
