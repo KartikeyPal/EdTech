@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin:"https://cheery-crostata-b5a5ba.netlify.app",
+        origin:"https://edtech-glfo.onrender.com",
         credentials:true
     })
 );
