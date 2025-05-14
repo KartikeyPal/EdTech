@@ -8,6 +8,7 @@ const{
     getCourseDetails, 
     editCourse,
     getFullCourseDetails,
+    getInstructorCourses,
 } = require('../controllers/Course'); // all ok 
 
 
@@ -47,6 +48,7 @@ router.get('/showAllCourses',showAllCourses);
 router.post('/getCourseDetails',getCourseDetails);
 router.post('/editCourse',auth,isInstructor,editCourse);
 router.post('/getFullCourseDetails',auth,getFullCourseDetails);
+router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 // Section Routes
 router.post('/addSection',auth,isInstructor,createSection);
 router.post('/updateSection',auth,isInstructor,updateSection);

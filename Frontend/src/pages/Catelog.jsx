@@ -70,7 +70,7 @@ const Catelog = () => {
                                 {
                                     catelogPageData?.mostSellingCourses
                                     .map((course,index)=> (
-                                        <div>
+                                        <div key={index}>
                                             <CourseCard course={course} key={index} Height={"h-[400px]"}/>
 
                                         </div>
