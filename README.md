@@ -1,5 +1,9 @@
 StudyNotion Online Education Platform (MERN App)
+
 Main Page
+
+
+
 <img width="518" height="782" alt="mainpage" src="https://github.com/user-attachments/assets/1cddc985-936d-4c93-af8b-3c0a47dccba9" />
 
 Project Description
