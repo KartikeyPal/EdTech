@@ -27,14 +27,14 @@ const Home = () => {
                     </div>
                 </div>
             </Link>
-            <div className='text-center text-4xl font-semibold mt-7'>
+            <div className='text-center text-3xl md:text-4xl font-semibold mt-7'>
                 Empower Your Future With
                 <HighlightText text={" Coding Skills"}/>
             </div>
             <div className='mt-4 w-[90%] text-center font-bold text-richblack-300'>
                 With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors. 
             </div>
-            <div className='flex flex-row gap-7 mt-8'>
+            <div className='flex flex-col sm:flex-row gap-4 sm:gap-7 mt-8'>
                 <CTAButton linkto={"/signup"} active={true}>Learn More</CTAButton>
                 <CTAButton linkto={"/login"} active={false}>Book a Demo</CTAButton>
             </div>
@@ -106,7 +106,7 @@ const Home = () => {
                 <div className='homgpage_bg h-[333px]'>
                     <div className='h-[50%]'></div>
                     <div className='w-11/12 max-w-maxContent flex flex-col items-center gap-5'>
-                        <div className=' flex flex-row gap-7 text-white  items-center ml-[10%] mt-[3%]    '>
+                        <div className='flex flex-col sm:flex-row gap-4 sm:gap-7 text-white items-center mx-auto mt-[8%] sm:mt-[3%]'>
                             <CTAButton active={true} linkto={"/signup"}>
                                 <div className='flex items-center gap-3'>
                                     Explore Full Catelog
@@ -123,13 +123,13 @@ const Home = () => {
                 </div>
             {/*part 2 */}
                 <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7'>
-                    <div className='flex flex-row gap-5 mb-10 mt-[95px]'>
-                        <div className='font-inter font-semibold w-[45%] text-4xl'>
-                            get the skills you need for a <HighlightText text={"job that is in demand"}/>
+                    <div className='flex flex-col md:flex-row gap-8 mb-10 mt-10 md:mt-[95px] items-center'>
+                        <div className='font-inter font-semibold w-full md:w-[45%] text-3xl md:text-4xl text-center md:text-left'>
+                            Get the skills you need for a <HighlightText text={"job that is in demand"}/>
                         </div>
-                        <div className='flex flex-col gap-10 w-[40%] items-start' >
-                            <div className='text-[16px] font-inter'>
-                            The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
+                        <div className='flex flex-col gap-8 md:gap-10 w-full md:w-[40%] items-center md:items-start' >
+                            <div className='text-[16px] font-inter text-center md:text-left'>
+                            The modern StudyNotion dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
                             </div>
                             <CTAButton active={true} linkto={"/signup"}><div>Learn More</div></CTAButton>
                         </div>
@@ -146,7 +146,7 @@ const Home = () => {
                     <ReviewSlider/> 
         </div>
         {/* Footer  */}
-        <div className='mx-auto w-full flex flex-row items-center justify-between gap-7 bg-[#161D29] shadow-richblack-700 shadow-lg px-[52px] pt-[120px] '>
+        <div className='mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-7 bg-[#161D29] shadow-richblack-700 shadow-lg px-6 md:px-[52px] pt-[60px] md:pt-[120px] '>
                 <Footer/>
         </div>
     </div>
