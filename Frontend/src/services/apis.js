@@ -1,6 +1,6 @@
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
-// const BASE_URL = 'https://edtech-1-w3t9.onrender.com/api/v1'
-const BASE_URL = 'http://localhost:4000/api/v1'
+const BASE_URL = 'https://edtech-nayb.onrender.com/api/v1'
+// const BASE_URL = 'http://localhost:4000/api/v1'
 
 
 export const categories ={
